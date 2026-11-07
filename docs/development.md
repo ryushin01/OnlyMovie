@@ -78,15 +78,17 @@ Identity는 API가 없어 대시보드에서만 설정합니다. 처음 한 번 
 
 - `pnpm dev`가 `@netlify/vite-plugin`으로 함수와 DB를 흉내 냅니다. DB 파일은 `.netlify/db`에 있습니다.
 - 마이그레이션은 자동으로 적용되지 않습니다. `pnpm dev`를 켠 채로 `pnpm db:migrate`를 실행합니다.
-- Identity는 로컬에서 동작하지 않아, 로컬 함수에서는 가상의 회원으로 간주합니다(`netlify/lib/auth.ts`). 배포된 함수에는 해당하지 않습니다. 가입과 로그인 흐름은 배포 미리보기에서 확인합니다.
+- Identity는 로컬에서 동작하지 않아, 로컬 함수에서는 가상의 회원으로 간주합니다(`netlify/lib/auth.ts`). 배포된 함수에는 해당하지 않습니다. 가입과 로그인 흐름은 운영 배포 뒤 배포 검사와 직접 확인으로 봅니다. PR 단계에서 확인해야 하면 `scripts/netlify-ignore.sh`의 미리보기 건너뛰기를 잠시 풀어 둡니다.
 - 엣지 함수 에뮬레이터는 끕니다(`vite.config.ts`). 이 프로젝트는 엣지 함수를 쓰지 않고, 켜 두면 Deno 버전에 따라 개발 서버가 종료됩니다.
 - 시작할 때 `Failed retrieving site data`가 나면 상위 폴더의 `.netlify/state.json`이 다른 사이트를 가리키는 경우입니다. `netlify link`로 이 프로젝트를 연결하거나, 이 폴더에 `.netlify/state.json`을 `{}`로 만듭니다.
 
 ## 배포 시 유의점
 
 - `main`에 병합하면 Netlify가 `netlify.toml` 설정으로 빌드하고 **마이그레이션을 적용한 뒤** 배포합니다. 이어서 `.github/workflows/live-check.yml`이 `version.txt`로 해당 커밋의 배포를 확인한 뒤, 세 브라우저로 배포된 사이트를 검사합니다.
+- Netlify 팀 크레딧을 아끼려고 빌드를 줄입니다(`scripts/netlify-ignore.sh`, `netlify.toml`의 `ignore`). PR 미리보기와 브랜치 배포는 빌드하지 않고, `main`도 문서·E2E·테스트·저장소 설정(`docs/`, `e2e/`, `.github/`, `README.md`, `CHANGELOG.md`, `*.test.ts(x)`)만 바뀐 커밋은 건너뜁니다. 이때는 배포 검사도 돌지 않습니다(`paths-ignore`, 같은 목록). PR의 빌드와 E2E 검사는 GitHub Actions가 맡습니다.
+- 크레딧을 다 쓰면 팀이 operational credits 상태가 되어 사이트는 그대로 열리지만 새 배포가 멈춥니다. 배포 검사가 "10분 안에 배포되지 않았습니다"로 실패하면 Netlify의 Usage 화면부터 확인합니다.
 - 적용된 마이그레이션은 고치거나 지우면 배포가 실패합니다. 항상 새 파일을 추가합니다.
-- 미리보기는 운영 데이터가 복사된 DB 브랜치를 쓰고, 미리보기 주소는 공개입니다.
+- 미리보기를 다시 켜면(위의 빌드 건너뛰기를 풀면) 운영 데이터가 복사된 DB 브랜치를 쓰고, 미리보기 주소는 공개입니다.
 - 직접 주소는 SPA 대체 규칙으로 HTTP 200을 돌려줍니다. 없는 주소는 앱의 404 화면이 열리지만 HTTP 상태는 200입니다.
 - 없는 `/assets/*`는 앱 화면이 아니라 404로 응답합니다. `robots.txt`처럼 고정 주소로 읽는 파일은 `public/`에 두어야 대체 규칙에 걸리지 않습니다.
 - 공유 미리보기 정보는 `index.html` 하나뿐이어서 어느 주소를 공유해도 메인 기준으로 보입니다.
