@@ -85,7 +85,7 @@ Identity는 API가 없어 대시보드에서만 설정합니다. 처음 한 번 
 ## 배포 시 유의점
 
 - `main`에 병합하면 Netlify가 `netlify.toml` 설정으로 빌드하고 **마이그레이션을 적용한 뒤** 배포합니다. 이어서 `.github/workflows/live-check.yml`이 `version.txt`로 해당 커밋의 배포를 확인한 뒤, 세 브라우저로 배포된 사이트를 검사합니다.
-- Netlify 팀 크레딧을 아끼려고 빌드를 줄입니다(`scripts/netlify-ignore.sh`, `netlify.toml`의 `ignore`). PR 미리보기와 브랜치 배포는 빌드하지 않고, `main`도 문서·E2E·테스트·저장소 설정(`docs/`, `e2e/`, `.github/`, `README.md`, `CHANGELOG.md`, `*.test.ts(x)`)만 바뀐 커밋은 건너뜁니다. 이때는 배포 검사도 돌지 않습니다(`paths-ignore`, 같은 목록). PR의 빌드와 E2E 검사는 GitHub Actions가 맡습니다.
+- Netlify 팀 크레딧을 아끼려고 빌드를 줄입니다(`scripts/netlify-ignore.sh`, `netlify.toml`의 `ignore`). PR 미리보기와 브랜치 배포는 빌드하지 않고, `main`도 문서·E2E·테스트·저장소 설정(`docs/`, `e2e/`, `.github/`, `README.md`, `CHANGELOG.md`, `*.test.ts(x)`)만 바뀐 커밋은 건너뜁니다. 이때는 배포 검사도 돌지 않습니다(`paths-ignore`, 같은 목록). 배포 검사를 손으로 돌렸을 때 배포된 커밋 이후로 이런 변경만 있었다면, 같은 스크립트로 확인해 배포된 사이트를 그대로 검사합니다. PR의 빌드와 E2E 검사는 GitHub Actions가 맡습니다.
 - 크레딧을 다 쓰면 팀이 operational credits 상태가 되어 사이트는 그대로 열리지만 새 배포가 멈춥니다. 배포 검사가 "10분 안에 배포되지 않았습니다"로 실패하면 Netlify의 Usage 화면부터 확인합니다.
 - 적용된 마이그레이션은 고치거나 지우면 배포가 실패합니다. 항상 새 파일을 추가합니다.
 - 미리보기를 다시 켜면(위의 빌드 건너뛰기를 풀면) 운영 데이터가 복사된 DB 브랜치를 쓰고, 미리보기 주소는 공개입니다.
