@@ -2,6 +2,8 @@
   # version.txt는 배포 후 검사(live-check.yml)가 방금 올린 커밋이 배포되었는지 확인하는 데 씁니다.
   command = "pnpm build && printf '%s' \"$COMMIT_REF\" > dist/version.txt"
   publish = "dist"
+  # 크레딧을 아끼려고 PR 미리보기, 브랜치 배포, 문서·테스트만 바뀐 커밋은 빌드하지 않습니다.
+  ignore = "bash ./scripts/netlify-ignore.sh"
 
 # 없는 빌드 파일은 앱 화면이 아니라 404로 응답해, 배포 후 검사가 누락을 잡을 수 있게 합니다.
 [[redirects]]
