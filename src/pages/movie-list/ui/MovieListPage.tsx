@@ -36,7 +36,7 @@ const tabsCss = css`
     text-decoration: none;
   }
   /* 색만으로 구분하지 않도록 밑줄을 함께 그립니다. */
-  a[data-on='true'] {
+  a[aria-current='page'] {
     color: var(--ink);
     border-bottom-color: var(--accent);
     font-weight: 800;
@@ -94,28 +94,30 @@ export function MovieListPage() {
       <h1 css={pageTitleCss}>영화 찾기</h1>
       <nav aria-label="공개 상태">
         <ul css={tabsCss}>
-          {TABS.map(({ label, patch }) => (
-            <li key={label}>
-              <Link
-                {...routes.movies(
-                  toMovieSearch({
-                    ...filters,
-                    status: undefined,
-                    firstImport: undefined,
-                    page: undefined,
-                    ...patch,
-                  }),
-                )}
-                activeOptions={{ exact: true, includeSearch: true }}
-                data-on={
-                  (filters.status ?? undefined) === patch.status &&
-                  Boolean(filters.firstImport) === Boolean(patch.firstImport)
-                }
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
+          {TABS.map(({ label, patch }) => {
+            const on =
+              (filters.status ?? undefined) === patch.status &&
+              Boolean(filters.firstImport) === Boolean(patch.firstImport);
+            return (
+              <li key={label}>
+                <Link
+                  {...routes.movies(
+                    toMovieSearch({
+                      ...filters,
+                      status: undefined,
+                      firstImport: undefined,
+                      page: undefined,
+                      ...patch,
+                    }),
+                  )}
+                  activeOptions={{ exact: true, includeSearch: true }}
+                  aria-current={on ? 'page' : undefined}
+                >
+                  {label}
+                </Link>
+              </li>
+            );
+          })}
         </ul>
       </nav>
       <MovieFilterForm

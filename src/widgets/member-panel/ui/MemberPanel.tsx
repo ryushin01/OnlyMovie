@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 import { Link } from '@tanstack/react-router';
-import { formatDate, useLibrary, type Movie } from '@/entities/movie';
+import { formatDate, isReleased, useLibrary, type Movie } from '@/entities/movie';
 import { useSession } from '@/entities/session';
 import { activePlan, PeriodMeter, planSurfaceCss, PLANS, useSubscription } from '@/entities/subscription';
 import { routes } from '@/shared/config/routes';
@@ -108,7 +109,8 @@ export function MemberPanel() {
   const { data: subscription } = useSubscription(user?.id);
   const { data: library } = useLibrary(user?.id);
   const plan = activePlan(subscription?.subscription);
-  const upcoming = library?.alerts.filter((alert) => !alert.unread).slice(0, 3) ?? [];
+  const [now] = useState(() => new Date());
+  const upcoming = library?.alerts.filter((alert) => !isReleased(alert.movie, now)).slice(0, 3) ?? [];
 
   return (
     <aside css={asideCss} aria-label="내 정보">

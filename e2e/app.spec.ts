@@ -553,6 +553,10 @@ test('검색하면 결과 아래에 연관 영화를 잇고, 탭으로 공개 �
   await expect(page).toHaveURL(/status=upcoming/);
   await expect(tabs.getByRole('link', { name: '공개 예정' })).toHaveAttribute('aria-current', 'page');
   await expect(tabs.getByRole('link', { name: '전체' })).not.toHaveAttribute('aria-current', 'page');
+
+  // 2페이지에서도, 불리언 조건에서도 지금 탭을 알립니다.
+  await page.goto('/movies?firstImport=true&page=2');
+  await expect(tabs.getByRole('link', { name: '국내 첫 공개' })).toHaveAttribute('aria-current', 'page');
 });
 
 test('키보드 순서는 로고, 검색창, 도구, 주요 메뉴 순이다', async ({ page }) => {

@@ -18,3 +18,14 @@ it('회원에게는 이용권과 남은 날, 찜 바로가기를 보여 준다',
   expect(screen.getByText(/다음 결제까지 \d+일/)).toBeInTheDocument();
   expect(await screen.findByRole('link', { name: '마지막 상영' })).toBeInTheDocument();
 });
+
+it('이미 공개되어 확인한 알림은 다가오는 공개에 넣지 않는다', async () => {
+  const { state } = installFakeApi({
+    movies: [sampleMovie(), sampleMovie({ id: 'future', title: '먼 훗날', releasedOn: '2999-01-15' })],
+  });
+  state.alerts = ['last-screening', 'future'];
+  state.alertsRead = ['last-screening'];
+  await renderWithProviders(<MemberPanel />);
+  expect(await screen.findByRole('link', { name: '먼 훗날' })).toBeInTheDocument();
+  expect(screen.queryByRole('link', { name: '마지막 상영' })).not.toBeInTheDocument();
+});
