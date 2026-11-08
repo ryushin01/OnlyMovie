@@ -105,14 +105,14 @@ export function Player({ movie, quality, startAt }: Props) {
   useEffect(() => {
     if (!running) return;
     const device = deviceId();
-    let active = true;
+    const session = { active: true };
     const enqueue = (task: () => Promise<void>) => {
       screenQueue.current = screenQueue.current.then(task);
     };
     const claim = () =>
       enqueue(() =>
         claimScreen(movie.id, device).catch((error: unknown) => {
-          if (active && error instanceof ApiError && error.status === 409) {
+          if (session.active && error instanceof ApiError && error.status === 409) {
             setPlaying(false);
             setBlocked(true);
           }
@@ -121,7 +121,7 @@ export function Player({ movie, quality, startAt }: Props) {
     claim();
     const timer = setInterval(claim, SCREEN_INTERVAL_MS);
     return () => {
-      active = false;
+      session.active = false;
       clearInterval(timer);
       enqueue(() => releaseScreen(movie.id, device).catch(() => {}));
     };
