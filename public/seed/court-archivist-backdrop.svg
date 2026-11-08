@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#7a2f2f"/><stop offset="1" stop-color="#1e0b0b"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#7a2f2f"/><stop offset="1" stop-color="#1e0b0b"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="1600" height="900" fill="url(#g)"/>
-<circle cx="1120" cy="520" r="130" fill="#fff" opacity=".55"/>
-<rect y="620" width="1600" height="280" fill="#000" opacity=".45"/>
+<circle cx="1248" cy="252" r="81" fill="#bd9797" opacity=".7"/><polygon points="1075,396 1075,550 1188,550" fill="#bd9797"/><polygon points="994,556 1205,556 1172,580 1020,580" fill="#170808"/><path d="M0 558 Q 400 550 800 558 T 1600 558 V 900 H 0Z" fill="#3c3030"/><path d="M0 626 Q 400 613 800 626 T 1600 626 V 900 H 0Z" fill="#332626"/><path d="M0 695 Q 400 677 800 695 T 1600 695 V 900 H 0Z" fill="#2a1c1c"/><path d="M0 763 Q 400 740 800 763 T 1600 763 V 900 H 0Z" fill="#201212"/><path d="M0 832 Q 400 804 800 832 T 1600 832 V 900 H 0Z" fill="#170808"/>
 </svg>

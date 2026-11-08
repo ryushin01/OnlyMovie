@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3f5247"/><stop offset="1" stop-color="#0c120f"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3f5247"/><stop offset="1" stop-color="#0c120f"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">무전</text>
-<text x="44" y="772" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">침묵</text>
+<circle cx="243" cy="504" r="216" fill="#9fa9a3" opacity=".85"/><polygon points="-30,900 5,540 187,540 222,900" fill="#2c3932"/><polygon points="372,900 411,441 609,441 648,900" fill="#2c3932"/><rect y="774" width="600" height="126" fill="#090e0b"/>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">무전</text>
+<text x="44" y="812" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">침묵</text>
 </svg>

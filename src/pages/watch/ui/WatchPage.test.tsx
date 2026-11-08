@@ -51,6 +51,27 @@ describe('WatchPage', () => {
     expect(screen.getByRole('button', { name: '일시정지' })).toBeInTheDocument();
   });
 
+  it('재생하면 기기 자리를 잡고, 멈추면 돌려준다', async () => {
+    const user = userEvent.setup();
+    const { state } = installFakeApi({ subscription: activeSubscription('standard') });
+    await view();
+    await user.click(await screen.findByRole('button', { name: '재생' }));
+    await user.click(screen.getByRole('button', { name: '일시정지' }));
+    const screenCalls = () =>
+      state.calls.filter((call) => call.path.includes('/playback?device=')).map((call) => call.method);
+    await waitFor(() => expect(screenCalls()).toEqual(['PUT', 'DELETE']));
+  });
+
+  it('동시 시청 대수를 넘으면 멈추고 글자로 알린다', async () => {
+    const user = userEvent.setup();
+    const { state } = installFakeApi({ subscription: activeSubscription('basic') });
+    state.screensFull = true;
+    await view();
+    await user.click(await screen.findByRole('button', { name: '재생' }));
+    expect(await screen.findByRole('alert')).toHaveTextContent('동시 시청 대수');
+    expect(screen.getByRole('button', { name: '재생' })).toBeInTheDocument();
+  });
+
   it('지난번 위치에서 시작하고, 일시정지하면 위치를 저장한다', async () => {
     const user = userEvent.setup();
     const { state } = installFakeApi({ subscription: activeSubscription('standard') });
@@ -62,9 +83,7 @@ describe('WatchPage', () => {
     await user.click(screen.getByRole('button', { name: '일시정지' }));
 
     await waitFor(() =>
-      expect(state.calls.find((call) => call.method === 'PUT')?.path).toBe(
-        '/api/library/progress/last-screening',
-      ),
+      expect(state.calls.some((call) => call.path === '/api/library/progress/last-screening')).toBe(true),
     );
     expect(state.progress['last-screening']).toBeGreaterThanOrEqual(600);
   });

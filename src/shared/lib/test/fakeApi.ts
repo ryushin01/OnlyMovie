@@ -68,6 +68,9 @@ export function installFakeApi({
     payments: [] as Record<string, unknown>[],
     watchlist: [] as string[],
     progress: {} as Record<string, number>,
+    alerts: [] as string[],
+    alertsRead: [] as string[],
+    screensFull: false,
     calls: [] as { method: string; path: string; body?: unknown }[],
     fail: null as null | ((method: string, path: string) => boolean),
     hold: null as null | Promise<void>,
@@ -98,13 +101,29 @@ export function installFakeApi({
           const movie = byId(id);
           return movie ? [{ movie, positionSeconds }] : [];
         }),
+        alerts: state.alerts.flatMap((id) => {
+          const movie = byId(id);
+          return movie ? [{ movie, unread: !state.alertsRead.includes(id) }] : [];
+        }),
       });
+    }
+    if (path === '/api/library/alerts/read') {
+      state.alertsRead = [...state.alerts];
+      return new Response(null, { status: 204 });
+    }
+    const alert = path.match(/^\/api\/library\/alert\/(.+)$/);
+    if (alert) {
+      const id = decodeURIComponent(alert[1]);
+      state.alerts = method === 'PUT' ? [...state.alerts, id] : state.alerts.filter((item) => item !== id);
+      return new Response(null, { status: 204 });
     }
     const library = path.match(/^\/api\/library\/(watchlist|progress)\/(.+)$/);
     if (library) {
       const id = decodeURIComponent(library[2]);
-      if (library[1] === 'progress') state.progress[id] = body.positionSeconds;
-      else if (method === 'PUT') state.watchlist.push(id);
+      if (library[1] === 'progress') {
+        if (method === 'DELETE') delete state.progress[id];
+        else state.progress[id] = body.positionSeconds;
+      } else if (method === 'PUT') state.watchlist.push(id);
       else state.watchlist = state.watchlist.filter((item) => item !== id);
       return new Response(null, { status: 204 });
     }
@@ -151,6 +170,12 @@ export function installFakeApi({
 
     const playback = path.match(/^\/api\/movies\/([^/]+)\/playback$/);
     if (playback) {
+      if (method === 'DELETE') return new Response(null, { status: 204 });
+      if (method === 'PUT') {
+        return state.screensFull
+          ? Response.json({ error: 'too_many_screens' }, { status: 409 })
+          : new Response(null, { status: 204 });
+      }
       const movie = state.movies.find((row) => row.id === decodeURIComponent(playback[1]));
       if (!movie) return Response.json({ error: 'not_found' }, { status: 404 });
       if (!state.user) return Response.json({ error: 'login_required' }, { status: 401 });

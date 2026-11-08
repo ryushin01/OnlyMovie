@@ -2,16 +2,33 @@ import { css } from '@emotion/react';
 import { useId, useState, type FormEvent } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { routes } from '@/shared/config/routes';
-import { Button } from '@/shared/ui/Button';
+import { SearchIcon } from '@/shared/ui/icons';
 import { inputCss, visuallyHidden } from '@/shared/ui/styles';
 
 const searchCss = css`
-  flex: 1 1 240px;
-  max-width: 460px;
+  width: 100%;
+  max-width: 520px;
 `;
 const formCss = css`
-  display: flex;
-  gap: 8px;
+  position: relative;
+`;
+const fieldCss = css`
+  padding-left: 52px;
+  border-radius: 999px;
+`;
+const submitCss = css`
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--accent);
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
 `;
 
 /** 머리글의 검색창. 어느 화면에서든 제목, 감독, 배우로 찾아 리스트로 갑니다. */
@@ -33,15 +50,16 @@ export function MovieSearch() {
         </label>
         <input
           id={id}
-          css={inputCss}
+          css={[inputCss, fieldCss]}
           type="search"
           placeholder="제목, 감독, 배우"
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
-        <Button type="submit" variant="outline" css={{ flex: 'none', paddingInline: 16 }}>
-          검색
-        </Button>
+        <button type="submit" css={submitCss}>
+          <SearchIcon />
+          <span css={visuallyHidden}>검색</span>
+        </button>
       </form>
     </search>
   );

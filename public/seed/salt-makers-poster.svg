@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6b7f8c"/><stop offset="1" stop-color="#14191c"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6b7f8c"/><stop offset="1" stop-color="#14191c"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="62" font-weight="800" fill="#fff">소금을 만드는</text>
-<text x="44" y="750" font-family="sans-serif" font-size="62" font-weight="800" fill="#fff">사람들</text>
+<circle cx="376" cy="405" r="153" fill="#b5bfc6" opacity=".8"/><polygon points="0,900 0,606 86,611 171,593 257,586 343,518 429,572 514,602 600,533 600,900" fill="#505f69"/><polygon points="0,900 0,743 86,666 171,661 257,752 343,676 429,642 514,653 600,680 600,900" fill="#0f1315"/>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="62" font-weight="800" fill="#fff">소금을 만드는</text>
+<text x="44" y="790" font-family="sans-serif" font-size="62" font-weight="800" fill="#fff">사람들</text>
 </svg>

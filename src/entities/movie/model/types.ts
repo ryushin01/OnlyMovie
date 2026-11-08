@@ -93,6 +93,13 @@ export interface HomeData {
 export interface MemberLibrary {
   watchlist: Movie[];
   continueWatching: { movie: Movie; positionSeconds: number }[];
+  /** 공개 알림을 신청한 작품. 새로 공개되어 아직 확인하지 않았으면 unread입니다. */
+  alerts: ReleaseAlert[];
+}
+
+export interface ReleaseAlert {
+  movie: Movie;
+  unread: boolean;
 }
 
 /** 이만큼 보면 끝까지 본 것으로 보고 이어 보기에서 뺍니다. */

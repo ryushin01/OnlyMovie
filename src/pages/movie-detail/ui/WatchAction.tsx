@@ -7,16 +7,6 @@ import { activePlan, useSubscription, watchBlock } from '@/entities/subscription
 import { paths, routes } from '@/shared/config/routes';
 import { buttonCss } from '@/shared/ui/Button';
 
-const linkCss = css`
-  color: #111;
-  background: #fff;
-  border-color: #fff;
-
-  &:hover:not(:disabled) {
-    color: #fff;
-    background: transparent;
-  }
-`;
 const noteCss = css`
   margin: 8px 0 0;
   font-size: 0.9375rem;
@@ -40,14 +30,14 @@ export function WatchAction({ movie }: { movie: Movie }) {
 
   if (block === 'login_required') {
     return (
-      <Link {...routes.login(paths.movie(movie.id))} css={[buttonCss(), linkCss]}>
+      <Link {...routes.login(paths.movie(movie.id))} css={buttonCss()}>
         로그인하고 보기
       </Link>
     );
   }
   if (block === 'plan_required') {
     return (
-      <Link {...routes.plans} css={[buttonCss(), linkCss]}>
+      <Link {...routes.plans} css={buttonCss()}>
         이용권 구매하고 보기
       </Link>
     );
@@ -55,7 +45,7 @@ export function WatchAction({ movie }: { movie: Movie }) {
   if (block === 'upgrade_required') {
     return (
       <>
-        <Link {...routes.account} css={[buttonCss(), linkCss]}>
+        <Link {...routes.account} css={buttonCss()}>
           이용권 올리고 보기
         </Link>
         <p css={noteCss}>국내 첫 공개작은 스탠다드 이상 이용권으로 볼 수 있습니다.</p>
@@ -64,7 +54,7 @@ export function WatchAction({ movie }: { movie: Movie }) {
   }
   const watching = library?.continueWatching.find((item) => item.movie.id === movie.id);
   return (
-    <Link {...routes.watch(movie.id)} css={[buttonCss(), linkCss]}>
+    <Link {...routes.watch(movie.id)} css={buttonCss()}>
       {watching ? `이어 보기 (${formatClock(watching.positionSeconds)}부터)` : '재생'}
     </Link>
   );

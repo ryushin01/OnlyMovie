@@ -22,6 +22,7 @@ export const routes = {
   movies: (search: Search = {}) => ({ to: '/movies', search }),
   movie: (id: string) => ({ to: '/movies/$id', params: { id } }),
   watch: (id: string) => ({ to: '/watch/$id', params: { id } }),
+  imports: { to: '/imports' },
   plans: { to: '/plans' },
   checkout: (plan: string) => ({ to: '/checkout/$plan', params: { plan } }),
   account: { to: '/account' },

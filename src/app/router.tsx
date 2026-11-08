@@ -4,6 +4,7 @@ import { movieSearch } from '@/entities/movie';
 import { AccountPage } from '@/pages/account';
 import { CheckoutPage } from '@/pages/checkout';
 import { HomePage } from '@/pages/home';
+import { ImportsPage } from '@/pages/imports';
 import { LoginPage } from '@/pages/login';
 import { MovieDetailPage } from '@/pages/movie-detail';
 import { MovieListPage } from '@/pages/movie-list';
@@ -51,6 +52,7 @@ export const routeTree = rootRoute.addChildren([
   }),
   createRoute({ getParentRoute: () => rootRoute, path: '/movies/$id', component: MovieDetailPage }),
   createRoute({ getParentRoute: () => rootRoute, path: '/watch/$id', component: WatchPage }),
+  createRoute({ getParentRoute: () => rootRoute, path: '/imports', component: ImportsPage }),
   createRoute({ getParentRoute: () => rootRoute, path: '/plans', component: PlansPage }),
   createRoute({ getParentRoute: () => rootRoute, path: '/checkout/$plan', component: CheckoutPage }),
   createRoute({ getParentRoute: () => rootRoute, path: '/account', component: AccountPage }),

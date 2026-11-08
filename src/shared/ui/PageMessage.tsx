@@ -6,7 +6,7 @@ const wrapCss = css`
 `;
 const titleCss = css`
   margin: 0 0 24px;
-  font-size: clamp(2.25rem, 7vw, 5.5rem);
+  font-size: clamp(1.75rem, 4.5vw, 3.25rem);
   font-weight: 800;
   line-height: 1.05;
   letter-spacing: -0.03em;

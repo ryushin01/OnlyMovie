@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b85a30"/><stop offset="1" stop-color="#2a130a"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b85a30"/><stop offset="1" stop-color="#2a130a"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">일요일</text>
-<text x="44" y="772" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">특집극</text>
+<circle cx="599" cy="36" r="95" fill="#fff" opacity="0.18"/><circle cx="568" cy="625" r="93" fill="#fff" opacity="0.36"/><circle cx="380" cy="466" r="42" fill="#fff" opacity="0.26"/><circle cx="65" cy="429" r="79" fill="#fff" opacity="0.29"/><circle cx="227" cy="62" r="88" fill="#fff" opacity="0.38"/><circle cx="195" cy="29" r="51" fill="#fff" opacity="0.30"/><circle cx="379" cy="338" r="31" fill="#fff" opacity="0.22"/><circle cx="180" cy="227" r="67" fill="#fff" opacity="0.13"/><circle cx="433" cy="75" r="88" fill="#fff" opacity="0.19"/><g fill="#dcad98"><ellipse cx="180" cy="648" rx="101" ry="42"/><circle cx="142" cy="624" r="38"/><circle cx="210" cy="617" r="47"/></g><g fill="#dcad98"><ellipse cx="456" cy="540" rx="81" ry="33"/><circle cx="426" cy="521" r="30"/><circle cx="480" cy="515" r="38"/></g>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">일요일</text>
+<text x="44" y="812" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">특집극</text>
 </svg>

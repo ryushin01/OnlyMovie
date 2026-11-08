@@ -14,11 +14,11 @@ const listCss = css`
 const tagCss = css`
   display: inline-flex;
   align-items: center;
-  min-height: 32px;
-  padding: 2px 12px;
+  min-height: 36px;
+  padding: 2px 14px;
   color: inherit;
-  border: 1px solid currentColor;
-  border-radius: 16px;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  border-radius: 999px;
   font-size: 0.9375rem;
   text-decoration: none;
 

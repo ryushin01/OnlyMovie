@@ -44,7 +44,7 @@ export function DeleteAccountButton({ onDone }: { onDone: () => void }) {
           ref={alertRef}
           role="alert"
           tabIndex={-1}
-          css={{ margin: '12px 0 0', color: 'var(--accent)', fontWeight: 700 }}
+          css={{ margin: '12px 0 0', color: 'var(--danger)', fontWeight: 700 }}
         >
           탈퇴하지 못했습니다. 잠시 뒤 다시 시도해 주세요.
         </p>

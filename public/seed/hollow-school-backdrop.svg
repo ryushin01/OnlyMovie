@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#5a4f3a"/><stop offset="1" stop-color="#14110b"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#5a4f3a"/><stop offset="1" stop-color="#14110b"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="1600" height="900" fill="url(#g)"/>
-<circle cx="1120" cy="520" r="130" fill="#fff" opacity=".55"/>
-<rect y="620" width="1600" height="280" fill="#000" opacity=".45"/>
+<circle cx="720" cy="234" r="99" fill="#ada79d" opacity=".85"/><polygon points="-84,900 -6,510 72,900" fill="#0f0d08"/><polygon points="27,900 103,518 179,900" fill="#0f0d08"/><polygon points="121,900 195,529 269,900" fill="#0f0d08"/><polygon points="220,900 305,474 390,900" fill="#0f0d08"/><polygon points="357,900 414,615 471,900" fill="#0f0d08"/><polygon points="469,900 532,586 595,900" fill="#0f0d08"/><polygon points="572,900 644,542 716,900" fill="#0f0d08"/><polygon points="643,900 744,395 845,900" fill="#0f0d08"/><polygon points="793,900 853,600 913,900" fill="#0f0d08"/><polygon points="851,900 944,433 1037,900" fill="#0f0d08"/><polygon points="1010,900 1081,546 1152,900" fill="#0f0d08"/><polygon points="1092,900 1163,543 1234,900" fill="#0f0d08"/><polygon points="1204,900 1275,545 1346,900" fill="#0f0d08"/><polygon points="1323,900 1398,527 1473,900" fill="#0f0d08"/><polygon points="1422,900 1499,514 1576,900" fill="#0f0d08"/><polygon points="1549,900 1606,613 1663,900" fill="#0f0d08"/>
 </svg>

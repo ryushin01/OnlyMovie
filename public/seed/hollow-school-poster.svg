@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5a4f3a"/><stop offset="1" stop-color="#14110b"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5a4f3a"/><stop offset="1" stop-color="#14110b"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">빈 학교의</text>
-<text x="44" y="772" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">종소리</text>
+<circle cx="419" cy="234" r="99" fill="#ada79d" opacity=".85"/><polygon points="-69,900 16,474 101,900" fill="#0f0d08"/><polygon points="-45,900 59,381 163,900" fill="#0f0d08"/><polygon points="12,900 95,484 178,900" fill="#0f0d08"/><polygon points="51,900 131,501 211,900" fill="#0f0d08"/><polygon points="56,900 141,476 226,900" fill="#0f0d08"/><polygon points="131,900 210,504 289,900" fill="#0f0d08"/><polygon points="167,900 241,530 315,900" fill="#0f0d08"/><polygon points="221,900 287,571 353,900" fill="#0f0d08"/><polygon points="231,900 319,462 407,900" fill="#0f0d08"/><polygon points="258,900 365,366 472,900" fill="#0f0d08"/><polygon points="318,900 419,394 520,900" fill="#0f0d08"/><polygon points="363,900 449,472 535,900" fill="#0f0d08"/><polygon points="383,900 462,507 541,900" fill="#0f0d08"/><polygon points="435,900 517,489 599,900" fill="#0f0d08"/><polygon points="493,900 559,570 625,900" fill="#0f0d08"/><polygon points="514,900 611,415 708,900" fill="#0f0d08"/>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">빈 학교의</text>
+<text x="44" y="812" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">종소리</text>
 </svg>

@@ -183,6 +183,9 @@ export async function installFakeApi(
     posts: 0,
     watchlist: [] as string[],
     progress: {} as Record<string, number>,
+    alerts: [] as string[],
+    alertsRead: [] as string[],
+    screensFull: false,
     delay: 0,
   };
   const pay = (id: string, amount: number, kind: string, status = 'paid') =>
@@ -240,7 +243,7 @@ export async function installFakeApi(
       ? route.fulfill({ json: movie })
       : route.fulfill({ status: 404, json: { error: 'not_found' } });
   });
-  await page.route('**/api/movies/*/playback', (route) => {
+  await page.route('**/api/movies/*/playback*', (route) => {
     const id = decodeURIComponent(new URL(route.request().url()).pathname.split('/').at(-2)!);
     const movie = state.movies.find((item) => item.id === id);
     if (!movie) return route.fulfill({ status: 404, json: { error: 'not_found' } });
@@ -250,6 +253,12 @@ export async function installFakeApi(
     if (movie.firstImport && state.subscription.plan === 'basic')
       return route.fulfill({ status: 403, json: { error: 'upgrade_required' } });
     const quality = { basic: 'HD', standard: 'FHD', premium: '4K' }[state.subscription.plan];
+    if (route.request().method() === 'DELETE') return route.fulfill({ status: 204 });
+    if (route.request().method() === 'PUT') {
+      return state.screensFull
+        ? route.fulfill({ status: 409, json: { error: 'too_many_screens' } })
+        : route.fulfill({ status: 204 });
+    }
     return route.fulfill({ json: { quality, positionSeconds: state.progress[id] ?? 0 } });
   });
 
@@ -260,6 +269,7 @@ export async function installFakeApi(
     state.payments = [];
     state.watchlist = [];
     state.progress = {};
+    state.alerts = [];
     return route.fulfill({ status: 204 });
   });
   await page.route('**/api/library', (route) => {
@@ -272,6 +282,12 @@ export async function installFakeApi(
           const movie = byId(id);
           return movie ? [{ movie, positionSeconds }] : [];
         }),
+        alerts: state.alerts.flatMap((id) => {
+          const movie = byId(id);
+          return movie
+            ? [{ movie, unread: movie.releasedOn <= TODAY && !state.alertsRead.includes(id) }]
+            : [];
+        }),
       },
     });
   });
@@ -279,7 +295,11 @@ export async function installFakeApi(
     if (!state.user) return route.fulfill({ status: 401, json: { error: 'unauthorized' } });
     const [kind, id] = new URL(route.request().url()).pathname.split('/').slice(-2);
     const method = route.request().method();
-    if (kind === 'progress') state.progress[id] = route.request().postDataJSON().positionSeconds;
+    if (kind === 'alerts') state.alertsRead = [...state.alerts];
+    else if (kind === 'alert') {
+      state.alerts = method === 'PUT' ? [...state.alerts, id] : state.alerts.filter((item) => item !== id);
+    } else if (kind === 'progress' && method === 'DELETE') delete state.progress[id];
+    else if (kind === 'progress') state.progress[id] = route.request().postDataJSON().positionSeconds;
     else if (method === 'PUT') state.watchlist = [id, ...state.watchlist.filter((item) => item !== id)];
     else state.watchlist = state.watchlist.filter((item) => item !== id);
     return route.fulfill({ status: 204 });

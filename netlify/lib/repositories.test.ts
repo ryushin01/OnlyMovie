@@ -4,14 +4,19 @@ import { Client } from 'pg';
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { GENRES } from '../../src/entities/movie/model/types';
 import {
+  addReleaseAlert,
   addToWatchlist,
   deleteMemberData,
   getLibrary,
   getProgress,
+  markAlertsRead,
   removeFromWatchlist,
+  removeProgress,
+  removeReleaseAlert,
   saveProgress,
 } from './libraryRepository';
 import { findMovie, homeData, movieFacets, searchMovies } from './movieRepository';
+import { claimScreen, releaseScreen, SCREEN_TTL_SECONDS } from './playbackRepository';
 import {
   cancelSubscription,
   changePlan,
@@ -309,7 +314,7 @@ describe('찜과 이어 보기', () => {
   it('회원마다 따로 관리한다', async () => {
     await addToWatchlist(client, USER, 'paper-whale');
     await saveProgress(client, USER, 'paper-whale', 100);
-    expect(await getLibrary(client, 'other')).toEqual({ watchlist: [], continueWatching: [] });
+    expect(await getLibrary(client, 'other')).toEqual({ watchlist: [], continueWatching: [], alerts: [] });
     expect(await getProgress(client, 'other', 'paper-whale')).toBe(0);
   });
 
@@ -322,9 +327,94 @@ describe('찜과 이어 보기', () => {
 
     await deleteMemberData(client, USER);
 
-    expect(await getLibrary(client, USER)).toEqual({ watchlist: [], continueWatching: [] });
+    expect(await getLibrary(client, USER)).toEqual({ watchlist: [], continueWatching: [], alerts: [] });
     expect(await getSubscriptionData(client, USER, NOW)).toEqual({ subscription: null, payments: [] });
     expect((await getLibrary(client, 'other')).watchlist).toHaveLength(1);
     expect((await getSubscriptionData(client, 'other', NOW)).subscription?.plan).toBe('basic');
+  });
+});
+
+describe('회원 기능 추가분', () => {
+  const USER = 'alert-user';
+  const firstUpcoming = async () => (await searchMovies(client, { status: 'upcoming' }, NOW)).items[0];
+  const firstReleased = async () => (await searchMovies(client, { status: 'now' }, NOW)).items[0];
+
+  beforeEach(async () => {
+    await deleteMemberData(client, USER);
+  });
+
+  it('공개 예정작에만 알림을 걸고, 공개되면 새 알림이 되며 확인하면 사라진다', async () => {
+    const movie = await firstUpcoming();
+    expect(await addReleaseAlert(client, USER, 'no-such-movie', NOW)).toBe('not_found');
+    expect(await addReleaseAlert(client, USER, (await firstReleased()).id, NOW)).toBe('released');
+    expect(await addReleaseAlert(client, USER, movie.id, NOW)).toBe('ok');
+    expect(await addReleaseAlert(client, USER, movie.id, NOW)).toBe('ok');
+
+    expect((await getLibrary(client, USER, NOW)).alerts).toEqual([
+      expect.objectContaining({ unread: false }),
+    ]);
+
+    // 공개 전에 확인해도 공개 뒤의 새 알림은 그대로입니다.
+    await markAlertsRead(client, USER, NOW);
+    const afterRelease = new Date(`${movie.releasedOn}T12:00:00+09:00`);
+    expect((await getLibrary(client, USER, afterRelease)).alerts[0].unread).toBe(true);
+
+    await markAlertsRead(client, USER, afterRelease);
+    expect((await getLibrary(client, USER, afterRelease)).alerts[0].unread).toBe(false);
+
+    await removeReleaseAlert(client, USER, movie.id);
+    expect((await getLibrary(client, USER, afterRelease)).alerts).toEqual([]);
+  });
+
+  it('이어 보기 기록을 지운다', async () => {
+    const movie = await firstReleased();
+    await saveProgress(client, USER, movie.id, 600);
+    await removeProgress(client, USER, movie.id);
+    expect(await getProgress(client, USER, movie.id)).toBe(0);
+  });
+
+  it('동시 시청 대수를 넘는 새 기기를 막고, 재생 중인 기기는 이어 간다', async () => {
+    const { id: movieId } = await firstReleased();
+    const claim = (deviceId: string, now = NOW) =>
+      claimScreen(client, { userId: USER, deviceId, movieId, limit: 2, now });
+    expect(await claim('device-a')).toBe(true);
+    expect(await claim('device-b')).toBe(true);
+    expect(await claim('device-c')).toBe(false);
+    expect(await claim('device-a')).toBe(true);
+
+    await releaseScreen(client, USER, 'device-b');
+    expect(await claim('device-c')).toBe(true);
+  });
+
+  it('갱신이 끊긴 기기는 대수에서 빠진다', async () => {
+    const { id: movieId } = await firstReleased();
+    const claim = (deviceId: string, now: Date) =>
+      claimScreen(client, { userId: USER, deviceId, movieId, limit: 1, now });
+    expect(await claim('device-a', NOW)).toBe(true);
+    expect(await claim('device-b', new Date(NOW.getTime() + 10_000))).toBe(false);
+    expect(await claim('device-b', new Date(NOW.getTime() + (SCREEN_TTL_SECONDS + 1) * 1000))).toBe(true);
+  });
+
+  it('탈퇴하면 알림과 재생 자리도 지운다', async () => {
+    const upcoming = await firstUpcoming();
+    await addReleaseAlert(client, USER, upcoming.id, NOW);
+    await claimScreen(client, {
+      userId: USER,
+      deviceId: 'device-a',
+      movieId: (await firstReleased()).id,
+      limit: 1,
+      now: NOW,
+    });
+    await deleteMemberData(client, USER);
+    expect((await getLibrary(client, USER, NOW)).alerts).toEqual([]);
+    expect(
+      await claimScreen(client, {
+        userId: USER,
+        deviceId: 'device-b',
+        movieId: (await firstReleased()).id,
+        limit: 1,
+        now: NOW,
+      }),
+    ).toBe(true);
   });
 });

@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8c4a2b"/><stop offset="1" stop-color="#1f0f08"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8c4a2b"/><stop offset="1" stop-color="#1f0f08"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">국경의</text>
-<text x="44" y="772" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">늑대들</text>
+<circle cx="363" cy="504" r="216" fill="#c6a595" opacity=".85"/><polygon points="-30,900 5,495 187,495 222,900" fill="#62341e"/><polygon points="372,900 411,513 609,513 648,900" fill="#62341e"/><rect y="774" width="600" height="126" fill="#170b06"/>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">국경의</text>
+<text x="44" y="812" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">늑대들</text>
 </svg>

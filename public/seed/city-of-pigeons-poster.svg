@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5e5a72"/><stop offset="1" stop-color="#121018"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5e5a72"/><stop offset="1" stop-color="#121018"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">비둘기의</text>
-<text x="44" y="772" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">도시</text>
+<circle cx="344" cy="405" r="153" fill="#afadb9" opacity=".8"/><polygon points="0,900 0,574 86,492 171,557 257,562 343,562 429,601 514,580 600,533 600,900" fill="#474456"/><polygon points="0,900 0,656 86,667 171,643 257,714 343,737 429,665 514,711 600,646 600,900" fill="#0e0c12"/>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">비둘기의</text>
+<text x="44" y="812" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">도시</text>
 </svg>

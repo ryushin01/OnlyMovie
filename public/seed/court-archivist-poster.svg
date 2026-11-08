@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7a2f2f"/><stop offset="1" stop-color="#1e0b0b"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7a2f2f"/><stop offset="1" stop-color="#1e0b0b"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">사관의</text>
-<text x="44" y="772" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">붓</text>
+<circle cx="468" cy="252" r="81" fill="#bd9797" opacity=".7"/><polygon points="215,396 215,550 328,550" fill="#bd9797"/><polygon points="134,556 345,556 312,580 160,580" fill="#170808"/><path d="M0 558 Q 150 550 300 558 T 600 558 V 900 H 0Z" fill="#3c3030"/><path d="M0 626 Q 150 613 300 626 T 600 626 V 900 H 0Z" fill="#332626"/><path d="M0 695 Q 150 677 300 695 T 600 695 V 900 H 0Z" fill="#2a1c1c"/><path d="M0 763 Q 150 740 300 763 T 600 763 V 900 H 0Z" fill="#201212"/><path d="M0 832 Q 150 804 300 832 T 600 832 V 900 H 0Z" fill="#170808"/>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">사관의</text>
+<text x="44" y="812" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">붓</text>
 </svg>

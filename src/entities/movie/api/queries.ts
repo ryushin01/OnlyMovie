@@ -7,8 +7,11 @@ import {
   getLibrary,
   getMovie,
   getPlayback,
+  markAlertsRead,
+  removeProgress,
   saveProgress,
   searchMovies,
+  setReleaseAlert,
   setWatchlisted,
 } from './movieApi';
 
@@ -46,6 +49,30 @@ export function useToggleWatchlist() {
   const client = useQueryClient();
   return useMutation({
     mutationFn: ({ id, saved }: { id: string; saved: boolean }) => setWatchlisted(id, saved),
+    onSuccess: () => client.invalidateQueries({ queryKey: [LIBRARY] }),
+  });
+}
+
+export function useToggleReleaseAlert() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, saved }: { id: string; saved: boolean }) => setReleaseAlert(id, saved),
+    onSuccess: () => client.invalidateQueries({ queryKey: [LIBRARY] }),
+  });
+}
+
+export function useMarkAlertsRead() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: markAlertsRead,
+    onSuccess: () => client.invalidateQueries({ queryKey: [LIBRARY] }),
+  });
+}
+
+export function useRemoveProgress() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: removeProgress,
     onSuccess: () => client.invalidateQueries({ queryKey: [LIBRARY] }),
   });
 }
