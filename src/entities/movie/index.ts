@@ -1,13 +1,18 @@
 export {
   useHome,
   useLibrary,
+  useMarkAlertsRead,
   useMovie,
   useMovieFacets,
   useMovies,
   usePlayback,
+  useRemoveProgress,
   useSaveProgress,
+  useToggleReleaseAlert,
   useToggleWatchlist,
 } from './api/queries';
+export { claimScreen, releaseScreen } from './api/movieApi';
+export { remainingNotes, watchedRatios } from './model/library';
 export {
   parseMovieFilters,
   movieSearch,
@@ -30,6 +35,7 @@ export {
   type HomeRow,
   type MemberLibrary,
   type Movie,
+  type ReleaseAlert,
   type MovieFacets,
 } from './model/types';
 export { GenreLinks } from './ui/GenreLinks';

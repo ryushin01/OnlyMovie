@@ -15,7 +15,7 @@ import {
 import { routes } from '@/shared/config/routes';
 import { Button, buttonCss } from '@/shared/ui/Button';
 import { Field } from '@/shared/ui/Field';
-import { inputCss } from '@/shared/ui/styles';
+import { inputCss, panelCss } from '@/shared/ui/styles';
 
 const gridCss = css`
   display: grid;
@@ -113,7 +113,7 @@ export function MovieFilterForm({ filters, onApply }: Props) {
 
   return (
     // 주소가 바뀌면 입력값을 다시 맞춥니다.
-    <form key={toMovieQuery(filters)} onSubmit={handleSubmit} aria-label="영화 필터">
+    <form key={toMovieQuery(filters)} css={panelCss} onSubmit={handleSubmit} aria-label="영화 필터">
       <div css={gridCss}>
         <Field label="검색어" hint="제목, 원제, 감독, 각본, 배우, 국가">
           {(control) => <input {...control} css={inputCss} type="search" name="q" defaultValue={filters.q} />}

@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c4832a"/><stop offset="1" stop-color="#2c1b08"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c4832a"/><stop offset="1" stop-color="#2c1b08"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">엉뚱한</text>
-<text x="44" y="772" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">결혼식</text>
+<circle cx="424" cy="187" r="73" fill="#fff" opacity="0.18"/><circle cx="235" cy="494" r="54" fill="#fff" opacity="0.15"/><circle cx="209" cy="563" r="27" fill="#fff" opacity="0.21"/><circle cx="361" cy="160" r="94" fill="#fff" opacity="0.23"/><circle cx="145" cy="111" r="104" fill="#fff" opacity="0.14"/><circle cx="221" cy="273" r="52" fill="#fff" opacity="0.15"/><circle cx="387" cy="368" r="107" fill="#fff" opacity="0.32"/><circle cx="140" cy="489" r="61" fill="#fff" opacity="0.30"/><circle cx="88" cy="157" r="39" fill="#fff" opacity="0.26"/><g fill="#e2c195"><ellipse cx="180" cy="648" rx="101" ry="42"/><circle cx="142" cy="624" r="38"/><circle cx="210" cy="617" r="47"/></g><g fill="#e2c195"><ellipse cx="456" cy="540" rx="81" ry="33"/><circle cx="426" cy="521" r="30"/><circle cx="480" cy="515" r="38"/></g>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">엉뚱한</text>
+<text x="44" y="812" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">결혼식</text>
 </svg>

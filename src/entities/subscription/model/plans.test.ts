@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { activePlan, isUpgrade, watchBlock, type Subscription } from './plans';
+import { activePlan, isUpgrade, periodProgress, watchBlock, type Subscription } from './plans';
 
 const released = { firstImport: false, released: true };
 const firstImport = { firstImport: true, released: true };
@@ -40,4 +40,19 @@ describe('activePlan', () => {
 it('요금이 더 높으면 상위 이용권이다', () => {
   expect(isUpgrade('basic', 'premium')).toBe(true);
   expect(isUpgrade('premium', 'standard')).toBe(false);
+});
+
+describe('periodProgress', () => {
+  it('달력의 한 달을 기준으로 남은 날과 비율을 계산한다', () => {
+    const { days, ratio } = periodProgress('2026-12-06T00:00:00.000Z', new Date('2026-11-21T00:00:00.000Z'));
+    expect(days).toBe(15);
+    expect(ratio).toBeCloseTo(0.5);
+  });
+
+  it('지난 기간은 0으로 멈춘다', () => {
+    expect(periodProgress('2026-11-01T00:00:00.000Z', new Date('2026-11-21T00:00:00.000Z'))).toEqual({
+      days: 0,
+      ratio: 0,
+    });
+  });
 });

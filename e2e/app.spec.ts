@@ -363,9 +363,7 @@ test('회원 탈퇴를 확인하면 기록이 지워지고 로그아웃된다', 
   page.once('dialog', (dialog) => dialog.accept());
   await page.getByRole('button', { name: '회원 탈퇴' }).click();
   await expect(page).toHaveURL(/\/$/);
-  await expect(
-    page.getByRole('navigation', { name: '주요 메뉴' }).getByRole('link', { name: '회원가입' }),
-  ).toBeVisible();
+  await expect(page.getByRole('banner').getByRole('link', { name: '회원가입' })).toBeVisible();
   expect(state.user).toBeNull();
   expect(state.subscription).toBeNull();
 });
@@ -471,13 +469,102 @@ test('화면 폭에 따라 한 줄의 카드 수가 달라지고 다음 버튼�
   const list = page.getByRole('region', { name: '최근 공개' }).getByRole('list');
   await expect(list.getByRole('listitem').first()).toBeVisible();
   const ratio = await list.evaluate((element) => element.clientWidth / element.children[0].clientWidth);
-  expect(ratio).toBeGreaterThan(6);
+  // 메인의 줄은 가로형 카드라 1440px에서 네 장 남짓 보입니다.
+  expect(ratio).toBeGreaterThan(4);
+  expect(ratio).toBeLessThan(6);
   // 부드러운 스크롤은 로딩 중 레이아웃이 바뀌면 끊길 수 있어, 애니메이션을 끄고 로딩이 끝난 뒤 누릅니다.
   await page.waitForLoadState('networkidle');
 
   await page.getByRole('button', { name: '최근 공개 다음 목록' }).click();
   await expect.poll(() => list.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
   await context.close();
+});
+
+test('주요 메뉴는 넓은 화면에서 왼쪽 레일, 좁은 화면에서 아래쪽 탭 막대가 된다 [컨텍스트]', async ({
+  browser,
+  baseURL,
+}) => {
+  const context = await browser.newContext({ baseURL, viewport: { width: 1280, height: 800 } });
+  const page = await context.newPage();
+  await installFakeApi(page);
+  await page.goto('/plans');
+  const rail = page.getByRole('navigation', { name: '주요 메뉴' });
+  await expect(rail.getByRole('link', { name: '이용권' })).toHaveAttribute('aria-current', 'page');
+  const wide = await rail.boundingBox();
+  expect(wide?.x).toBe(16);
+  expect(wide?.width).toBe(88);
+
+  await page.setViewportSize({ width: 360, height: 740 });
+  const narrow = await rail.boundingBox();
+  expect(narrow?.width).toBe(360);
+  expect((narrow?.y ?? 0) + (narrow?.height ?? 0)).toBe(740);
+
+  // 끝까지 내려도 바닥글이 탭 막대에 가리지 않습니다.
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  const footer = await page.getByRole('contentinfo').boundingBox();
+  expect((footer?.y ?? 0) + (footer?.height ?? 0)).toBeLessThanOrEqual((await rail.boundingBox())?.y ?? 0);
+  await context.close();
+});
+
+test('공개 예정작에 알림을 걸면 알림 목록에 나타나고, 새로 공개된 작품은 확인할 때까지 표시된다', async ({
+  page,
+}) => {
+  const state = await installFakeApi(page, { user: MEMBER, plan: 'standard' });
+  state.alerts = ['neon-rain'];
+  await page.goto('/movies/island-of-clocks');
+  await page.getByRole('button', { name: '공개 알림 받기' }).click();
+  await expect(page.getByRole('button', { name: '공개 알림 받기' })).toHaveAttribute('aria-pressed', 'true');
+
+  const bell = page.getByRole('button', { name: '공개 알림 새 소식 1건' });
+  await bell.click();
+  await expect(page.getByRole('banner').getByRole('link', { name: /시계의 섬/ })).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(bell).toHaveCount(0);
+  await expect(page.getByRole('button', { name: '공개 알림', exact: true })).toBeFocused();
+  expect(state.alertsRead).toContain('neon-rain');
+});
+
+test('이어 보기에서 작품을 지운다', async ({ page }) => {
+  const state = await installFakeApi(page, { user: MEMBER, plan: 'standard' });
+  state.progress = { 'neon-rain': 2400, 'glass-orbit': 1500 };
+  await page.goto('/');
+  const row = page.getByRole('region', { name: '이어 보기' });
+  await row.getByRole('button', { name: '네온 레인 이어 보기에서 지우기' }).click();
+  await expect(row.getByRole('link', { name: '네온 레인' })).toHaveCount(0);
+  await expect(row.getByRole('link', { name: '유리 궤도' })).toBeVisible();
+  await expect(page.getByRole('main')).toBeFocused();
+});
+
+test('동시 시청 대수를 넘으면 재생을 멈추고 안내한다', async ({ page }) => {
+  const state = await installFakeApi(page, { user: MEMBER, plan: 'standard' });
+  state.screensFull = true;
+  await page.goto('/watch/glass-orbit');
+  await page.getByRole('button', { name: '재생' }).click();
+  await expect(page.getByRole('alert')).toContainText('동시 시청 대수');
+  await expect(page.getByRole('button', { name: '재생' })).toBeVisible();
+});
+
+test('검색하면 결과 아래에 연관 영화를 잇고, 탭으로 공개 상태를 고른다', async ({ page }) => {
+  await installFakeApi(page);
+  await page.goto('/movies?q=%EC%B2%A0%EC%9D%98');
+  await expect(page.getByRole('region', { name: '연관 영화' })).toBeVisible();
+  const tabs = page.getByRole('navigation', { name: '공개 상태' });
+  await tabs.getByRole('link', { name: '공개 예정' }).click();
+  await expect(page).toHaveURL(/status=upcoming/);
+  await expect(tabs.getByRole('link', { name: '공개 예정' })).toHaveAttribute('aria-current', 'page');
+  await expect(tabs.getByRole('link', { name: '전체' })).not.toHaveAttribute('aria-current', 'page');
+
+  // 2페이지에서도, 불리언 조건에서도 지금 탭을 알립니다.
+  await page.goto('/movies?firstImport=true&page=2');
+  await expect(tabs.getByRole('link', { name: '국내 첫 공개' })).toHaveAttribute('aria-current', 'page');
+});
+
+test('키보드 순서는 로고, 검색창, 도구, 주요 메뉴 순이다', async ({ page }) => {
+  await installFakeApi(page);
+  await page.goto('/');
+  await page.getByRole('banner').getByRole('link', { name: 'OnlyMovie' }).focus();
+  await page.keyboard.press('Tab');
+  await expect(page.getByLabel('영화 검색')).toBeFocused();
 });
 
 test('다크 모드를 저장하고 시스템 설정을 따른다', async ({ browser, baseURL }) => {
@@ -533,6 +620,7 @@ const VISITOR_PAGES: [string, string][] = [
   ['/movies?year=2026&sort=title', '영화 찾기'],
   ['/movies/last-screening', '마지막 상영'],
   ['/movies/island-of-clocks', '시계의 섬'],
+  ['/imports', '수입 기획전'],
   ['/plans', '이용권'],
   ['/login', '로그인'],
   ['/signup', '회원가입'],
@@ -541,6 +629,7 @@ const VISITOR_PAGES: [string, string][] = [
 const MEMBER_PAGES: [string, string][] = [
   ['/', '시네필을 위한'],
   ['/movies/last-screening', '마지막 상영'],
+  ['/imports', '수입 기획전'],
   ['/plans', '이용권'],
   ['/account', '내 계정'],
   ['/watch/last-screening', '마지막 상영'],
@@ -625,6 +714,7 @@ test('모든 컨트롤의 대각선 길이가 6mm 이상이다 [컨텍스트]', 
     '/',
     '/movies',
     '/movies/last-screening',
+    '/imports',
     '/plans',
     '/account',
     '/watch/last-screening',
@@ -638,10 +728,13 @@ test('모든 컨트롤의 대각선 길이가 6mm 이상이다 [컨텍스트]', 
         'main a, main button, main input, main select, main summary, header a, header button, header input',
       )
       .evaluateAll((elements) =>
-        elements.map((element) => {
-          const { width, height } = element.getBoundingClientRect();
-          return { name: element.textContent || element.id, diagonal: Math.hypot(width, height) };
-        }),
+        // 이 폭에서 그려지지 않는 요소(닫힌 알림 목록, 넓은 화면 전용 패널)는 조작할 수 없으므로 뺍니다.
+        elements
+          .filter((element) => element.getClientRects().length > 0)
+          .map((element) => {
+            const { width, height } = element.getBoundingClientRect();
+            return { name: element.textContent || element.id, diagonal: Math.hypot(width, height) };
+          }),
       );
     expect(sizes.length).toBeGreaterThan(0);
     expect(sizes.filter((size) => size.diagonal < MIN_DIAGONAL_PX)).toEqual([]);

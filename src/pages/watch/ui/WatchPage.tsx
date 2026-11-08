@@ -13,8 +13,7 @@ const route = getRouteApi('/watch/$id');
 
 const titleCss = css`
   ${formTitleCss}
-  padding-block: clamp(16px, 3vw, 32px);
-  font-size: clamp(1.5rem, 4vw, 3rem);
+  padding-block: 8px 16px;
 `;
 
 export function WatchPage() {

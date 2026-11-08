@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4a2a35"/><stop offset="1" stop-color="#12080c"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4a2a35"/><stop offset="1" stop-color="#12080c"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">지하의</text>
-<text x="44" y="772" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">세입자</text>
+<circle cx="416" cy="234" r="99" fill="#a5959a" opacity=".85"/><polygon points="-86,900 4,451 94,900" fill="#0e0609"/><polygon points="-29,900 44,534 117,900" fill="#0e0609"/><polygon points="-21,900 62,485 145,900" fill="#0e0609"/><polygon points="73,900 136,583 199,900" fill="#0e0609"/><polygon points="47,900 141,429 235,900" fill="#0e0609"/><polygon points="123,900 207,478 291,900" fill="#0e0609"/><polygon points="164,900 231,566 298,900" fill="#0e0609"/><polygon points="180,900 286,368 392,900" fill="#0e0609"/><polygon points="224,900 308,479 392,900" fill="#0e0609"/><polygon points="282,900 340,611 398,900" fill="#0e0609"/><polygon points="331,900 401,551 471,900" fill="#0e0609"/><polygon points="337,900 421,482 505,900" fill="#0e0609"/><polygon points="369,900 470,393 571,900" fill="#0e0609"/><polygon points="443,900 539,422 635,900" fill="#0e0609"/><polygon points="479,900 555,519 631,900" fill="#0e0609"/><polygon points="512,900 601,453 690,900" fill="#0e0609"/>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">지하의</text>
+<text x="44" y="812" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">세입자</text>
 </svg>

@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#27707f"/><stop offset="1" stop-color="#07191d"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#27707f"/><stop offset="1" stop-color="#07191d"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="62" font-weight="800" fill="#fff">호수가 사라진</text>
-<text x="44" y="750" font-family="sans-serif" font-size="62" font-weight="800" fill="#fff">날</text>
+<circle cx="204" cy="234" r="99" fill="#93b8bf" opacity=".85"/><polygon points="-56,900 3,604 62,900" fill="#051316"/><polygon points="-52,900 33,474 118,900" fill="#051316"/><polygon points="-6,900 88,431 182,900" fill="#051316"/><polygon points="46,900 131,475 216,900" fill="#051316"/><polygon points="78,900 156,512 234,900" fill="#051316"/><polygon points="106,900 210,382 314,900" fill="#051316"/><polygon points="168,900 242,532 316,900" fill="#051316"/><polygon points="230,900 295,574 360,900" fill="#051316"/><polygon points="215,900 316,397 417,900" fill="#051316"/><polygon points="282,900 352,550 422,900" fill="#051316"/><polygon points="279,900 382,387 485,900" fill="#051316"/><polygon points="360,900 429,554 498,900" fill="#051316"/><polygon points="395,900 470,525 545,900" fill="#051316"/><polygon points="432,900 501,555 570,900" fill="#051316"/><polygon points="515,900 577,590 639,900" fill="#051316"/><polygon points="529,900 597,560 665,900" fill="#051316"/>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="62" font-weight="800" fill="#fff">호수가 사라진</text>
+<text x="44" y="790" font-family="sans-serif" font-size="62" font-weight="800" fill="#fff">날</text>
 </svg>

@@ -10,6 +10,7 @@ export {
   formatPrice,
   isPlanId,
   isUpgrade,
+  periodProgress,
   PLAN_IDS,
   PLANS,
   watchBlock,
@@ -19,3 +20,5 @@ export {
   type Subscription,
   type WatchBlock,
 } from './model/plans';
+export { planSurfaceCss } from './ui/planSurface';
+export { PeriodMeter } from './ui/PeriodMeter';

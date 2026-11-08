@@ -24,6 +24,24 @@ export async function getMovie(id: string): Promise<Movie | null> {
 export const getPlayback = (id: string) =>
   request<{ quality: string; positionSeconds: number }>(`/api/movies/${encodeURIComponent(id)}/playback`);
 
+const playbackUrl = (id: string, device: string) =>
+  `/api/movies/${encodeURIComponent(id)}/playback?device=${encodeURIComponent(device)}`;
+
+/** 이 기기의 재생 자리를 잡거나 갱신합니다. 동시 시청 대수를 넘으면 409입니다. */
+export const claimScreen = (id: string, device: string) =>
+  request<void>(playbackUrl(id, device), { method: 'PUT' });
+
+export const releaseScreen = (id: string, device: string) =>
+  request<void>(playbackUrl(id, device), { method: 'DELETE', keepalive: true });
+
+export const removeProgress = (id: string) =>
+  request<void>(`/api/library/progress/${encodeURIComponent(id)}`, { method: 'DELETE' });
+
+export const setReleaseAlert = (id: string, saved: boolean) =>
+  request<void>(`/api/library/alert/${encodeURIComponent(id)}`, { method: saved ? 'PUT' : 'DELETE' });
+
+export const markAlertsRead = () => request<void>('/api/library/alerts/read', { method: 'PUT' });
+
 export const getLibrary = () => request<MemberLibrary>('/api/library');
 
 export const setWatchlisted = (id: string, saved: boolean) =>

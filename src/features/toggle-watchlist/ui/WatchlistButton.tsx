@@ -4,18 +4,8 @@ import { useLibrary, useToggleWatchlist } from '@/entities/movie';
 import { useSession } from '@/entities/session';
 import { paths, routes } from '@/shared/config/routes';
 import { Button, buttonCss } from '@/shared/ui/Button';
+import { onImageButtonCss } from '@/shared/ui/styles';
 
-/** 어두운 배경 이미지 위에 놓이므로 테마와 상관없이 흰색으로 그립니다. */
-const onImageCss = css`
-  color: #fff;
-  background: transparent;
-  border-color: #fff;
-
-  &:hover:not(:disabled) {
-    color: #111;
-    background: #fff;
-  }
-`;
 const errorCss = css`
   margin: 8px 0 0;
   font-weight: 700;
@@ -30,7 +20,7 @@ export function WatchlistButton({ movieId }: { movieId: string }) {
 
   if (!user) {
     return (
-      <Link {...routes.login(paths.movie(movieId))} css={[buttonCss('outline'), onImageCss]}>
+      <Link {...routes.login(paths.movie(movieId))} css={[buttonCss('outline'), onImageButtonCss]}>
         찜하기
       </Link>
     );
@@ -40,7 +30,7 @@ export function WatchlistButton({ movieId }: { movieId: string }) {
     <div>
       <Button
         variant="outline"
-        css={onImageCss}
+        css={onImageButtonCss}
         aria-pressed={saved}
         disabled={toggle.isPending}
         onClick={() => toggle.mutate({ id: movieId, saved: !saved })}

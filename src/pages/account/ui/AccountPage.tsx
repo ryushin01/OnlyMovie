@@ -1,34 +1,36 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import { Link, Navigate } from '@tanstack/react-router';
-import { useLibrary } from '@/entities/movie';
+import { remainingNotes, useLibrary, watchedRatios } from '@/entities/movie';
 import { RequireAuth, useSession, type SessionUser } from '@/entities/session';
-import { activePlan, formatPrice, PLANS, useSubscription, type Payment } from '@/entities/subscription';
+import {
+  activePlan,
+  formatPrice,
+  PeriodMeter,
+  planSurfaceCss,
+  PLANS,
+  useSubscription,
+  type Payment,
+} from '@/entities/subscription';
 import { DeleteAccountButton } from '@/features/delete-account';
 import { SubscriptionManager } from '@/features/manage-subscription';
+import { RemoveProgressButton } from '@/features/remove-progress';
 import { routes } from '@/shared/config/routes';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
+import { pageTitleCss, panelCss, sectionTitleCss } from '@/shared/ui/styles';
 import { MovieRow } from '@/widgets/movie-row';
 
-const titleCss = css`
-  margin: 0;
-  padding-block: clamp(24px, 4vw, 56px) 12px;
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-`;
 const sectionCss = css`
+  ${panelCss}
   max-width: 60rem;
-  margin-top: 32px;
-  padding: 24px;
-  background: var(--surface);
+  margin-top: 24px;
+  box-shadow: var(--shadow);
 
   h2 {
     margin: 0 0 8px;
-    font-size: 1.375rem;
-    font-weight: 800;
+    font-size: 1.25rem;
+    font-weight: 700;
   }
 `;
 const scrollCss = css`
@@ -39,10 +41,8 @@ const tableCss = css`
   border-collapse: collapse;
 
   caption {
+    ${sectionTitleCss}
     margin-bottom: 8px;
-    text-align: left;
-    font-size: 1.375rem;
-    font-weight: 800;
   }
   th,
   td {
@@ -100,7 +100,7 @@ function Account({ user, onDeleted }: { user: SessionUser; onDeleted: () => void
 
   return (
     <>
-      <h1 css={titleCss}>내 계정</h1>
+      <h1 css={pageTitleCss}>내 계정</h1>
       <p css={{ margin: 0 }}>
         {user.name ? `${user.name} · ` : ''}
         {user.email}
@@ -113,10 +113,16 @@ function Account({ user, onDeleted }: { user: SessionUser; onDeleted: () => void
       )}
       {data && (
         <>
-          <section css={sectionCss}>
+          <section css={[sectionCss, plan && planSurfaceCss(plan)]}>
             <h2>{plan ? `${PLANS[plan].name} 이용권 이용 중` : '이용 중인 이용권이 없습니다'}</h2>
             {plan && data.subscription ? (
-              <SubscriptionManager subscription={data.subscription} />
+              <>
+                <PeriodMeter
+                  end={data.subscription.currentPeriodEnd}
+                  label={data.subscription.cancelAtPeriodEnd ? '해지' : '다음 결제'}
+                />
+                <SubscriptionManager subscription={data.subscription} />
+              </>
             ) : (
               <Link {...routes.plans} css={[buttonCss(), { marginTop: 12 }]}>
                 이용권 보기
@@ -125,6 +131,16 @@ function Account({ user, onDeleted }: { user: SessionUser; onDeleted: () => void
           </section>
           {data.payments.length > 0 && <Payments payments={data.payments} />}
         </>
+      )}
+      {library && library.continueWatching.length > 0 && (
+        <MovieRow
+          title="시청 기록"
+          movies={library.continueWatching.map((item) => item.movie)}
+          notes={remainingNotes(library)}
+          progress={watchedRatios(library)}
+          cardAction={(movie) => <RemoveProgressButton movieId={movie.id} title={movie.title} />}
+          wide
+        />
       )}
       {library && library.watchlist.length > 0 && <MovieRow title="찜한 영화" movies={library.watchlist} />}
       <section css={sectionCss}>

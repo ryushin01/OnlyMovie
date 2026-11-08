@@ -1,20 +1,23 @@
 import { css } from '@emotion/react';
+import { useState } from 'react';
 import { Link, getRouteApi } from '@tanstack/react-router';
 import {
   AGE_LABELS,
   formatDate,
   formatRuntime,
   GenreLinks,
+  isReleased,
   MoviePoster,
   useMovie,
   type Movie,
 } from '@/entities/movie';
+import { ReleaseAlertButton } from '@/features/release-alerts';
 import { WatchlistButton } from '@/features/toggle-watchlist';
 import { routes } from '@/shared/config/routes';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
 import { PageMessage } from '@/shared/ui/PageMessage';
-import { skeletonCss, visuallyHidden } from '@/shared/ui/styles';
+import { badgeCss, panelCss, sectionTitleCss, skeletonCss, visuallyHidden } from '@/shared/ui/styles';
 import { RelatedMovies } from './RelatedMovies';
 import { WatchAction } from './WatchAction';
 
@@ -26,10 +29,13 @@ const heroCss = css`
   align-items: flex-end;
   gap: clamp(16px, 3vw, 48px);
   overflow: hidden;
-  margin-inline: calc(-1 * var(--gutter));
-  padding: clamp(32px, 6vw, 80px) var(--gutter) clamp(20px, 3vw, 40px);
+  padding: clamp(24px, 4vw, 56px);
   color: #fff;
-  background: #111;
+  background: #1f2230;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  /* 테마와 상관없이 어두운 이미지 위이므로 초점 표시는 흰색으로 합니다. */
+  --focus: #fff;
 `;
 const backdropCss = css`
   position: absolute;
@@ -41,7 +47,7 @@ const backdropCss = css`
 const shadeCss = css`
   position: absolute;
   inset: 0;
-  background: rgb(0 0 0 / 0.72);
+  background: rgb(31 34 48 / 0.76);
 `;
 const posterCss = css`
   position: relative;
@@ -49,6 +55,7 @@ const posterCss = css`
   width: clamp(120px, 18vw, 260px);
   aspect-ratio: 2 / 3;
   object-fit: cover;
+  border-radius: var(--radius-sm);
   box-shadow: 0 12px 32px rgb(0 0 0 / 0.5);
 
   @media (max-width: 560px) {
@@ -62,18 +69,14 @@ const textCss = css`
   max-width: 48rem;
 `;
 const labelCss = css`
-  display: inline-block;
-  margin: 0 0 8px;
-  padding: 2px 8px;
-  border: 1px solid #fff;
-  font-size: 0.8125rem;
-  font-weight: 700;
+  ${badgeCss}
+  margin: 0 0 10px;
 `;
 const titleCss = css`
   margin: 0;
-  font-size: clamp(2rem, 6vw, 4.5rem);
-  font-weight: 900;
-  line-height: 1.05;
+  font-size: clamp(1.875rem, 4.5vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.1;
   letter-spacing: -0.03em;
 `;
 const originalCss = css`
@@ -104,13 +107,13 @@ const actionsCss = css`
   gap: 8px;
 `;
 const sectionCss = css`
+  ${panelCss}
   max-width: 60rem;
-  margin-top: clamp(32px, 4vw, 56px);
+  margin-top: clamp(20px, 2.5vw, 32px);
 
   h2 {
-    margin: 0 0 16px;
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    font-weight: 800;
+    ${sectionTitleCss}
+    margin-bottom: 16px;
   }
 `;
 const infoCss = css`
@@ -191,6 +194,11 @@ function MovieInfo({ movie }: { movie: Movie }) {
   );
 }
 
+function UpcomingAlert({ movie }: { movie: Movie }) {
+  const [now] = useState(() => new Date());
+  return isReleased(movie, now) ? null : <ReleaseAlertButton movieId={movie.id} onImage />;
+}
+
 /** 3단 구조의 마지막 단계 */
 export function MovieDetailPage() {
   const { id } = route.useParams();
@@ -260,6 +268,7 @@ export function MovieDetailPage() {
           <div css={actionsCss}>
             <WatchAction movie={movie} />
             <WatchlistButton movieId={movie.id} />
+            <UpcomingAlert movie={movie} />
           </div>
         </div>
       </div>

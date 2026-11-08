@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#5f7f86"/><stop offset="1" stop-color="#121c1f"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#5f7f86"/><stop offset="1" stop-color="#121c1f"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="1600" height="900" fill="url(#g)"/>
-<circle cx="1120" cy="520" r="130" fill="#fff" opacity=".55"/>
-<rect y="620" width="1600" height="280" fill="#000" opacity=".45"/>
+<circle cx="1205" cy="128" r="74" fill="#fff" opacity="0.12"/><circle cx="238" cy="516" r="38" fill="#fff" opacity="0.22"/><circle cx="226" cy="37" r="43" fill="#fff" opacity="0.21"/><circle cx="589" cy="541" r="78" fill="#fff" opacity="0.24"/><circle cx="1222" cy="35" r="66" fill="#fff" opacity="0.38"/><circle cx="701" cy="314" r="77" fill="#fff" opacity="0.16"/><circle cx="937" cy="71" r="69" fill="#fff" opacity="0.18"/><circle cx="622" cy="216" r="51" fill="#fff" opacity="0.12"/><circle cx="176" cy="369" r="43" fill="#fff" opacity="0.40"/><g fill="#afbfc3"><ellipse cx="480" cy="648" rx="195" ry="81"/><circle cx="407" cy="601" r="73"/><circle cx="537" cy="588" r="91"/></g><g fill="#afbfc3"><ellipse cx="1216" cy="540" rx="156" ry="64"/><circle cx="1158" cy="503" r="58"/><circle cx="1262" cy="492" r="73"/></g>
 </svg>

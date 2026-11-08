@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/shared/ui/Button';
+import { MoonIcon, SunIcon } from '@/shared/ui/icons';
+import { visuallyHidden } from '@/shared/ui/styles';
 
 const STORAGE_KEY = 'only-movie-theme';
 
@@ -18,9 +20,17 @@ export function ThemeToggle() {
     }
   };
 
+  const label = dark ? '라이트 모드' : '다크 모드';
+
   return (
-    <Button variant="outline" onClick={toggle}>
-      {dark ? '라이트 모드' : '다크 모드'}
+    <Button
+      variant="outline"
+      onClick={toggle}
+      title={label}
+      css={{ width: 44, paddingInline: '0 !important' }}
+    >
+      {dark ? <SunIcon /> : <MoonIcon />}
+      <span css={visuallyHidden}>{label}</span>
     </Button>
   );
 }

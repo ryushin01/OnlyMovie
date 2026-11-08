@@ -74,3 +74,14 @@ export function watchBlock(
 /** 해지가 예약되어도 결제 기간이 끝날 때까지는 볼 수 있습니다. */
 export const activePlan = (subscription: Subscription | null | undefined): PlanId | null =>
   subscription?.status === 'active' ? subscription.plan : null;
+
+const DAY_MS = 86_400_000;
+
+/** 이번 결제 주기(종료일에서 달력으로 한 달 전부터)에서 남은 날과 남은 비율입니다. */
+export function periodProgress(endIso: string, now: Date) {
+  const end = new Date(endIso);
+  const start = new Date(end);
+  start.setUTCMonth(start.getUTCMonth() - 1);
+  const left = Math.max(0, end.getTime() - now.getTime());
+  return { days: Math.ceil(left / DAY_MS), ratio: Math.min(1, left / (end.getTime() - start.getTime())) };
+}

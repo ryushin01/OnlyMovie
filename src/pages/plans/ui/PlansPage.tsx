@@ -1,19 +1,19 @@
 import { css } from '@emotion/react';
 import { Link } from '@tanstack/react-router';
 import { useSession } from '@/entities/session';
-import { activePlan, formatPrice, PLAN_IDS, PLANS, useSubscription } from '@/entities/subscription';
+import {
+  activePlan,
+  formatPrice,
+  PLAN_IDS,
+  planSurfaceCss,
+  PLANS,
+  useSubscription,
+} from '@/entities/subscription';
 import { routes } from '@/shared/config/routes';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
+import { pageTitleCss } from '@/shared/ui/styles';
 
-const titleCss = css`
-  margin: 0;
-  padding-block: clamp(24px, 4vw, 56px) 12px;
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-`;
 const gridCss = css`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
@@ -26,8 +26,9 @@ const cardCss = css`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 24px;
-  background: var(--surface);
+  padding: 28px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 
   h2 {
     margin: 0;
@@ -54,7 +55,7 @@ export function PlansPage() {
 
   return (
     <>
-      <h1 css={titleCss}>이용권</h1>
+      <h1 css={pageTitleCss}>이용권</h1>
       <p css={{ margin: 0, maxWidth: '44rem' }}>
         시네필이 기다려 온 미수입 영화를 가장 먼저 만나 보세요. 포트폴리오 프로젝트로, 실제 결제는 이루어지지
         않습니다.
@@ -64,7 +65,7 @@ export function PlansPage() {
           const plan = PLANS[id];
           return (
             <li key={id}>
-              <article css={cardCss}>
+              <article css={[cardCss, planSurfaceCss(id)]}>
                 <h2>{plan.name}</h2>
                 <p css={priceCss}>월 {formatPrice(plan.price)}</p>
                 <ul>

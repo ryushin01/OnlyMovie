@@ -20,7 +20,7 @@ const actionsCss = css`
 `;
 const alertCss = css`
   margin: 16px 0 0;
-  color: var(--accent);
+  color: var(--danger);
   font-weight: 700;
 `;
 

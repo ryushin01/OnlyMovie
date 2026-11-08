@@ -1,7 +1,7 @@
 # OnlyMovie
 
 [![CI](https://github.com/ryushin01/OnlyMovie/actions/workflows/ci.yml/badge.svg)](https://github.com/ryushin01/OnlyMovie/actions/workflows/ci.yml)
-[![version](https://img.shields.io/badge/version-3.1.2-a82c0c)](https://github.com/ryushin01/OnlyMovie/releases/latest)
+[![version](https://img.shields.io/badge/version-3.3.0-0a7446)](https://github.com/ryushin01/OnlyMovie/releases/latest)
 
 시네필을 위한 영화 전문 OTT입니다. 시리즈도 예능도 없이 영화만 다루고, 국내에 수입되지 않은 영화를 누구보다 먼저 들여와 보여 줍니다.
 
@@ -17,19 +17,19 @@
 
 | 메인 (다크 모드) | 메인 (라이트 모드) |
 |---|---|
-| ![국내 첫 공개작 소개가 크게 놓이고 아래로 가상 영화 포스터가 가로로 나열된 어두운 메인 화면](docs/images/home-dark.jpg) | ![국내 첫 공개작 소개가 크게 놓이고 아래로 가상 영화 포스터가 가로로 나열된 밝은 메인 화면](docs/images/home-light.jpg) |
+| ![왼쪽 레일 메뉴와 알약형 검색창 옆으로 국내 첫 공개작 소개가 둥근 카드로 크게 놓인 어두운 메인 화면](docs/images/home-dark.jpg) | ![왼쪽 레일 메뉴와 알약형 검색창 옆으로 국내 첫 공개작 소개가 둥근 카드로 크게 놓인 밝은 메인 화면](docs/images/home-light.jpg) |
 
 | 리스트 | 메인의 이어 보기 |
 |---|---|
-| ![검색어, 장르, 공개 상태, 연도, 국가, 등급, 러닝타임, 감독, 배우 필터 아래로 포스터가 격자로 놓인 리스트 화면](docs/images/list-dark.jpg) | ![이어 보기 줄이 맨 위에 놓인 메인 화면](docs/images/home-member-dark.jpg) |
+| ![검색어, 장르, 공개 상태, 연도, 국가, 등급, 러닝타임, 감독, 배우 필터 아래로 포스터가 격자로 놓인 리스트 화면](docs/images/list-dark.jpg) | ![진행 막대가 있는 가로형 카드의 이어 보기 줄이 놓인 메인 화면](docs/images/home-member-dark.jpg) |
 
 | 내 계정 | 디테일 |
 |---|---|
-| ![이용 중인 이용권과 변경 버튼, 결제 내역, 찜한 영화, 회원 탈퇴가 놓인 내 계정 화면](docs/images/account-dark.jpg) | ![이어서 볼 위치를 알리는 버튼과 찜하기 버튼이 놓인 작품 상세 화면](docs/images/detail-dark.jpg) |
+| ![이용 중인 이용권이 색면 카드로 놓이고 남은 날과 변경 버튼, 찜한 영화가 이어지는 내 계정 화면](docs/images/account-dark.jpg) | ![이어서 볼 위치를 알리는 버튼과 찜하기 버튼이 놓인 작품 상세 화면](docs/images/detail-dark.jpg) |
 
 | 이용권 | 재생 |
 |---|---|
-| ![베이직, 스탠다드, 프리미엄 이용권의 요금과 화질, 동시 시청 수를 비교하는 화면](docs/images/plans-light.jpg) | ![가상 자막과 화질 표시가 있는 화면 아래로 재생, 위치 슬라이더, 음소거, 자막 버튼이 놓인 재생 화면](docs/images/player-dark.jpg) |
+| ![베이직, 스탠다드, 프리미엄 이용권을 파랑, 분홍, 빨강 색면 카드로 비교하는 화면](docs/images/plans-light.jpg) | ![가상 자막과 화질 표시가 있는 화면 아래로 재생, 위치 슬라이더, 음소거, 자막 버튼이 놓인 재생 화면](docs/images/player-dark.jpg) |
 
 ## 주요 기능
 
@@ -44,6 +44,9 @@
 - 이어 보기: 보던 위치를 서버에 저장해 메인과 디테일에서 이어서 재생
 - 찜하기: 공개 예정작까지 찜해 메인과 내 계정에서 모아 보기
 - 비슷한 영화: 디테일에서 같은 장르의 다른 영화로 이동
+- 공개 알림: 공개 예정작에 알림을 걸고 공개되면 머리글의 종에서 확인
+- 수입 기획전: 작품을 들여온 이야기와 함께 보는 국내 첫 공개작 모음
+- 동시 시청 제한: 이용권별 대수를 서버에서 확인. 시청 기록은 메인과 내 계정에서 지우기
 - 스켈레톤 UI: 포스터와 목록을 불러오는 동안 같은 크기의 자리를 표시해 화면이 밀리지 않음. 움직임 줄이기 설정을 따름
 - 다크 모드 (처음에는 시스템 설정을 따르고, 고른 값을 기억)
 
@@ -96,7 +99,7 @@ scripts/            가상 영화 원고와 시드 생성
 src/
 ├─ app/             진입점, 라우터, 전역 스타일과 테마 색상
 ├─ pages/           home, movie-list, movie-detail, watch, plans, checkout, account, login, signup, not-found, route-error
-├─ widgets/         site-layout (머리글, 본문 바로가기, 바닥글), movie-row (가로 포스터 줄)
+├─ widgets/         site-layout (레일 메뉴, 머리글, 본문 바로가기, 바닥글), movie-row (가로 작품 줄), member-panel (내 정보)
 ├─ features/        search-movies, filter-movies, toggle-watchlist, subscribe, manage-subscription, login, signup, logout, delete-account, toggle-theme
 ├─ entities/        movie (작품, 검색 조건, 찜과 이어 보기), subscription (이용권, 재생 권한), session (로그인 상태)
 └─ shared/          공통 UI, 경로, 유틸리티

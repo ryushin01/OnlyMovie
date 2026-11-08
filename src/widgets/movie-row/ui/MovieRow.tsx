@@ -1,9 +1,10 @@
 import { css } from '@emotion/react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { Link } from '@tanstack/react-router';
 import type { routes } from '@/shared/config/routes';
 import { MovieCard, type Movie } from '@/entities/movie';
-import { visuallyHidden } from '@/shared/ui/styles';
+import { ChevronIcon } from '@/shared/ui/icons';
+import { sectionTitleCss, visuallyHidden } from '@/shared/ui/styles';
 
 const GAP = 'clamp(8px, 1vw, 16px)';
 
@@ -18,12 +19,7 @@ export const rowHeadCss = css`
   gap: 12px;
   margin-bottom: 12px;
 `;
-export const rowTitleCss = css`
-  margin: 0;
-  font-size: clamp(1.125rem, 1.8vw, 1.5rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-`;
+export const rowTitleCss = sectionTitleCss;
 const toolsCss = css`
   display: flex;
   align-items: center;
@@ -33,28 +29,34 @@ const moreCss = css`
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  color: inherit;
+  color: var(--muted);
+  font-size: 0.9375rem;
   font-weight: 700;
 `;
+/* 터치 화면은 손가락으로 밀어 넘깁니다. */
 const controlsCss = css`
-  display: flex;
-  gap: 4px;
-
-  /* 터치 화면은 손가락으로 밀어 넘깁니다. */
   @media (hover: none) {
     display: none;
   }
 `;
+const trackCss = css`
+  position: relative;
+`;
+/** 썸네일 위에 놓이므로 테마와 상관없이 어두운 바탕에 민트로 그립니다. */
 const controlCss = css`
+  position: absolute;
+  top: 34%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
   width: 44px;
   height: 44px;
-  color: var(--ink);
-  background: var(--surface);
+  color: #3ddc91;
+  background: rgb(31 34 48 / 0.85);
   border: 0;
   border-radius: 50%;
-  font: inherit;
-  font-size: 1.25rem;
   cursor: pointer;
+  --focus: #fff;
 
   &[aria-disabled='true'] {
     opacity: 0.4;
@@ -104,6 +106,24 @@ export const rowListCss = css`
   }
 `;
 
+/** 가로로 긴 카드는 한 줄에 더 적게 놓습니다. */
+export const rowWideCss = css`
+  --cards: 1.4;
+
+  @media (min-width: 480px) {
+    --cards: 2.3;
+  }
+  @media (min-width: 900px) {
+    --cards: 3.3;
+  }
+  @media (min-width: 1280px) {
+    --cards: 4.3;
+  }
+  @media (min-width: 1920px) {
+    --cards: 5.3;
+  }
+`;
+
 interface Props {
   title: string;
   movies: Movie[];
@@ -112,10 +132,16 @@ interface Props {
   moreTo?: ReturnType<typeof routes.movies>;
   /** 작품별로 카드에 덧붙일 글 (남은 시간 등) */
   notes?: Record<string, string>;
+  /** 작품별 본 비율 (0~1) */
+  progress?: Record<string, number>;
+  /** 포스터 대신 가로로 긴 카드로 그립니다. */
+  wide?: boolean;
+  /** 작품별로 카드 위에 놓을 조작 */
+  cardAction?: (movie: Movie) => ReactNode;
 }
 
 /** 제목 하나와 옆으로 넘기는 포스터 한 줄입니다. */
-export function MovieRow({ title, movies, moreTo, notes }: Props) {
+export function MovieRow({ title, movies, moreTo, notes, progress, wide = false, cardAction }: Props) {
   const titleId = useId();
   const listRef = useRef<HTMLUListElement>(null);
   const [edges, setEdges] = useState({ start: true, end: true });
@@ -157,37 +183,45 @@ export function MovieRow({ title, movies, moreTo, notes }: Props) {
               <span css={visuallyHidden}>{title}</span> 전체 보기
             </Link>
           )}
-          {!(edges.start && edges.end) && (
-            <div css={controlsCss}>
-              <button
-                type="button"
-                css={controlCss}
-                aria-label={`${title} 이전 목록`}
-                aria-disabled={edges.start}
-                onClick={() => move(-1)}
-              >
-                <span aria-hidden="true">←</span>
-              </button>
-              <button
-                type="button"
-                css={controlCss}
-                aria-label={`${title} 다음 목록`}
-                aria-disabled={edges.end}
-                onClick={() => move(1)}
-              >
-                <span aria-hidden="true">→</span>
-              </button>
-            </div>
-          )}
         </div>
       </div>
-      <ul ref={listRef} css={rowListCss}>
-        {movies.map((movie) => (
-          <li key={movie.id}>
-            <MovieCard movie={movie} note={notes?.[movie.id]} />
-          </li>
-        ))}
-      </ul>
+      <div css={trackCss}>
+        {!(edges.start && edges.end) && (
+          <div css={controlsCss}>
+            <button
+              type="button"
+              css={[controlCss, { left: 4 }]}
+              aria-label={`${title} 이전 목록`}
+              aria-disabled={edges.start}
+              onClick={() => move(-1)}
+            >
+              <ChevronIcon direction="left" width={20} height={20} />
+            </button>
+            <button
+              type="button"
+              css={[controlCss, { right: 4 }]}
+              aria-label={`${title} 다음 목록`}
+              aria-disabled={edges.end}
+              onClick={() => move(1)}
+            >
+              <ChevronIcon direction="right" width={20} height={20} />
+            </button>
+          </div>
+        )}
+        <ul ref={listRef} css={[rowListCss, wide && rowWideCss]}>
+          {movies.map((movie) => (
+            <li key={movie.id}>
+              <MovieCard
+                movie={movie}
+                note={notes?.[movie.id]}
+                wide={wide}
+                progress={progress?.[movie.id]}
+                action={cardAction?.(movie)}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }

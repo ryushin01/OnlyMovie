@@ -14,6 +14,7 @@ test('화면 캡처', async ({ browser, baseURL }) => {
   const state = await installFakeApi(page, { user: MEMBER, plan: 'standard' });
   state.progress = { 'neon-rain': 2400, 'glass-orbit': 1500, 'iron-harbor': 3300 };
   state.watchlist = ['island-of-clocks', 'paper-whale', 'fog-kingdom'];
+  state.alerts = ['island-of-clocks'];
 
   await page.goto('/');
   await expect(page.getByRole('region', { name: '국내 첫 공개' })).toBeVisible();

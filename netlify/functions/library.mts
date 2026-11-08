@@ -1,7 +1,16 @@
 import { getDatabase } from '@netlify/database';
 import type { Config, Context } from '@netlify/functions';
 import { currentMember, rejectCrossSite, unauthorized } from '../lib/auth';
-import { addToWatchlist, getLibrary, removeFromWatchlist, saveProgress } from '../lib/libraryRepository';
+import {
+  addReleaseAlert,
+  addToWatchlist,
+  getLibrary,
+  markAlertsRead,
+  removeFromWatchlist,
+  removeProgress,
+  removeReleaseAlert,
+  saveProgress,
+} from '../lib/libraryRepository';
 
 const notFound = () => Response.json({ error: 'not_found' }, { status: 404 });
 const MAX_POSITION = 24 * 60 * 60;
@@ -30,6 +39,29 @@ export default async (req: Request, context: Context) => {
       await removeFromWatchlist(db, member.id, id);
       return new Response(null, { status: 204 });
     }
+  }
+
+  if (kind === 'alert' && id) {
+    if (req.method === 'PUT') {
+      const result = await addReleaseAlert(db, member.id, id, new Date());
+      if (result === 'not_found') return notFound();
+      if (result === 'released') return Response.json({ error: 'released' }, { status: 409 });
+      return new Response(null, { status: 204 });
+    }
+    if (req.method === 'DELETE') {
+      await removeReleaseAlert(db, member.id, id);
+      return new Response(null, { status: 204 });
+    }
+  }
+
+  if (kind === 'alerts' && id === 'read' && req.method === 'PUT') {
+    await markAlertsRead(db, member.id, new Date());
+    return new Response(null, { status: 204 });
+  }
+
+  if (kind === 'progress' && id && req.method === 'DELETE') {
+    await removeProgress(db, member.id, id);
+    return new Response(null, { status: 204 });
   }
 
   if (kind === 'progress' && id && req.method === 'PUT') {

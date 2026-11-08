@@ -1,7 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 900">
-<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1f7a8c"/><stop offset="1" stop-color="#06202a"/></linearGradient></defs>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1f7a8c"/><stop offset="1" stop-color="#06202a"/></linearGradient><linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".8"/></linearGradient></defs>
 <rect width="600" height="900" fill="url(#g)"/>
-<circle cx="430" cy="290" r="190" fill="#fff" opacity=".14"/>
-<text x="44" y="680" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">종이</text>
-<text x="44" y="772" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">고래</text>
+<circle cx="30" cy="531" r="31" fill="#fff" opacity="0.35"/><circle cx="2" cy="25" r="60" fill="#fff" opacity="0.28"/><circle cx="77" cy="566" r="39" fill="#fff" opacity="0.24"/><circle cx="19" cy="41" r="86" fill="#fff" opacity="0.39"/><circle cx="562" cy="160" r="103" fill="#fff" opacity="0.39"/><circle cx="349" cy="84" r="88" fill="#fff" opacity="0.24"/><circle cx="85" cy="524" r="68" fill="#fff" opacity="0.13"/><circle cx="101" cy="160" r="51" fill="#fff" opacity="0.14"/><circle cx="489" cy="424" r="62" fill="#fff" opacity="0.35"/><g fill="#8fbdc6"><ellipse cx="180" cy="648" rx="101" ry="42"/><circle cx="142" cy="624" r="38"/><circle cx="210" cy="617" r="47"/></g><g fill="#8fbdc6"><ellipse cx="456" cy="540" rx="81" ry="33"/><circle cx="426" cy="521" r="30"/><circle cx="480" cy="515" r="38"/></g>
+<rect width="600" height="900" fill="url(#s)"/>
+<text x="44" y="720" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">종이</text>
+<text x="44" y="812" font-family="sans-serif" font-size="84" font-weight="800" fill="#fff">고래</text>
 </svg>

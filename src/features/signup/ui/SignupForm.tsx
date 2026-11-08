@@ -12,7 +12,7 @@ const formCss = css`
 `;
 const alertCss = css`
   margin: 0;
-  color: var(--accent);
+  color: var(--danger);
   font-weight: 700;
 `;
 

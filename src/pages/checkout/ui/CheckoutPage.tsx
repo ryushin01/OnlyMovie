@@ -1,4 +1,3 @@
-import { css } from '@emotion/react';
 import { Link, Navigate, getRouteApi, useNavigate } from '@tanstack/react-router';
 import { RequireAuth, useSession } from '@/entities/session';
 import {
@@ -14,17 +13,9 @@ import { routes } from '@/shared/config/routes';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
 import { PageMessage } from '@/shared/ui/PageMessage';
+import { formPanelCss, formTitleCss } from '@/shared/ui/styles';
 
 const route = getRouteApi('/checkout/$plan');
-
-const titleCss = css`
-  margin: 0;
-  padding-block: clamp(24px, 4vw, 56px) 12px;
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-`;
 
 function Checkout({ plan }: { plan: Plan }) {
   const navigate = useNavigate();
@@ -37,8 +28,8 @@ function Checkout({ plan }: { plan: Plan }) {
   if (activePlan(data?.subscription)) return <Navigate {...routes.account} replace />;
 
   return (
-    <>
-      <h1 css={titleCss}>{plan.name} 이용권</h1>
+    <div css={formPanelCss}>
+      <h1 css={formTitleCss}>{plan.name} 이용권</h1>
       <p css={{ margin: '0 0 8px' }}>
         월 {formatPrice(plan.price)} · 최대 {plan.quality} 화질 · 동시 시청 {plan.screens}대
       </p>
@@ -46,7 +37,7 @@ function Checkout({ plan }: { plan: Plan }) {
         실제 돈이 오가지 않는 가상 결제입니다. 카드 정보를 받지 않습니다.
       </p>
       <CheckoutForm plan={plan} onDone={() => navigate(routes.account)} />
-    </>
+    </div>
   );
 }
 

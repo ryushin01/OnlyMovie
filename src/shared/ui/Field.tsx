@@ -28,7 +28,7 @@ const hintCss = css`
 `;
 const errorCss = css`
   margin: 8px 0 0;
-  color: var(--accent);
+  color: var(--danger);
   font-size: 0.9375rem;
   font-weight: 700;
 `;
