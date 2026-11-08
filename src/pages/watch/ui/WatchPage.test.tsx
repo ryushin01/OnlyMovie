@@ -62,6 +62,26 @@ describe('WatchPage', () => {
     await waitFor(() => expect(screenCalls()).toEqual(['PUT', 'DELETE']));
   });
 
+  it('자리를 잡는 요청이 끝난 뒤에 돌려주어, 늦은 요청이 자리를 다시 차지하지 않는다', async () => {
+    const user = userEvent.setup();
+    const { state } = installFakeApi({ subscription: activeSubscription('standard') });
+    await view();
+    const play = await screen.findByRole('button', { name: '재생' });
+    let release = () => {};
+    state.hold = new Promise((resolve) => {
+      release = resolve;
+    });
+    await user.click(play);
+    await user.click(screen.getByRole('button', { name: '일시정지' }));
+    const screenCalls = () =>
+      state.calls.filter((call) => call.path.includes('/playback?device=')).map((call) => call.method);
+    expect(screenCalls()).toEqual(['PUT']);
+
+    release();
+    state.hold = null;
+    await waitFor(() => expect(screenCalls()).toEqual(['PUT', 'DELETE']));
+  });
+
   it('동시 시청 대수를 넘으면 멈추고 글자로 알린다', async () => {
     const user = userEvent.setup();
     const { state } = installFakeApi({ subscription: activeSubscription('basic') });

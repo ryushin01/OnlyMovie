@@ -98,24 +98,32 @@ export function Player({ movie, quality, startAt }: Props) {
     return () => clearInterval(timer);
   }, [running, duration]);
 
+  // 자리 요청은 앞의 요청이 끝난 뒤에 보냅니다. 늦게 도착한 요청이 이미 돌려준 자리를 다시 차지하지 않게 합니다.
+  const screenQueue = useRef<Promise<unknown>>(Promise.resolve());
+
   // 재생하는 동안 이 기기의 자리를 지킵니다. 대수를 넘었을 때만 멈추고, 일시적인 네트워크 오류로는 끊지 않습니다.
   useEffect(() => {
     if (!running) return;
     const device = deviceId();
     let active = true;
+    const enqueue = (task: () => Promise<void>) => {
+      screenQueue.current = screenQueue.current.then(task);
+    };
     const claim = () =>
-      claimScreen(movie.id, device).catch((error: unknown) => {
-        if (active && error instanceof ApiError && error.status === 409) {
-          setPlaying(false);
-          setBlocked(true);
-        }
-      });
-    void claim();
-    const timer = setInterval(() => void claim(), SCREEN_INTERVAL_MS);
+      enqueue(() =>
+        claimScreen(movie.id, device).catch((error: unknown) => {
+          if (active && error instanceof ApiError && error.status === 409) {
+            setPlaying(false);
+            setBlocked(true);
+          }
+        }),
+      );
+    claim();
+    const timer = setInterval(claim, SCREEN_INTERVAL_MS);
     return () => {
       active = false;
       clearInterval(timer);
-      void releaseScreen(movie.id, device).catch(() => {});
+      enqueue(() => releaseScreen(movie.id, device).catch(() => {}));
     };
   }, [running, movie.id]);
 
