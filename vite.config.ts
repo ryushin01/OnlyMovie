@@ -18,6 +18,8 @@ export default defineConfig({
   ],
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
   preview: { headers: { 'Content-Security-Policy': contentSecurityPolicy } },
+  // 작은 글꼴 조각을 data: 주소로 넣으면 CSP(font-src 'self')에 막히므로 글꼴은 항상 파일로 내보냅니다.
+  build: { assetsInlineLimit: (file) => (/\.(woff2?|ttf|otf)$/.test(file) ? false : undefined) },
   test: {
     environment: 'jsdom',
     setupFiles: ['./src/shared/lib/test/setup.ts'],

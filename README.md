@@ -1,7 +1,7 @@
 # OnlyMovie
 
 [![CI](https://github.com/ryushin01/OnlyMovie/actions/workflows/ci.yml/badge.svg)](https://github.com/ryushin01/OnlyMovie/actions/workflows/ci.yml)
-[![version](https://img.shields.io/badge/version-3.3.0-0a7446)](https://github.com/ryushin01/OnlyMovie/releases/latest)
+[![version](https://img.shields.io/badge/version-3.3.1-0a7446)](https://github.com/ryushin01/OnlyMovie/releases/latest)
 
 시네필을 위한 영화 전문 OTT입니다. 시리즈도 예능도 없이 영화만 다루고, 국내에 수입되지 않은 영화를 누구보다 먼저 들여와 보여 줍니다.
 
@@ -59,7 +59,7 @@
 | 프레임워크 | React 19, Vite 8, TypeScript 7, TanStack Router |
 | 상태·데이터 | TanStack Query v5 |
 | 서버 | Netlify Functions, Netlify Database (PostgreSQL), Netlify Identity (회원) |
-| 스타일 | Emotion, Pretendard |
+| 스타일 | Emotion, Oswald·Black Han Sans(제목), Roboto·Gothic A1(본문) |
 | 품질 | oxlint, Prettier, Vitest + React Testing Library, Playwright + axe (Chromium, Firefox, WebKit E2E) |
 | 배포 | Netlify, GitHub Actions |
 | 자동화 | GitHub Actions (CI, 배포 후 사이트 검사), Dependabot |
