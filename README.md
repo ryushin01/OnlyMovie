@@ -111,4 +111,5 @@ src/
 |---|---|
 | [개발 가이드](docs/development.md) | 구현 판단, 테스트 구성, 배포 시 유의점, 알려진 제한 |
 | [접근성 점검](docs/accessibility.md) | KWCAG 2.2 항목별 자체 점검 결과 |
+| [시퀀스 다이어그램](docs/sequence-diagrams.md) | 재생 권한과 동시 시청 제한, 이어 보기 저장, 이용권 바꾸기 |
 | [변경 기록](CHANGELOG.md) | 버전별 변경 내용 |
