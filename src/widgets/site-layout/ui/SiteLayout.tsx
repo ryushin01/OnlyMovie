@@ -8,7 +8,7 @@ import { MovieSearch } from '@/features/search-movies';
 import { ThemeToggle } from '@/features/toggle-theme';
 import { routes } from '@/shared/config/routes';
 import { buttonCss } from '@/shared/ui/Button';
-import { FilmIcon, HomeIcon, LoginIcon, PlayIcon, StarIcon, TicketIcon, UserIcon } from '@/shared/ui/icons';
+import { FilmIcon, HomeIcon, LoginIcon, StarIcon, TicketIcon, UserIcon } from '@/shared/ui/icons';
 
 /** 레일이 왼쪽에 서고, 좁은 화면에서는 아래쪽 탭 막대가 되는 폭 */
 const WIDE = '@media (min-width: 768px)';
@@ -53,6 +53,12 @@ const headerCss = css`
     grid-template-columns: auto minmax(0, 1fr) auto;
   }
 `;
+const logoImgCss = css`
+  display: block;
+  width: 40px;
+  height: 40px;
+`;
+
 const logoCss = css`
   grid-area: logo;
   display: inline-flex;
@@ -188,8 +194,7 @@ export function SiteLayout() {
       </a>
       <header css={headerCss}>
         <Link {...routes.home} activeOptions={{ exact: true }} css={logoCss}>
-          <PlayIcon />
-          OnlyMovie
+          <img src="/brand/logo.png" alt="OnlyMovie" width={40} height={40} css={logoImgCss} />
         </Link>
         <MovieSearch />
         <div css={toolsCss}>
