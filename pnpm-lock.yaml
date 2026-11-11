@@ -169,6 +169,18 @@ importers:
       '@emotion/react':
         specifier: ^11.14.0
         version: 11.14.0(@types/react@19.3.0)(react@19.3.1)(supports-color@7.2.0)
+      '@fontsource-variable/oswald':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/black-han-sans':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/gothic-a1':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/roboto':
+        specifier: ^5.3.0
+        version: 5.3.0
       '@netlify/database':
         specifier: ^2.0.1
         version: 2.0.1
@@ -184,9 +196,6 @@ importers:
       '@tanstack/react-router':
         specifier: 1.170.46
         version: 1.170.46(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
-      pretendard:
-        specifier: ^1.3.9
-        version: 1.3.9
       react:
         specifier: ^19.3.1
         version: 19.3.1
@@ -601,6 +610,18 @@ packages:
 
   '@fastify/busboy@3.2.4':
     resolution: {integrity: sha512-lQS8xcXT54rdJb+wlG/Q7SMSdtkZEpLPHooSDUZyyZm9LJD7X1kONPhVoPaHq+dsPtWUGGLIz9gBNhs9qKbylw==}
+
+  '@fontsource-variable/oswald@5.3.0':
+    resolution: {integrity: sha512-sSZzcTeaQGNyZbTVlS4tNNHElK38UktFLqKd6NQDLFCBV27320rQC3kXSZVytYm1PPjKmPxqVaGwqj7LEKUWQw==}
+
+  '@fontsource/black-han-sans@5.3.0':
+    resolution: {integrity: sha512-HZtn51La10fZU1DdnbY06YcvLxF9NAkNk/GdA6rKDWPztH9zWLqVcfVvCKNmosBuFrhToGbw/pMNJ/TjdC296Q==}
+
+  '@fontsource/gothic-a1@5.3.0':
+    resolution: {integrity: sha512-0HmmE3YQgdcXkVZd/pRTw7MOc9PffY7tNrR/dovEGO00cno/4ImiHxEXdJoq80Bs2jC52wuvuFRcepJ38mksEw==}
+
+  '@fontsource/roboto@5.3.0':
+    resolution: {integrity: sha512-BapRJOWYP+LZ21zp+wBQjfpPYKRoxc4LspJ/RLuI+HSMBD5u/X4O+ESDrSvEqDSy0rAl7GwBJ+09mdc16cVQ1Q==}
 
   '@humanwhocodes/momoa@2.0.4':
     resolution: {integrity: sha512-RE815I4arJFtt+FVeU1Tgp9/Xvecacji8w/V6XtXsWWH/wz/eNkNbhb+ny/+PlVZjV0rxQpRSQKNKE3lcktHEA==}
@@ -3102,9 +3123,6 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  pretendard@1.3.9:
-    resolution: {integrity: sha512-PaQAADyLY5v4kYFwkpSJHbSSYIkiriY/1xXw75TKoZ9UQQqeU+tvP05yTdZAWibiIYoo8ZKtRv8PM7w0IaywSw==}
-
   prettier@3.9.10:
     resolution: {integrity: sha512-skGHTH1Yb9QvaTC4hWnRTzEYtCpApF0UMBPz+t/0ZPzP8ihefo/btKd+QA7pUE0fEwA1SbS/NmhyEcstdXOIdA==}
     engines: {node: '>=14'}
@@ -4171,6 +4189,14 @@ snapshots:
   '@exodus/bytes@1.16.0': {}
 
   '@fastify/busboy@3.2.4': {}
+
+  '@fontsource-variable/oswald@5.3.0': {}
+
+  '@fontsource/black-han-sans@5.3.0': {}
+
+  '@fontsource/gothic-a1@5.3.0': {}
+
+  '@fontsource/roboto@5.3.0': {}
 
   '@humanwhocodes/momoa@2.0.4': {}
 
@@ -6647,8 +6673,6 @@ snapshots:
       typescript: 5.9.3
     transitivePeerDependencies:
       - supports-color
-
-  pretendard@1.3.9: {}
 
   prettier@3.9.10: {}
 

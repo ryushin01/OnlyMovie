@@ -1,5 +1,11 @@
 import { css, Global } from '@emotion/react';
-import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+// 제목: Oswald(영문)·검은고딕(한글), 본문: Roboto(영문·숫자)·Gothic A1(한글)
+import '@fontsource-variable/oswald/index.css';
+import '@fontsource/black-han-sans/400.css';
+import '@fontsource/gothic-a1/400.css';
+import '@fontsource/gothic-a1/700.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/700.css';
 
 const styles = css`
   :root {
@@ -48,11 +54,17 @@ const styles = css`
   html {
     -webkit-text-size-adjust: 100%;
   }
+  /* 극장 포스터처럼 좁은 대문자와 굵은 한글. 검은고딕은 굵기가 하나라 가짜 굵기를 만들지 않습니다. */
+  h1,
+  h2 {
+    font-family: 'Oswald Variable', 'Black Han Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    font-synthesis-weight: none;
+  }
   body {
     margin: 0;
     color: var(--ink);
     background: var(--bg);
-    font-family: 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+    font-family: Roboto, 'Gothic A1', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
     font-size: 1rem;
     line-height: 1.5;
     /* 한글이 단어 중간에서 끊기지 않게 하되, 긴 문자열은 넘치지 않게 합니다. */
