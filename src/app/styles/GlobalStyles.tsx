@@ -57,14 +57,19 @@ const styles = css`
   /* 극장 포스터처럼 좁은 대문자와 굵은 한글. 검은고딕은 굵기가 하나라 가짜 굵기를 만들지 않습니다. */
   h1,
   h2 {
-    font-family: 'Oswald Variable', 'Black Han Sans', 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    /* 대체 글꼴: 포스터 글씨처럼 좁은 대문자(맥 Avenir Next Condensed, 윈도 Arial Narrow)와 운영체제 한글 고딕 */
+    font-family:
+      'Oswald Variable', 'Black Han Sans', 'Avenir Next Condensed', 'Arial Narrow', 'Apple SD Gothic Neo',
+      'Malgun Gothic', 'Noto Sans CJK KR', sans-serif;
     font-synthesis-weight: none;
   }
   body {
     margin: 0;
     color: var(--ink);
     background: var(--bg);
-    font-family: Roboto, 'Gothic A1', 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+    font-family:
+      Roboto, 'Gothic A1', 'Segoe UI', 'Helvetica Neue', 'Apple SD Gothic Neo', 'Malgun Gothic',
+      'Noto Sans CJK KR', system-ui, sans-serif;
     font-size: 1rem;
     line-height: 1.5;
     /* 한글이 단어 중간에서 끊기지 않게 하되, 긴 문자열은 넘치지 않게 합니다. */

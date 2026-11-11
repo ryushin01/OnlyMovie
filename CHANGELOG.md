@@ -1,5 +1,11 @@
 # 변경 기록
 
+## 3.3.2
+
+### 변경
+
+- 대체 글꼴: 제목은 좁은 대문자(Avenir Next Condensed, Arial Narrow), 본문은 Segoe UI·Helvetica Neue, 한글은 운영체제 고딕(Noto Sans CJK KR 포함)으로 이음
+
 ## 3.3.1
 
 ### 변경
