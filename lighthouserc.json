@@ -1,8 +1,8 @@
 {
   "ci": {
     "collect": {
-      "startServerCommand": "E2E=1 pnpm exec vite preview --port 4181 --strictPort",
-      "startServerReadyPattern": "Local",
+      "startServerCommand": "node scripts/lighthouse-server.ts --port 4181",
+      "startServerReadyPattern": "lighthouse server ready",
       "url": [
         "http://localhost:4181/",
         "http://localhost:4181/movies",

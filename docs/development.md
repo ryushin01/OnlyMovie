@@ -64,7 +64,7 @@ CI는 `main` 푸시와 PR마다 타입 검사, 린트, 포맷 검사, 단위 테
 
 - 로그인 코드는 로그인, 가입, 로그아웃 때만 받습니다.
 - **번들 크기:** `pnpm size`가 첫 화면 JS 150 kB, CSS 53 kB(gzip)를 넘으면 실패합니다. 기준은 `.size-limit.json`에 있습니다.
-- **Lighthouse:** `pnpm lhci`가 E2E와 같은 목업 서버(`E2E=1 vite preview`)로 첫 화면·영화 목록·영화 상세를 데스크톱 기준 3번씩 재서 성능 90·접근성 100·권장 사항 95·SEO 90점, LCP 2.5초·TBT 200ms·CLS 0.1 이하인지 확인합니다. 2026-11-12 측정은 세 화면 모두 99/100/100/100입니다.
+- **Lighthouse:** `pnpm lhci`가 `scripts/lighthouse-server.ts`로 `dist/`를 띄우고 첫 화면·영화 목록·영화 상세를 데스크톱 기준 3번씩 재서 성능 90·접근성 100·권장 사항 95·SEO 90점, LCP 2.5초·TBT 200ms·CLS 0.1 이하인지 확인합니다. `vite preview`에는 Netlify 함수가 없어, 이 서버가 E2E와 같은 목업 데이터(`e2e/fakeData.ts`)로 `/api/*` 읽기 요청에 답합니다. 2026-11-12 측정은 첫 화면 94~95, 목록 95~96, 상세 96점(접근성·권장 사항·SEO 100)입니다.
 
 ## 모니터링
 
@@ -75,6 +75,7 @@ CI는 `main` 푸시와 PR마다 타입 검사, 린트, 포맷 검사, 단위 테
 | `VITE_SENTRY_DSN` | 있으면 처리하지 못한 오류와 나쁜(poor) Web Vitals를 Sentry로 보냅니다. 없으면 Sentry를 번들에 넣지 않고, 개발 모드에서 Web Vitals를 콘솔에만 찍습니다 |
 
 - TanStack Router가 잡아 오류 화면으로 바꾼 오류는 전역으로 올라가지 않으므로 `defaultOnCatch`에서 `reportError`로 보냅니다.
+- Sentry에는 주소의 `#` 뒤(로그인·복구 토큰이 실릴 수 있음)를 보내지 않습니다.
 - Sentry에는 오류 내용만 보내고 사용자 정보·쿠키·헤더·쿼리 문자열, 방문 기록(세션), 이동·클릭 기록(브레드크럼), 콘솔 기록은 모으지 않습니다. Sentry를 받기 전에 난 오류는 최대 20개까지 모아 두었다가 처리되지 않은 오류로 보냅니다.
 - 쓰는 함수만 `sentry.ts`에서 다시 내보내 약 31 kB(gzip)로 받습니다. 모듈 전체를 불러오면 리플레이·피드백까지 들어가 140 kB가 됩니다.
 - Netlify Functions(서버)의 오류는 Netlify 로그로 확인합니다.
