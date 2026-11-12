@@ -14,10 +14,10 @@ describe('HomePage', () => {
       screen.getByRole('heading', { level: 1, name: /시네필을 위한 영화 전문 OTT/ }),
     ).toBeInTheDocument();
     expect(screen.getByRole('region', { name: '국내 첫 공개' })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: '자세히 보기: 마지막 상영' })).toHaveAttribute(
-      'href',
-      '/movies/last-screening',
-    );
+    expect(
+      // 화면 낭독기 전용 글자는 position: absolute라 블록으로 계산되어, 브라우저에 따라 앞에 공백이 들어갑니다.
+      screen.getByRole('link', { name: /^자세히 보기 ?: 마지막 상영$/ }),
+    ).toHaveAttribute('href', '/movies/last-screening');
   });
 
   it('회원에게는 이어 보기와 남은 시간, 찜한 영화를 보여 준다', async () => {
