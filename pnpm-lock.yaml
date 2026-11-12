@@ -182,20 +182,20 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
       '@netlify/database':
+        specifier: ^2.0.3
+        version: 2.0.3
+      '@netlify/functions':
+        specifier: ^6.1.1
+        version: 6.1.1
+      '@netlify/identity':
         specifier: ^2.0.1
         version: 2.0.1
-      '@netlify/functions':
-        specifier: ^6.1.0
-        version: 6.1.0
-      '@netlify/identity':
-        specifier: ^2.0.0
-        version: 2.0.0
       '@sentry/browser':
         specifier: ^11.12.0
         version: 11.12.0
       '@tanstack/react-query':
-        specifier: ^5.105.3
-        version: 5.105.3(@types/react@19.3.0)(react@19.3.1)
+        specifier: ^5.107.1
+        version: 5.107.1(@types/react@19.3.0)(react@19.3.1)
       '@tanstack/react-router':
         specifier: 1.170.46
         version: 1.170.46(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
@@ -891,6 +891,10 @@ packages:
     resolution: {integrity: sha512-xT8DGkqwnw3C1TzBmgvJl8NyEugGNKoj6o5aKoSPxKXLGI2Hfm6JodsSHwl9r5drotMMY+x1rH5GjprLngKvIA==}
     engines: {node: '>=22.12.0'}
 
+  '@netlify/cache@4.2.1':
+    resolution: {integrity: sha512-10RASHobwpQ3DKKptwPen6zxpbNUBCE+5WWFufOlRwyfNjwhY95h3XuvPFLNQMuROcZY9Yiw++Xww+qkcLkZtw==}
+    engines: {node: '>=22.12.0'}
+
   '@netlify/config@25.6.1':
     resolution: {integrity: sha512-Ly2b/1864tfhu845i2PcqPzeomHTesV39ECDEhUqsO7ZdYrP1gNk4EVixSLy51FVjrr6qHLAby/BRqdh5yQffw==}
     engines: {node: '>=22.12.0'}
@@ -900,8 +904,8 @@ packages:
     resolution: {integrity: sha512-Zu8cM4AeXNuQI/cNAI6vrammtdDnWIGO6PYKDAECDMzsb3IcoTsVOZAePup7cGdjaGcBBVdi1qx/PoI5hNZcxg==}
     engines: {node: '>=22.12.0'}
 
-  '@netlify/database@2.0.1':
-    resolution: {integrity: sha512-ikz0NcVgeOe62Sic5MEFMyv/yMWtzhMLcynXTDftTL3rVEMoJL16mjnU9gNZ6G80lBngjjPjZrDOyAS1j+Kt3A==}
+  '@netlify/database@2.0.3':
+    resolution: {integrity: sha512-Ghq0NYwsQyT9GjgUhpbeOlk98RD6PeV2skhQIy/q6tPMiJz/p7NkfcixkXSouHfyJZmOEI6eweZeIDKAa3VLmA==}
     engines: {node: '>=22.12.0'}
 
   '@netlify/dev-utils@6.0.4':
@@ -935,6 +939,10 @@ packages:
     resolution: {integrity: sha512-Kwbood+CBR0okDmimwQ7YhsLU5jV0ON/8f6SvaTklVqDMOMfaHhaSsl6ELgnpWwlKgnkDYUf1Sg2BIJnrenRrA==}
     engines: {node: '>=22.12.0'}
 
+  '@netlify/functions@6.1.1':
+    resolution: {integrity: sha512-hTZaFcNZG+ntoAkDBRv+TMN6Nns6+mVAcMGtmXR3lCkhryxydpb2AUZDOz0zx9Zzb750R9UhoqcmfV06og9wFQ==}
+    engines: {node: '>=22.12.0'}
+
   '@netlify/headers-parser@10.1.1':
     resolution: {integrity: sha512-ooiSc/eN/ktuugZmY4GVPh6nBYz2um0zpemokDvTLLQPF12QyXil8N6fr82wdLi03WNowwiL98eultZkTyHlyw==}
     engines: {node: '>=22.12.0'}
@@ -943,8 +951,8 @@ packages:
     resolution: {integrity: sha512-ddw5op/6n3MZ2aWV3lzy+bubUM9I/LvjvxMcwKMnRUudHpgAvb0cepUOluY+Uabu/0td2RNvQfpKrFPUKwo0Yw==}
     engines: {node: '>=22.12.0'}
 
-  '@netlify/identity@2.0.0':
-    resolution: {integrity: sha512-AX2zdazgfa9M/L22kgC5TpuVgofz9ZkK0W7JRIqmW/In6LyW6HzLS2K9a3CPXlfcjWm1JqEdmXoXze3VIjes6Q==}
+  '@netlify/identity@2.0.1':
+    resolution: {integrity: sha512-tKOJddHz1GHGbNsKSMaPjmtBiAJ76vU/CBmfZfiliO0SUtWbsJ7pdiXeki/73qyTR708r/NGsC0DnvUO1ebQtA==}
     engines: {node: '>=22.12.0'}
 
   '@netlify/images@2.0.5':
@@ -975,6 +983,10 @@ packages:
     resolution: {integrity: sha512-OHo40+V3QZkR+UrDjqhN+LekrAby/dSSJxsvyYs9i88E/mSl3goB/ysoL+VYROm190egxmQyRYlHK7vL4GeHBQ==}
     engines: {node: '>=22.12.0'}
 
+  '@netlify/runtime-utils@3.0.1':
+    resolution: {integrity: sha512-PythjseqdFTvaTK28IiRZ/w0YOZKgyBDxiXuCNEwCBxidnKZ7najsOMtstwwzmsRtfHbmXHOB5NLaGCnvnvBTg==}
+    engines: {node: '>=22.12.0'}
+
   '@netlify/runtime@5.0.12':
     resolution: {integrity: sha512-2UiWCJY43Q9/qlNqUD699dLK3R01MqHmiD44PP2KVQP1I+7duNhILNG59bCSkIowkJ4gCCwVPKKllml76s5NMw==}
     engines: {node: '>=22.12.0'}
@@ -1001,6 +1013,10 @@ packages:
 
   '@netlify/types@3.3.0':
     resolution: {integrity: sha512-u/uh0vOFslJsTcG8nnynAKnTpVIakXbv3mkBG9DTqKZrDEzmfLKDZ3I7evHA3/CYUmNB24pNrzlHj2nIsqEwzg==}
+    engines: {node: '>=22.12.0'}
+
+  '@netlify/types@3.3.1':
+    resolution: {integrity: sha512-LwPy3VpwMTETniJEgLr67yP8Rt8eORZaQ/NwVXhOOkv9q1F2SANSoJbfkhEmyLpwQ/aoPTAi0bULBDlFHXwEQA==}
     engines: {node: '>=22.12.0'}
 
   '@netlify/vite-plugin@3.0.1':
@@ -1532,11 +1548,11 @@ packages:
     resolution: {integrity: sha512-w1+YvwmTkwt5n8yUqEH3IWZ9DsmorCZW/EQ3KYHnqEgIkOZpH54NvW6/Epq3Dzb8H0ifIeYX8PExvrNLIH5FIA==}
     engines: {node: '>=20.19'}
 
-  '@tanstack/query-core@5.105.3':
-    resolution: {integrity: sha512-v1rbNy7MB/4Akth7CQH+CerV13K7Ok9hAusEsfz4sCjDdu3/kOSJPoWfoB+YjdEX1eBFBWKNAGE5nqZCgdlHDw==}
+  '@tanstack/query-core@5.107.1':
+    resolution: {integrity: sha512-PSyAik11oQBEVOiVy5hjZWHmoUqOXqK1WYy4v55mcxozEfKaQgpUMsgnXhWjuESzSht8JfzqMS1m6M/9CpNgvg==}
 
-  '@tanstack/react-query@5.105.3':
-    resolution: {integrity: sha512-dj5hGWZmwoc9NG4enoXuYbiYwb5FxgJYPVv06eUgicMTfEMTRXn08Xv9D/r1V8TfjAv+BpxdvZFzJ1h3hSWZcQ==}
+  '@tanstack/react-query@5.107.1':
+    resolution: {integrity: sha512-udCOOLp3ZAheUrIHLCe+ZZge6nr2ZUrGMSWcCuXsjY1Bf2JeeE09oxst97PILiCY6N8xo/7bIo3Hvz13zh06FA==}
     peerDependencies:
       '@types/react': ^18 || ^19
       react: ^18 || ^19
@@ -5468,6 +5484,10 @@ snapshots:
     dependencies:
       '@netlify/runtime-utils': 3.0.0
 
+  '@netlify/cache@4.2.1':
+    dependencies:
+      '@netlify/runtime-utils': 3.0.1
+
   '@netlify/config@25.6.1':
     dependencies:
       '@netlify/api': 15.1.6
@@ -5500,10 +5520,10 @@ snapshots:
       '@electric-sql/pglite': 0.3.16
       pg-gateway: 0.3.0-beta.4
 
-  '@netlify/database@2.0.1':
+  '@netlify/database@2.0.3':
     dependencies:
       '@neondatabase/serverless': 1.2.0
-      '@netlify/runtime-utils': 3.0.0
+      '@netlify/runtime-utils': 3.0.1
       pg: 8.23.1
       waddler: 0.1.1(@neondatabase/serverless@1.2.0)(pg@8.23.1)
       ws: 8.22.1
@@ -5631,6 +5651,11 @@ snapshots:
       '@netlify/cache': 4.2.0
       '@netlify/types': 3.3.0
 
+  '@netlify/functions@6.1.1':
+    dependencies:
+      '@netlify/cache': 4.2.1
+      '@netlify/types': 3.3.1
+
   '@netlify/headers-parser@10.1.1':
     dependencies:
       escape-string-regexp: 5.0.0
@@ -5640,7 +5665,7 @@ snapshots:
     dependencies:
       '@netlify/headers-parser': 10.1.1
 
-  '@netlify/identity@2.0.0':
+  '@netlify/identity@2.0.1':
     dependencies:
       gotrue-js: 1.0.1
 
@@ -5680,6 +5705,8 @@ snapshots:
 
   '@netlify/runtime-utils@3.0.0': {}
 
+  '@netlify/runtime-utils@3.0.1': {}
+
   '@netlify/runtime@5.0.12(supports-color@7.2.0)':
     dependencies:
       '@netlify/blobs': 11.1.7(supports-color@7.2.0)
@@ -5710,6 +5737,8 @@ snapshots:
   '@netlify/types@2.8.0': {}
 
   '@netlify/types@3.3.0': {}
+
+  '@netlify/types@3.3.1': {}
 
   '@netlify/vite-plugin@3.0.1(@types/node@26.6.6)(babel-plugin-macros@3.1.0)(supports-color@7.2.0)(vite@8.3.5(@types/node@26.6.6)(esbuild@0.28.1)(yaml@2.9.1))':
     dependencies:
@@ -6109,11 +6138,11 @@ snapshots:
 
   '@tanstack/history@1.162.5': {}
 
-  '@tanstack/query-core@5.105.3': {}
+  '@tanstack/query-core@5.107.1': {}
 
-  '@tanstack/react-query@5.105.3(@types/react@19.3.0)(react@19.3.1)':
+  '@tanstack/react-query@5.107.1(@types/react@19.3.0)(react@19.3.1)':
     dependencies:
-      '@tanstack/query-core': 5.105.3
+      '@tanstack/query-core': 5.107.1
       react: 19.3.1
     optionalDependencies:
       '@types/react': 19.3.0
