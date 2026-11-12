@@ -8,3 +8,4 @@ playwright-report/
 
 # Local Netlify folder
 .netlify
+.lighthouseci

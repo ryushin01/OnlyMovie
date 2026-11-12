@@ -1,0 +1,9 @@
+[
+  {
+    "name": "첫 화면 JS",
+    "path": ["dist/assets/index-*.js", "dist/assets/main-*.js"],
+    "gzip": true,
+    "limit": "150 kB"
+  },
+  { "name": "CSS", "path": "dist/assets/index-*.css", "gzip": true, "limit": "53 kB" }
+]

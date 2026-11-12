@@ -15,6 +15,7 @@ import { SignupPage } from '@/pages/signup';
 import { WatchPage } from '@/pages/watch';
 import { nextSearch } from '@/shared/config/routes';
 import { routerSearch } from '@/shared/lib/routerSearch';
+import { reportError } from './monitoring';
 import { SiteLayout } from '@/widgets/site-layout';
 
 function Root() {
@@ -74,6 +75,8 @@ export const router = createRouter({
   routeTree,
   basepath: import.meta.env.BASE_URL.replace(/\/$/, '') || '/',
   defaultErrorComponent: RouteErrorPage,
+  // 라우터가 잡은 화면 오류는 전역으로 올라가지 않으므로 직접 보냅니다.
+  defaultOnCatch: (error) => reportError(error),
   scrollRestoration: true,
   ...routerSearch,
 });
