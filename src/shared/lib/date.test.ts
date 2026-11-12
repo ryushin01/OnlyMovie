@@ -6,4 +6,9 @@ describe('formatKoreanDate', () => {
     expect(formatKoreanDate('2026-11-12T16:00:00Z')).toBe('2026년 11월 13일');
     expect(formatKoreanDate('2026-11-12T16:00:00Z', 'medium')).toBe('2026. 11. 13.');
   });
+
+  it('날짜가 아니면 오류 대신 "—"를 보여 줍니다', () => {
+    expect(formatKoreanDate('')).toBe('—');
+    expect(formatKoreanDate('not a date', 'medium')).toBe('—');
+  });
 });

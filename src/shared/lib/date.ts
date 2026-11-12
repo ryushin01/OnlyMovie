@@ -4,6 +4,11 @@ const FORMATS = {
   medium: new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium', timeZone: 'Asia/Seoul' }),
 };
 
-/** '2026-11-13T03:00:00Z' → long: "2026년 11월 13일", medium: "2026. 11. 13." */
-export const formatKoreanDate = (iso: string, style: keyof typeof FORMATS = 'long') =>
-  FORMATS[style].format(new Date(iso));
+/**
+ * '2026-11-13T03:00:00Z' → long: "2026년 11월 13일", medium: "2026. 11. 13."
+ * 날짜가 아니면 "—". `Intl.DateTimeFormat.format`은 잘못된 날짜에 RangeError를 던져 화면이 깨지기 때문입니다.
+ */
+export function formatKoreanDate(iso: string, style: keyof typeof FORMATS = 'long') {
+  const date = new Date(iso);
+  return Number.isNaN(date.getTime()) ? '—' : FORMATS[style].format(date);
+}
