@@ -1,6 +1,6 @@
 {
   "name": "only-movie",
-  "version": "3.3.2",
+  "version": "3.3.3",
   "private": true,
   "type": "module",
   "scripts": {
@@ -16,7 +16,9 @@
     "test:e2e": "playwright test",
     "test:live": "LIVE=1 playwright test e2e/live.spec.ts",
     "screenshots": "SCREENSHOTS=1 playwright test e2e/screenshots.spec.ts --project=chromium",
-    "demo-gif": "DEMO=1 playwright test e2e/demo.spec.ts --project=chromium"
+    "demo-gif": "DEMO=1 playwright test e2e/demo.spec.ts --project=chromium",
+    "size": "size-limit",
+    "lhci": "lhci autorun"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -27,16 +29,20 @@
     "@netlify/database": "^2.0.1",
     "@netlify/functions": "^6.1.0",
     "@netlify/identity": "^2.0.0",
+    "@sentry/browser": "^11.12.0",
     "@tanstack/react-query": "^5.105.3",
     "@tanstack/react-router": "1.170.46",
     "react": "^19.3.1",
-    "react-dom": "^19.3.1"
+    "react-dom": "^19.3.1",
+    "web-vitals": "^6.2.3"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
+    "@lhci/cli": "^0.16.0",
     "@netlify/database-dev": "^1.0.1",
     "@netlify/vite-plugin": "^3.0.1",
     "@playwright/test": "^1.64.1",
+    "@size-limit/file": "^14.3.0",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
@@ -53,6 +59,7 @@
     "pg": "^8.23.1",
     "pngjs": "^7.0.0",
     "prettier": "^3.9.10",
+    "size-limit": "^14.3.0",
     "typescript": "^7.0.2",
     "vite": "^8.3.5",
     "vitest": "^5.1.0"

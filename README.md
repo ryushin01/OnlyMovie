@@ -60,7 +60,8 @@
 | 상태·데이터 | TanStack Query v5 |
 | 서버 | Netlify Functions, Netlify Database (PostgreSQL), Netlify Identity (회원) |
 | 스타일 | Emotion, Oswald·Black Han Sans(제목), Roboto·Gothic A1(본문) |
-| 품질 | oxlint, Prettier, Vitest + React Testing Library, Playwright + axe (Chromium, Firefox, WebKit E2E) |
+| 품질 | oxlint(jsx-a11y), Prettier, Vitest + React Testing Library, Playwright + axe (Chromium, Firefox, WebKit E2E), size-limit, Lighthouse CI |
+| 모니터링 | Sentry(DSN이 있을 때만), web-vitals |
 | 배포 | Netlify, GitHub Actions |
 | 자동화 | GitHub Actions (CI, 배포 후 사이트 검사), Dependabot |
 
@@ -83,6 +84,7 @@ pnpm db:migrate  # 처음 한 번, pnpm dev를 켠 채로 다른 터미널에서
 | `pnpm typecheck` / `lint` / `format` | 타입 검사 / 린트(접근성, FSD 계층 포함) / 코드 정리 |
 | `pnpm test` | 단위·컴포넌트 테스트, 실제 Postgres를 쓰는 서버 테스트 |
 | `pnpm test:e2e` | 프로덕션 빌드의 흐름·넘침·접근성 검사 (먼저 `build` 필요) |
+| `pnpm size` / `pnpm lhci` | 번들 크기 예산 / Lighthouse 점수 기준 검사 (먼저 `build` 필요) |
 | `pnpm test:live` | 배포된 사이트 검사 (`main`에 배포할 때마다 자동 실행) |
 | `pnpm screenshots` / `demo-gif` | README 스크린샷 / 시연 GIF 다시 만들기 (먼저 `build` 필요) |
 

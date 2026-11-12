@@ -1,5 +1,12 @@
 # 변경 기록
 
+## 3.3.3
+
+### 추가
+
+- 모니터링: `VITE_SENTRY_DSN`이 있으면 처리하지 못한 오류, 라우터가 잡은 화면 오류, 나쁜 Web Vitals를 Sentry로 보냄. 오류 내용만 보내고, Sentry(약 31 kB gzip)와 web-vitals는 첫 화면 뒤에 따로 받음
+- 성능 예산: CI에서 size-limit(첫 화면 JS 150 kB, CSS 53 kB)과 Lighthouse CI(첫 화면·영화 목록·영화 상세, 데스크톱 성능 90·접근성 100·권장 사항 95·SEO 90점)로 검사
+
 ## 3.3.2
 
 ### 변경
