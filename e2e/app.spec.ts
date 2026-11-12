@@ -766,20 +766,21 @@ test('운영과 같은 CSP에서 주요 화면이 정책 위반 없이 동작한
   expect(violations).toEqual([]);
 });
 
-test('화면을 그리다 오류가 나면 머리글을 유지한 채 안내하고 다른 화면으로 갈 수 있다', async ({ page }) => {
+test('응답 형식이 어긋나도 화면이 깨지지 않고 불러오기 실패를 안내하며, 머리글로 다른 화면에 갈 수 있다', async ({
+  page,
+}) => {
   await installFakeApi(page);
-  // 응답 형식이 어긋나 화면이 그리는 도중에 실패하는 경우입니다.
+  // 응답은 받는 즉시 스키마로 확인하므로, 형식이 어긋나면 화면을 그리기 전에 불러오기 실패로 다룹니다.
   await page.route('**/api/home', (route) =>
     route.fulfill({ json: { featured: seedMovies()[0], rows: null } }),
   );
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: '화면을 표시하지 못했습니다' })).toBeVisible();
-  await expect(page).toHaveTitle('화면을 표시하지 못했습니다 | OnlyMovie');
-  await expect(page.getByRole('button', { name: '새로고침' })).toBeVisible();
+  await expect(page.getByRole('alert')).toContainText('새로고침해 주세요');
+  await expect(page.getByRole('heading', { level: 1, name: '영화를 불러오지 못했습니다' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: '화면을 표시하지 못했습니다' })).toBeHidden();
   await expectNoAxeViolations(page);
 
   const nav = page.getByRole('navigation', { name: '주요 메뉴' });
   await nav.getByRole('link', { name: '이용권' }).click();
-  await expect(page.getByRole('heading', { level: 1, name: '화면을 표시하지 못했습니다' })).toBeHidden();
   await expect(page).toHaveURL(/\/plans$/);
 });

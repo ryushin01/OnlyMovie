@@ -8,6 +8,7 @@ import { PageMessage } from '@/shared/ui/PageMessage';
 import { MemberPanel } from '@/widgets/member-panel';
 import { MovieRow } from '@/widgets/movie-row';
 import { FeaturedMovie } from './FeaturedMovie';
+import { LoadFailed } from '@/shared/ui/LoadFailed';
 import { HomeSkeleton } from './HomeSkeleton';
 
 const layoutCss = css`
@@ -34,11 +35,7 @@ export function HomePage() {
 
   if (isPending) return <HomeSkeleton />;
   if (isError) {
-    return (
-      <p role="alert" css={{ paddingTop: 32 }}>
-        영화를 불러오지 못했습니다. 새로고침해 주세요.
-      </p>
-    );
+    return <LoadFailed title="영화를 불러오지 못했습니다" />;
   }
   if (!data.featured) return <PageMessage title="아직 공개된 영화가 없습니다" />;
 

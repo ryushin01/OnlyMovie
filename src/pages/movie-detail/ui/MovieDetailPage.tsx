@@ -19,6 +19,7 @@ import { buttonCss } from '@/shared/ui/Button';
 import { PageMessage } from '@/shared/ui/PageMessage';
 import { badgeCss, panelCss, sectionTitleCss, skeletonCss, visuallyHidden } from '@/shared/ui/styles';
 import { RelatedMovies } from './RelatedMovies';
+import { LoadFailed } from '@/shared/ui/LoadFailed';
 import { WatchAction } from './WatchAction';
 
 const route = getRouteApi('/movies/$id');
@@ -229,11 +230,7 @@ export function MovieDetailPage() {
     );
   }
   if (isError) {
-    return (
-      <p role="alert" css={{ paddingTop: 32 }}>
-        영화를 불러오지 못했습니다. 새로고침해 주세요.
-      </p>
-    );
+    return <LoadFailed title="영화를 불러오지 못했습니다" />;
   }
   if (!movie) {
     return (

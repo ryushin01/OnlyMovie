@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { request } from '@/shared/api/request';
-import type { PlanId, SubscriptionData } from '../model/plans';
+import { requestJson } from '@/shared/api/request';
+import type { PlanId } from '../model/plans';
+import { SubscriptionDataSchema } from './schemas';
 
 const KEY = 'subscription';
 
@@ -14,7 +15,7 @@ const json = (method: string, body: unknown): RequestInit => ({
 export const useSubscription = (userId: string | undefined) =>
   useQuery({
     queryKey: [KEY, userId],
-    queryFn: () => request<SubscriptionData>('/api/subscription'),
+    queryFn: () => requestJson('/api/subscription', SubscriptionDataSchema),
     enabled: Boolean(userId),
   });
 
@@ -29,7 +30,7 @@ export function useSubscribe() {
   const client = useQueryClient();
   return useMutation({
     mutationFn: (input: SubscribeInput) =>
-      request<SubscriptionData>('/api/subscription', json('POST', input)),
+      requestJson('/api/subscription', SubscriptionDataSchema, json('POST', input)),
     onSuccess: () => client.invalidateQueries({ queryKey: [KEY] }),
   });
 }
@@ -38,7 +39,7 @@ export function useChangeSubscription() {
   const client = useQueryClient();
   return useMutation({
     mutationFn: (change: SubscriptionChange) =>
-      request<SubscriptionData>('/api/subscription', json('PATCH', change)),
+      requestJson('/api/subscription', SubscriptionDataSchema, json('PATCH', change)),
     onSuccess: () => client.invalidateQueries({ queryKey: [KEY] }),
   });
 }

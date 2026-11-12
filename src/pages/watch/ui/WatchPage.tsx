@@ -7,6 +7,7 @@ import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
 import { PageMessage } from '@/shared/ui/PageMessage';
 import { formTitleCss } from '@/shared/ui/styles';
+import { LoadFailed } from '@/shared/ui/LoadFailed';
 import { Player } from './Player';
 
 const route = getRouteApi('/watch/$id');
@@ -58,11 +59,7 @@ export function WatchPage() {
     );
   }
   if (playback.isError || movie.isError || !movie.data || !playback.data) {
-    return (
-      <p role="alert" css={{ paddingTop: 32 }}>
-        재생 정보를 불러오지 못했습니다. 새로고침해 주세요.
-      </p>
-    );
+    return <LoadFailed title="재생 정보를 불러오지 못했습니다" />;
   }
 
   return (
