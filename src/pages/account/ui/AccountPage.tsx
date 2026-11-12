@@ -19,6 +19,7 @@ import { routes } from '@/shared/config/routes';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
 import { pageTitleCss, panelCss, sectionTitleCss } from '@/shared/ui/styles';
+import { formatKoreanDate } from '@/shared/lib/date';
 import { MovieRow } from '@/widgets/movie-row';
 
 const sectionCss = css`
@@ -56,8 +57,7 @@ const tableCss = css`
 const KIND = { new: '신규', renewal: '정기 결제', upgrade: '이용권 올림' };
 const STATUS = { paid: '성공', failed: '실패' };
 
-const day = (iso: string) =>
-  new Date(iso).toLocaleDateString('ko-KR', { dateStyle: 'medium', timeZone: 'Asia/Seoul' });
+const day = (iso: string) => formatKoreanDate(iso, 'medium');
 
 function Payments({ payments }: { payments: Payment[] }) {
   return (

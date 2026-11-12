@@ -2,6 +2,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { describe, expect, it, vi } from 'vitest';
+import type { Movie } from '../model/types';
 import { useMovies, useSaveProgress } from './queries';
 
 const wrapper = ({ children }: { children: ReactNode }) => (
@@ -33,10 +34,34 @@ describe('useSaveProgress', () => {
 });
 
 describe('useMovies', () => {
+  const movie: Movie = {
+    id: 'a',
+    title: '제목',
+    originalTitle: 'Title',
+    year: 2025,
+    country: '프랑스',
+    language: '프랑스어',
+    genres: ['드라마'],
+    director: '감독',
+    writer: '작가',
+    cast: [],
+    runtimeMinutes: 100,
+    ageRating: '12',
+    advisories: [],
+    moods: [],
+    audioLanguages: ['프랑스어'],
+    subtitleLanguages: ['한국어'],
+    synopsis: '',
+    importNote: '',
+    firstImport: false,
+    releasedOn: '2026-01-01',
+    poster: '/p.svg',
+    backdrop: '/b.svg',
+  };
   const stub = () =>
     vi.stubGlobal('fetch', (path: string) =>
       path.includes('genre=A')
-        ? Promise.resolve(Response.json({ items: [{ id: 'a' }], total: 1, page: 1, pageSize: 24 }))
+        ? Promise.resolve(Response.json({ items: [movie], total: 1, page: 1, pageSize: 24 }))
         : new Promise<Response>(() => {}),
     );
 

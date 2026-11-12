@@ -10,6 +10,7 @@ import {
   type Subscription,
   type SubscriptionChange,
 } from '@/entities/subscription';
+import { formatKoreanDate } from '@/shared/lib/date';
 import { Button } from '@/shared/ui/Button';
 
 const actionsCss = css`
@@ -24,8 +25,7 @@ const alertCss = css`
   font-weight: 700;
 `;
 
-const formatDay = (iso: string) =>
-  new Date(iso).toLocaleDateString('ko-KR', { dateStyle: 'long', timeZone: 'Asia/Seoul' });
+const formatDay = (iso: string) => formatKoreanDate(iso, 'long');
 
 const changeLabel = (current: PlanId, target: PlanId) => {
   const { name, price } = PLANS[target];

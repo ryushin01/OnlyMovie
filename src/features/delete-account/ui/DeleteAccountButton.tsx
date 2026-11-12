@@ -21,7 +21,7 @@ export function DeleteAccountButton({ onDone }: { onDone: () => void }) {
     setPending(true);
     setFailed(false);
     try {
-      await request<void>('/api/account', { method: 'DELETE' });
+      await request('/api/account', { method: 'DELETE' });
     } catch {
       setFailed(true);
       setPending(false);
