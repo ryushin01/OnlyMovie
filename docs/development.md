@@ -72,7 +72,7 @@ CI는 `main` 푸시와 PR마다 타입 검사, 린트, 포맷 검사, 단위 테
 
 ## 모니터링
 
-`src/app/main.tsx`가 화면을 그리기 전에 `app/monitoring`을 켜고, Sentry와 web-vitals는 나중에 따로 받습니다. Sentry는 페이지를 다 받은 뒤(load) 브라우저가 한가할 때 받고, load가 10초 안에 오지 않으면 그때 받습니다.
+`src/app/main.tsx`가 화면을 그리기 전에 `app/monitoring`을 켜고, Sentry와 web-vitals는 나중에 따로 받습니다. Sentry는 페이지를 다 받은 뒤(load) 브라우저가 한가할 때 받고, load가 10초 안에 오지 않으면 그때 바로 받습니다.
 
 | 환경 변수 | 내용 |
 | --- | --- |
