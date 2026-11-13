@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useState } from 'react';
 import { Link, Navigate } from '@tanstack/react-router';
-import { remainingNotes, useLibrary, watchedRatios } from '@/entities/movie';
+import { useLibrary } from '@/entities/movie';
 import { RequireAuth, useSession, type SessionUser } from '@/entities/session';
 import {
   activePlan,
@@ -14,13 +14,12 @@ import {
 } from '@/entities/subscription';
 import { DeleteAccountButton } from '@/features/delete-account';
 import { SubscriptionManager } from '@/features/manage-subscription';
-import { RemoveProgressButton } from '@/features/remove-progress';
 import { routes } from '@/shared/config/routes';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
 import { pageTitleCss, panelCss, sectionTitleCss } from '@/shared/ui/styles';
 import { formatKoreanDate } from '@/shared/lib/date';
-import { MovieRow } from '@/widgets/movie-row';
+import { ContinueWatchingRow, MovieRow } from '@/widgets/movie-row';
 
 const sectionCss = css`
   ${panelCss}
@@ -132,16 +131,7 @@ function Account({ user, onDeleted }: { user: SessionUser; onDeleted: () => void
           {data.payments.length > 0 && <Payments payments={data.payments} />}
         </>
       )}
-      {library && library.continueWatching.length > 0 && (
-        <MovieRow
-          title="시청 기록"
-          movies={library.continueWatching.map((item) => item.movie)}
-          notes={remainingNotes(library)}
-          progress={watchedRatios(library)}
-          cardAction={(movie) => <RemoveProgressButton movieId={movie.id} title={movie.title} />}
-          wide
-        />
-      )}
+      <ContinueWatchingRow library={library} title="시청 기록" />
       {library && library.watchlist.length > 0 && <MovieRow title="찜한 영화" movies={library.watchlist} />}
       <section css={sectionCss}>
         <h2>회원 탈퇴</h2>

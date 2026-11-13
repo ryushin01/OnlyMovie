@@ -17,7 +17,6 @@ export {
   parseMovieFilters,
   movieSearch,
   toMovieSearch,
-  PAGE_SIZE,
   RUNTIMES,
   SORTS,
   STATUSES,
@@ -31,12 +30,8 @@ export {
   formatRuntime,
   GENRES,
   isReleased,
-  type Genre,
-  type HomeRow,
   type MemberLibrary,
   type Movie,
-  type ReleaseAlert,
-  type MovieFacets,
 } from './model/types';
 export { GenreLinks } from './ui/GenreLinks';
 export { MovieCard } from './ui/MovieCard';

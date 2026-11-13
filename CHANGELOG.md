@@ -1,5 +1,20 @@
 # 변경 기록
 
+## 3.3.5
+
+### 공통화
+
+- 홈의 '이어 보기'와 내 계정의 '시청 기록' 줄이 같은 코드를 따로 갖고 있던 것을 `widgets/movie-row`의 `ContinueWatchingRow`로 모음(남은 시간, 본 비율, 기록 지우기 버튼). 테스트 추가
+
+### 모니터링
+
+- Sentry를 페이지를 다 받은 뒤(load) 한가할 때 받음. load가 10초 안에 오지 않으면 그때 받음
+- Error가 아닌 일반 객체로 거부된 Promise의 필드 값(`extra.__serialized__`)도 보내기 전에 지움
+
+### 정리
+
+- 엔티티 공개 API에서 다른 슬라이스가 쓰지 않는 내보내기를 뺌(`PAGE_SIZE`, `periodProgress`와 타입 `Genre`·`HomeRow`·`ReleaseAlert`·`MovieFacets`·`SubscribeInput`·`WatchBlock`)
+
 ## 3.3.4
 
 ### 수정
