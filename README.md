@@ -115,3 +115,14 @@ src/
 | [접근성 점검](docs/accessibility.md) | KWCAG 2.2 항목별 자체 점검 결과 |
 | [시퀀스 다이어그램](docs/sequence-diagrams.md) | 재생 권한과 동시 시청 제한, 이어 보기 저장, 이용권 바꾸기 |
 | [변경 기록](CHANGELOG.md) | 버전별 변경 내용 |
+
+## 출처
+
+| 자료 | 저작자 | 사용 허락 | 원본 |
+|---|---|---|---|
+| Oswald 글꼴 | The Oswald Project Authors | SIL OFL 1.1 | [googlefonts/OswaldFont](https://github.com/googlefonts/OswaldFont) |
+| Black Han Sans(검은고딕) 글꼴 | The Black Han Sans Project Authors | SIL OFL 1.1 | [zesstype/Black-Han-Sans](https://github.com/zesstype/Black-Han-Sans) |
+| Gothic A1 글꼴 | HanYang I&C | SIL OFL 1.1 | [Google Fonts](https://fonts.google.com/specimen/Gothic+A1) |
+| Roboto 글꼴 | The Roboto Project Authors | SIL OFL 1.1 | [googlefonts/roboto-classic](https://github.com/googlefonts/roboto-classic) |
+
+포스터와 배경 이미지는 코드로 그렸고, 영화와 인물은 가상 데이터입니다.
