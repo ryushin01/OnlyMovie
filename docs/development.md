@@ -72,14 +72,14 @@ CI는 `main` 푸시와 PR마다 타입 검사, 린트, 포맷 검사, 단위 테
 
 ## 모니터링
 
-`src/app/main.tsx`가 화면을 그리기 전에 `app/monitoring`을 켜고, Sentry와 web-vitals는 나중에 따로 받습니다.
+`src/app/main.tsx`가 화면을 그리기 전에 `app/monitoring`을 켜고, Sentry와 web-vitals는 나중에 따로 받습니다. Sentry는 페이지를 다 받은 뒤(load) 브라우저가 한가할 때 받고, load가 10초 안에 오지 않으면 그때 받습니다.
 
 | 환경 변수 | 내용 |
 | --- | --- |
 | `VITE_SENTRY_DSN` | 있으면 처리하지 못한 오류와 나쁜(poor) Web Vitals를 Sentry로 보냅니다. 없으면 Sentry를 번들에 넣지 않고, 개발 모드에서 Web Vitals를 콘솔에만 찍습니다 |
 
 - TanStack Router가 잡아 오류 화면으로 바꾼 오류는 전역으로 올라가지 않으므로 `defaultOnCatch`에서 `reportError`로 보냅니다.
-- Sentry에는 주소의 `#` 뒤(로그인·복구 토큰이 실릴 수 있음)를 보내지 않습니다.
+- Sentry에는 주소의 `#` 뒤(로그인·복구 토큰이 실릴 수 있음), 오류에 붙는 콜백 인수, Error가 아닌 일반 객체로 거부된 Promise의 필드 값(`extra.__serialized__`)을 보내지 않습니다.
 - Sentry에는 오류 내용만 보내고 사용자 정보·쿠키·헤더·쿼리 문자열, 방문 기록(세션), 이동·클릭 기록(브레드크럼), 콘솔 기록은 모으지 않습니다. Sentry를 받기 전에 난 오류는 최대 20개까지 모아 두었다가 처리되지 않은 오류로 보냅니다.
 - 쓰는 함수만 `sentry.ts`에서 다시 내보내 약 31 kB(gzip)로 받습니다. 모듈 전체를 불러오면 리플레이·피드백까지 들어가 140 kB가 됩니다.
 - Netlify Functions(서버)의 오류는 Netlify 로그로 확인합니다.
