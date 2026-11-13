@@ -41,6 +41,10 @@
 | esbuild 빌드 스크립트 | 실행하지 않음 (`pnpm-workspace.yaml`) | 없어도 빌드와 테스트가 동작합니다. 승인 여부를 정하지 않으면 `pnpm install`이 실패합니다. |
 | 샘플 데이터 | 가상의 영화와 코드로 그린 SVG, 시드 마이그레이션 | 실제 영화 이미지의 저작권 문제를 피합니다. `scripts/generate-seed.mjs`와 원고 `scripts/seed-movies.mjs`로 만듭니다. |
 
+### API 응답 검증
+
+API 호출은 `src/shared/api/request.ts`를 거칩니다. 본문을 받는 요청은 `requestJson(path, schema)`로 zod 스키마(`entities/*/api/schemas.ts`)를 넘겨, 형식이 어긋난 응답을 화면을 그리기 전에 `InvalidResponseError`(502)로 바꿉니다. 스키마에는 서버와 함께 쓰는 타입을 붙여 두 정의가 어긋나면 타입 검사에서 드러납니다. 불러오기에 실패한 화면은 `shared/ui`의 `LoadFailed`(제목이 있는 경고)를 쓰고, 날짜는 `shared/lib/date.ts`의 `formatKoreanDate`로 표시합니다(잘못된 날짜는 `—`).
+
 ## 테스트
 
 | 종류 | 위치 | 검사 내용 |
