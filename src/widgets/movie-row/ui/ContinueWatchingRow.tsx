@@ -1,6 +1,6 @@
 import { remainingNotes, watchedRatios, type MemberLibrary } from '@/entities/movie';
-import { RemoveProgressButton } from '@/features/remove-progress';
 import { MovieRow } from './MovieRow';
+import { RemoveProgressButton } from './RemoveProgressButton';
 
 /**
  * 이어 볼 영화 줄. 남은 시간과 본 비율을 함께 보여 주고, 카드마다 기록 지우기 버튼을 둡니다.

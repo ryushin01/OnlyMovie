@@ -1,8 +1,8 @@
 import { getRouteApi, Link, useNavigate } from '@tanstack/react-router';
-import { LoginForm } from '@/features/login';
-import { routes, safeNext } from '@/shared/config/routes';
+import { routes, safeNext } from '@/shared/config';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { formPanelCss, formTitleCss } from '@/shared/ui/styles';
+import { LoginForm } from './LoginForm';
 
 const route = getRouteApi('/login');
 

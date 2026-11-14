@@ -1,9 +1,8 @@
 import { screen } from '@testing-library/react';
 import { expect, it } from 'vitest';
 import type { Movie } from '@/entities/movie';
-import { sampleMovie } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
-import { routes } from '@/shared/config/routes';
+import { renderWithProviders, sampleMovie } from '@/shared/lib/test';
+import { routes } from '@/shared/config';
 import { MovieRow } from './MovieRow';
 
 it('MovieRow는 줄 제목으로 영역 이름을 정하고 전체 보기로 잇는다', async () => {

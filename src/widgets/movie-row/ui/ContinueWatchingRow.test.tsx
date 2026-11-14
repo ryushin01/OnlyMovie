@@ -1,8 +1,7 @@
 import { screen } from '@testing-library/react';
 import { expect, it } from 'vitest';
 import type { MemberLibrary, Movie } from '@/entities/movie';
-import { sampleMovie } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { renderWithProviders, sampleMovie } from '@/shared/lib/test';
 import { ContinueWatchingRow } from './ContinueWatchingRow';
 
 const library = (continueWatching: MemberLibrary['continueWatching']) =>

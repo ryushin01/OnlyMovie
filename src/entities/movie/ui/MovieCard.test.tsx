@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/react';
 import { expect, it } from 'vitest';
-import { sampleMovie } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { renderWithProviders, sampleMovie } from '@/shared/lib/test';
 import type { Movie } from '../model/types';
 import { MovieCard } from './MovieCard';
 

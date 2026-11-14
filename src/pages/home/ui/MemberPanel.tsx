@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router';
 import { formatDate, isReleased, useLibrary, type Movie } from '@/entities/movie';
 import { useSession } from '@/entities/session';
 import { activePlan, PeriodMeter, planSurfaceCss, PLANS, useSubscription } from '@/entities/subscription';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { buttonCss } from '@/shared/ui/Button';
 import { panelCss, sectionTitleCss } from '@/shared/ui/styles';
 

@@ -1,8 +1,7 @@
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { installFakeApi } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders, Where } from '@/shared/lib/test/renderWithProviders';
+import { installFakeApi, renderWithProviders, Where } from '@/shared/lib/test';
 import { SiteLayout } from './SiteLayout';
 
 const view = () => renderWithProviders(<Where />, '/', { layout: SiteLayout });

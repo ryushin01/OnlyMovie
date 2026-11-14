@@ -1,7 +1,6 @@
 import { act, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { activeSubscription, installFakeApi, sampleMovie } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { activeSubscription, installFakeApi, renderWithProviders, sampleMovie } from '@/shared/lib/test';
 import { MovieDetailPage } from './MovieDetailPage';
 
 const view = (path = '/movies/last-screening') =>

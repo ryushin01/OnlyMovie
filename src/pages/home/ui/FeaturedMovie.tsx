@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { Link } from '@tanstack/react-router';
 import { AGE_LABELS, formatRuntime, MoviePoster, type Movie } from '@/entities/movie';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { buttonCss } from '@/shared/ui/Button';
 import { badgeCss, visuallyHidden } from '@/shared/ui/styles';
 

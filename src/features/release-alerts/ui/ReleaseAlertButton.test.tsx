@@ -1,8 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, it } from 'vitest';
-import { installFakeApi } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { installFakeApi, renderWithProviders } from '@/shared/lib/test';
 import { ReleaseAlertButton } from './ReleaseAlertButton';
 
 const view = () => renderWithProviders(<ReleaseAlertButton movieId="last-screening" />);

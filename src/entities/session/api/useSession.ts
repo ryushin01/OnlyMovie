@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod/mini';
-import { ApiError, requestJson } from '@/shared/api/request';
+import { ApiError, requestJson } from '@/shared/api';
 
 const KEY = ['session'];
 

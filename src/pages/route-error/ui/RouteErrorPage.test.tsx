@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { expect, it } from 'vitest';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { renderWithProviders } from '@/shared/lib/test';
 import { RouteErrorPage } from './RouteErrorPage';
 
 it('RouteErrorPage는 안내와 새로고침 버튼을 보여 주고 문서 제목을 바꾼다', async () => {

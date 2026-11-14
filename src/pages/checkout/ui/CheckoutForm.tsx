@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useRef, useState, type FormEvent } from 'react';
 import { formatPrice, useSubscribe, type Plan } from '@/entities/subscription';
-import { ApiError } from '@/shared/api/request';
+import { ApiError } from '@/shared/api';
 import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { Button } from '@/shared/ui/Button';
 

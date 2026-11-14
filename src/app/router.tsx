@@ -13,7 +13,7 @@ import { PlansPage } from '@/pages/plans';
 import { RouteErrorPage } from '@/pages/route-error';
 import { SignupPage } from '@/pages/signup';
 import { WatchPage } from '@/pages/watch';
-import { nextSearch } from '@/shared/config/routes';
+import { nextSearch } from '@/shared/config';
 import { routerSearch } from '@/shared/lib/routerSearch';
 import { PageAnnouncer } from '@/shared/ui/PageAnnouncer';
 import { reportError } from './monitoring';

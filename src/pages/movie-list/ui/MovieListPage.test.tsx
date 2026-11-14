@@ -2,8 +2,7 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import { movieSearch } from '@/entities/movie';
-import { installFakeApi, sampleMovie } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { installFakeApi, renderWithProviders, sampleMovie } from '@/shared/lib/test';
 import { MovieListPage } from './MovieListPage';
 
 // 앱의 라우터처럼 주소의 조건을 검증해서 넘깁니다.

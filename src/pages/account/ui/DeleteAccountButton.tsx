@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useClearSession } from '@/entities/session';
-import { request } from '@/shared/api/request';
+import { request } from '@/shared/api';
 import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { Button } from '@/shared/ui/Button';
 

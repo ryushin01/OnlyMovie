@@ -12,8 +12,7 @@ import {
   type Movie,
 } from '@/entities/movie';
 import { ReleaseAlertButton } from '@/features/release-alerts';
-import { WatchlistButton } from '@/features/toggle-watchlist';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
 import { PageMessage } from '@/shared/ui/PageMessage';
@@ -21,6 +20,7 @@ import { badgeCss, panelCss, sectionTitleCss, skeletonCss, visuallyHidden } from
 import { RelatedMovies } from './RelatedMovies';
 import { LoadFailed } from '@/shared/ui/LoadFailed';
 import { WatchAction } from './WatchAction';
+import { WatchlistButton } from './WatchlistButton';
 
 const route = getRouteApi('/movies/$id');
 

@@ -1,7 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import { expect, it } from 'vitest';
-import { installFakeApi } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { installFakeApi, renderWithProviders } from '@/shared/lib/test';
 import { ImportsPage } from './ImportsPage';
 
 it('수입 이야기와 작품 링크를 보여 준다', async () => {

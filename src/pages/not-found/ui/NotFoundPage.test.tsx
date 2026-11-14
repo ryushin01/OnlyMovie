@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { expect, it } from 'vitest';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { renderWithProviders } from '@/shared/lib/test';
 import { NotFoundPage } from './NotFoundPage';
 
 it('NotFoundPage는 안내와 메인 링크를 보여 준다', async () => {

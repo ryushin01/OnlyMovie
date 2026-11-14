@@ -1,5 +1,5 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ApiError } from '@/shared/api/request';
+import { ApiError } from '@/shared/api';
 import type { MovieFilters } from '../model/filters';
 import {
   getFacets,

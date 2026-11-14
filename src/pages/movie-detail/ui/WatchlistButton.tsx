@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { Link } from '@tanstack/react-router';
 import { useLibrary, useToggleWatchlist } from '@/entities/movie';
 import { useSession } from '@/entities/session';
-import { paths, routes } from '@/shared/config/routes';
+import { paths, routes } from '@/shared/config';
 import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { Button, buttonCss } from '@/shared/ui/Button';
 import { onImageButtonCss } from '@/shared/ui/styles';

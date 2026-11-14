@@ -3,7 +3,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Link } from '@tanstack/react-router';
 import { formatDate, useLibrary, useMarkAlertsRead } from '@/entities/movie';
 import { useSession } from '@/entities/session';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { buttonCss } from '@/shared/ui/Button';
 import { BellIcon } from '@/shared/ui/icons';
 import { badgeCss } from '@/shared/ui/styles';

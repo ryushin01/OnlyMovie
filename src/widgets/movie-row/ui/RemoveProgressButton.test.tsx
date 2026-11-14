@@ -1,8 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, it } from 'vitest';
-import { installFakeApi } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { installFakeApi, renderWithProviders } from '@/shared/lib/test';
 import { RemoveProgressButton } from './RemoveProgressButton';
 
 const view = () => renderWithProviders(<RemoveProgressButton movieId="a" title="마지막 상영" />);

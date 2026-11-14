@@ -1,8 +1,8 @@
 import { css } from '@emotion/react';
 import { Link, Navigate, getRouteApi } from '@tanstack/react-router';
 import { useMovie, usePlayback } from '@/entities/movie';
-import { ApiError } from '@/shared/api/request';
-import { paths, routes } from '@/shared/config/routes';
+import { ApiError } from '@/shared/api';
+import { paths, routes } from '@/shared/config';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
 import { PageMessage } from '@/shared/ui/PageMessage';

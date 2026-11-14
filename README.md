@@ -1,7 +1,7 @@
 # OnlyMovie
 
 [![CI](https://github.com/ryushin01/OnlyMovie/actions/workflows/ci.yml/badge.svg)](https://github.com/ryushin01/OnlyMovie/actions/workflows/ci.yml)
-[![version](https://img.shields.io/badge/version-3.3.7-0a7446)](https://github.com/ryushin01/OnlyMovie/releases/latest)
+[![version](https://img.shields.io/badge/version-3.3.8-0a7446)](https://github.com/ryushin01/OnlyMovie/releases/latest)
 
 시네필을 위한 영화 전문 OTT입니다. 시리즈도 예능도 없이 영화만 다루고, 국내에 수입되지 않은 영화를 누구보다 먼저 들여와 보여 줍니다.
 
@@ -81,7 +81,7 @@ pnpm db:migrate  # 처음 한 번, pnpm dev를 켠 채로 다른 터미널에서
 | 명령 | 설명 |
 |---|---|
 | `pnpm build` | 타입 검사와 프로덕션 빌드 |
-| `pnpm typecheck` / `lint` / `format` | 타입 검사 / 린트(접근성, FSD 계층 포함) / 코드 정리 |
+| `pnpm typecheck` / `lint` / `lint:fsd` / `format` | 타입 검사 / 린트(접근성, FSD 계층 포함) / FSD 구조 검사(Steiger) / 코드 정리 |
 | `pnpm test` | 단위·컴포넌트 테스트, 실제 Postgres를 쓰는 서버 테스트 |
 | `pnpm test:e2e` | 프로덕션 빌드의 흐름·넘침·접근성 검사 (먼저 `build` 필요) |
 | `pnpm size` / `pnpm lhci` | 번들 크기 예산 / Lighthouse 점수 기준 검사 (먼저 `build` 필요) |
@@ -100,9 +100,10 @@ public/seed/        가상 영화의 포스터와 배경
 scripts/            가상 영화 원고와 시드 생성
 src/
 ├─ app/             진입점, 라우터, 전역 스타일과 테마 색상
-├─ pages/           home, movie-list, movie-detail, watch, plans, checkout, account, login, signup, not-found, route-error
-├─ widgets/         site-layout (레일 메뉴, 머리글, 본문 바로가기, 바닥글), movie-row (가로 작품 줄), member-panel (내 정보)
-├─ features/        search-movies, filter-movies, toggle-watchlist, subscribe, manage-subscription, login, signup, logout, delete-account, toggle-theme
+├─ pages/           home, movie-list, movie-detail, watch, imports, plans, checkout, account, login, signup, not-found, route-error
+│                   (한 화면에서만 쓰는 폼과 버튼은 그 화면에 둠)
+├─ widgets/         site-layout (레일 메뉴, 머리글, 검색, 테마 전환), movie-row (가로 작품 줄, 이어 보기)
+├─ features/        release-alerts (공개 알림: 머리글, 상세, 기획전에서 씀)
 ├─ entities/        movie (작품, 검색 조건, 찜과 이어 보기), subscription (이용권, 재생 권한), session (로그인 상태)
 └─ shared/          공통 UI, 경로, 유틸리티
 ```

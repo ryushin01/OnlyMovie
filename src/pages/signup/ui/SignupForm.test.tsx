@@ -1,8 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { installFakeApi } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { installFakeApi, renderWithProviders } from '@/shared/lib/test';
 import { SignupForm } from './SignupForm';
 
 const auth = vi.hoisted(() => ({ signup: vi.fn() }));

@@ -1,14 +1,14 @@
 import { css } from '@emotion/react';
 import { GENRES, GenreLinks, useHome, useLibrary } from '@/entities/movie';
 import { useSession } from '@/entities/session';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { PageMessage } from '@/shared/ui/PageMessage';
-import { MemberPanel } from '@/widgets/member-panel';
 import { ContinueWatchingRow, MovieRow } from '@/widgets/movie-row';
 import { FeaturedMovie } from './FeaturedMovie';
 import { LoadFailed } from '@/shared/ui/LoadFailed';
 import { HomeSkeleton } from './HomeSkeleton';
+import { MemberPanel } from './MemberPanel';
 
 const layoutCss = css`
   @media (min-width: 1440px) {

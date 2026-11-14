@@ -25,6 +25,7 @@
 | 작품 정보 캐시 | `Netlify-CDN-Cache-Control` 60초, 이후 5분은 이전 응답을 주며 갱신 | 메인과 리스트가 함수와 DB를 깨우느라 1~3초 걸리던 대기를 줄입니다. 회원과 무관한 메인, 검색, 필터 목록, 작품 상세에만 붙이며 찜, 이어 보기, 재생 권한에는 붙이지 않습니다. 공개 상태 변경은 몇 분 늦을 수 있지만 재생 권한은 서버가 따로 확인합니다. |
 | 요청 재시도 | 네트워크 오류와 5xx만 한 번 | 함수가 깨어나는 동안의 실패는 다시 시도하면 풀리지만, 4xx는 결과가 같아 안내만 늦어집니다. |
 | 라우터 | TanStack Router, 코드 기반 경로(`src/app/router.tsx`) | 링크의 경로와 매개변수를 타입으로 확인합니다(`<Link {...routes.movie(id)}>`). 화면은 `getRouteApi('/movies/$id')`로 매개변수와 주소 조건을 읽어 앱 파일을 가져오지 않습니다(FSD). 주소 조건은 각 경로의 `validateSearch`가 검증하고, 값은 JSON 대신 평범한 쿼리로 둡니다(`shared/lib/routerSearch.ts`). 메인의 첫 JS는 React Router 때보다 gzip 약 5kB 작습니다(134.2kB → 128.9kB, 1회 측정). |
+| 슬라이스 나누기 | 한 곳에서만 쓰는 폼과 버튼은 그 화면(pages)이나 위젯에 두고, 두 곳 이상에서 쓰면 features로 올림 | FSD의 pages first 원칙입니다. `pnpm lint:fsd`(Steiger)가 한 곳에서만 쓰는 슬라이스와 공개 API를 거치지 않은 import를 잡습니다. shared의 `api`, `config`, `lib/test`도 `index.ts`로만 가져옵니다. |
 | 상태 메시지 | 처음부터 두는 `output`·`alert` 영역(`AlertMessage`), 화면 전체 실패는 레이아웃의 `PageAnnouncer` | 스크린 리더는 처음부터 있던 영역의 내용이 바뀔 때 읽습니다. 실패 안내로 초점을 옮기지 않고, 본문이 통째로 바뀌는 실패는 앱이 시작될 때부터 있는 영역으로 알립니다. |
 | 요청 중 버튼 | `Button`의 `pending`(`aria-disabled`)과 `useRef` 잠금 | 초점을 가진 버튼을 `disabled`로 바꾸면 브라우저가 초점을 문서 처음으로 보내 키보드 사용자가 위치를 잃습니다. 빠른 두 번 누르기는 ref 잠금이 막습니다. |
 | 아이콘 버튼 툴팁 | `Tooltip`(`role="tooltip"`), 글자를 `aria-labelledby`로 이름에 씀 | 마우스와 초점 모두에서 보이고 Esc로 닫힙니다. 툴팁 글자가 곧 버튼 이름이라 `aria-describedby`로 이으면 같은 말을 두 번 읽습니다. 화면 가장자리의 버튼은 안쪽으로 펼쳐 넘치지 않게 합니다. |
@@ -66,7 +67,7 @@ pnpm test:e2e
 
 E2E는 기본으로 포트 4310을 쓰며, `E2E_PORT`로 바꿀 수 있습니다.
 
-CI는 `main` 푸시와 PR마다 타입 검사, 린트, 포맷 검사, 단위 테스트, 빌드, E2E를 실행합니다.
+CI는 `main` 푸시와 PR마다 타입 검사, 린트, FSD 구조 검사(Steiger), 포맷 검사, 단위 테스트, 빌드, E2E를 실행합니다.
 
 ## 성능
 

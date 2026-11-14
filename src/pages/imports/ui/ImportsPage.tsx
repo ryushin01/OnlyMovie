@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import { Link } from '@tanstack/react-router';
 import { formatDate, MoviePoster, useMovies, type Movie } from '@/entities/movie';
 import { ReleaseAlertButton } from '@/features/release-alerts';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { pageTitleCss, panelCss, sectionTitleCss } from '@/shared/ui/styles';

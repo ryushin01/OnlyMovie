@@ -2,14 +2,14 @@ import { css } from '@emotion/react';
 import { useEffect, useRef } from 'react';
 import { Link, Outlet, useLocation } from '@tanstack/react-router';
 import { useSession } from '@/entities/session';
-import { LogoutButton } from '@/features/logout';
 import { AlertBell } from '@/features/release-alerts';
-import { MovieSearch } from '@/features/search-movies';
-import { ThemeToggle } from '@/features/toggle-theme';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { buttonCss } from '@/shared/ui/Button';
 import { PageAnnouncer } from '@/shared/ui/PageAnnouncer';
 import { FilmIcon, HomeIcon, LoginIcon, StarIcon, TicketIcon, UserIcon } from '@/shared/ui/icons';
+import { LogoutButton } from './LogoutButton';
+import { MovieSearch } from './MovieSearch';
+import { ThemeToggle } from './ThemeToggle';
 
 /** 레일이 왼쪽에 서고, 좁은 화면에서는 아래쪽 탭 막대가 되는 폭 */
 const WIDE = '@media (min-width: 768px)';

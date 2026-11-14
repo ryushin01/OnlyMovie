@@ -10,7 +10,7 @@ import {
 } from '@tanstack/react-router';
 import { act, render } from '@testing-library/react';
 import type { ReactElement } from 'react';
-import { createQueryClient } from '@/shared/api/queryClient';
+import { createQueryClient } from '@/shared/api';
 import { routerSearch } from '@/shared/lib/routerSearch';
 
 type Page =

@@ -9,7 +9,7 @@ import {
   PLANS,
   useSubscription,
 } from '@/entities/subscription';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
 import { pageTitleCss } from '@/shared/ui/styles';
