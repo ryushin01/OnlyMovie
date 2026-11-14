@@ -22,7 +22,7 @@ export function LogoutButton() {
   };
 
   return (
-    <Button variant="outline" disabled={pending} onClick={handleClick}>
+    <Button variant="outline" pending={pending} onClick={handleClick}>
       로그아웃
     </Button>
   );

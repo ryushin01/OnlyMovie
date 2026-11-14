@@ -4,6 +4,7 @@ import { formatDate, MoviePoster, useMovies, type Movie } from '@/entities/movie
 import { ReleaseAlertButton } from '@/features/release-alerts';
 import { routes } from '@/shared/config/routes';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
+import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { pageTitleCss, panelCss, sectionTitleCss } from '@/shared/ui/styles';
 
 const introCss = css`
@@ -96,11 +97,9 @@ export function ImportsPage() {
       {(now.isPending || upcoming.isPending) && (
         <output css={{ display: 'block', marginTop: 32 }}>영화를 불러오는 중입니다.</output>
       )}
-      {(now.isError || upcoming.isError) && (
-        <p role="alert" css={{ marginTop: 32 }}>
-          영화를 불러오지 못했습니다. 새로고침해 주세요.
-        </p>
-      )}
+      <AlertMessage css={{ marginTop: 32 }}>
+        {now.isError || upcoming.isError ? '영화를 불러오지 못했습니다. 새로고침해 주세요.' : null}
+      </AlertMessage>
       {upcoming.data && upcoming.data.items.length > 0 && (
         <section css={sectionCss} aria-labelledby="imports-upcoming">
           <h2 id="imports-upcoming">곧 들어오는 작품</h2>

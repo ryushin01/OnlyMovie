@@ -34,5 +34,5 @@ it('실패를 글자로 알린다', async () => {
   state.fail = (method) => method === 'PUT';
   await view();
   await userEvent.click(await screen.findByRole('button', { name: '공개 알림 받기' }));
-  expect(await screen.findByRole('alert')).toHaveTextContent('바꾸지 못했습니다');
+  await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('바꾸지 못했습니다'));
 });

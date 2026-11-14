@@ -6,7 +6,8 @@ import { useSession } from '@/entities/session';
 import { routes } from '@/shared/config/routes';
 import { buttonCss } from '@/shared/ui/Button';
 import { BellIcon } from '@/shared/ui/icons';
-import { badgeCss, visuallyHidden } from '@/shared/ui/styles';
+import { badgeCss } from '@/shared/ui/styles';
+import { Tooltip } from '@/shared/ui/Tooltip';
 
 const wrapCss = css`
   position: relative;
@@ -90,6 +91,8 @@ export function AlertBell() {
   const panelId = useId();
   const alerts = data?.alerts ?? [];
   const unread = alerts.filter((alert) => alert.unread).length;
+  // 아이콘만 있는 버튼이므로 툴팁 글자를 이름으로 씁니다.
+  const bellLabel = `공개 알림${unread > 0 ? ` 새 소식 ${unread}건` : ''}`;
 
   const latest = useRef({ unread, markRead });
   useEffect(() => {
@@ -125,22 +128,26 @@ export function AlertBell() {
 
   return (
     <div ref={wrapRef} css={wrapCss}>
-      <button
-        ref={triggerRef}
-        type="button"
-        css={triggerCss}
-        aria-expanded={open}
-        aria-controls={panelId}
-        onClick={() => (open ? close() : setOpen(true))}
-      >
-        <BellIcon />
-        <span css={visuallyHidden}>공개 알림{unread > 0 ? ` 새 소식 ${unread}건` : ''}</span>
-        {unread > 0 && (
-          <span css={countCss} aria-hidden="true">
-            {unread}
-          </span>
+      <Tooltip label={bellLabel} align="end" suppressed={open}>
+        {(trigger) => (
+          <button
+            ref={triggerRef}
+            type="button"
+            css={triggerCss}
+            aria-expanded={open}
+            aria-controls={panelId}
+            onClick={() => (open ? close() : setOpen(true))}
+            {...trigger}
+          >
+            <BellIcon />
+            {unread > 0 && (
+              <span css={countCss} aria-hidden="true">
+                {unread}
+              </span>
+            )}
+          </button>
         )}
-      </button>
+      </Tooltip>
       <div id={panelId} css={panelCss} hidden={!open}>
         <h2>공개 알림</h2>
         {alerts.length === 0 ? (

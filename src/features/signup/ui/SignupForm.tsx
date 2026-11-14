@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { useRefreshSession } from '@/entities/session';
+import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { Button } from '@/shared/ui/Button';
 import { Field } from '@/shared/ui/Field';
 import { inputCss } from '@/shared/ui/styles';
@@ -11,8 +12,13 @@ const formCss = css`
   max-width: 420px;
 `;
 const alertCss = css`
-  margin: 0;
+  margin-bottom: 16px;
   color: var(--danger);
+  font-weight: 700;
+`;
+const doneTitleCss = css`
+  margin: 0 0 8px;
+  font-size: 1.25rem;
   font-weight: 700;
 `;
 
@@ -40,27 +46,32 @@ export function SignupForm({ onDone }: { onDone: () => void }) {
   const [failure, setFailure] = useState('');
   const [sentTo, setSentTo] = useState('');
   const [pending, setPending] = useState(false);
-  const alertRef = useRef<HTMLParagraphElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
+  const doneRef = useRef<HTMLHeadingElement>(null);
+  const submitting = useRef(false);
   const refreshSession = useRefreshSession();
 
+  // 폼이 확인 메일 안내로 바뀌면 누른 버튼이 사라지므로, 새 안내의 제목으로 초점을 옮깁니다.
   useEffect(() => {
-    if (failure) alertRef.current?.focus();
-  }, [failure]);
+    if (sentTo) doneRef.current?.focus();
+  }, [sentTo]);
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
-    if (pending) return;
+    if (submitting.current) return;
     const found = validate(name, email, password);
     setErrors(found);
     setFailure('');
     if (Object.keys(found).length > 0) {
-      // 오류가 난 첫 입력 칸으로 초점을 옮깁니다.
+      // 오류가 난 첫 입력 칸으로 초점을 옮깁니다. 오류 문구는 입력 칸의 설명으로 함께 읽힙니다.
       requestAnimationFrame(() =>
         formRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus(),
       );
       return;
     }
+    // 빠르게 두 번 누르면 pending이 바뀌기 전에 다시 들어오므로 ref로 막습니다.
+    // 성공하면 폼이 사라지거나 화면을 떠나므로 실패했을 때만 풉니다.
+    submitting.current = true;
     setPending(true);
     try {
       const { signup } = await import('@netlify/identity');
@@ -73,6 +84,7 @@ export function SignupForm({ onDone }: { onDone: () => void }) {
         setSentTo(email);
       }
     } catch {
+      submitting.current = false;
       setFailure('가입하지 못했습니다. 이미 가입한 이메일인지 확인하고 다시 시도해 주세요.');
     } finally {
       setPending(false);
@@ -81,10 +93,15 @@ export function SignupForm({ onDone }: { onDone: () => void }) {
 
   if (sentTo) {
     return (
-      <output>
-        {sentTo}로 확인 메일을 보냈습니다. 메일의 링크를 누르면 가입이 끝납니다. 메일이 보이지 않으면 스팸함을
-        확인해 주세요.
-      </output>
+      <div>
+        <h2 ref={doneRef} tabIndex={-1} css={doneTitleCss}>
+          메일을 확인해 주세요
+        </h2>
+        <p css={{ margin: 0 }}>
+          {sentTo}로 확인 메일을 보냈습니다. 메일의 링크를 누르면 가입이 끝납니다. 메일이 보이지 않으면
+          스팸함을 확인해 주세요.
+        </p>
+      </div>
     );
   }
 
@@ -125,13 +142,10 @@ export function SignupForm({ onDone }: { onDone: () => void }) {
           />
         )}
       </Field>
-      {failure && (
-        <p ref={alertRef} role="alert" tabIndex={-1} css={alertCss}>
-          {failure}
-        </p>
-      )}
       <div>
-        <Button type="submit" disabled={pending}>
+        {/* 안내 영역은 처음부터 두고 내용만 바꿉니다. 초점은 가입 버튼에 그대로 둡니다. */}
+        <AlertMessage css={alertCss}>{failure || null}</AlertMessage>
+        <Button type="submit" pending={pending}>
           {pending ? '가입 중…' : '가입하기'}
         </Button>
       </div>

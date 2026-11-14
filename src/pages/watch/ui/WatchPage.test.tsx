@@ -88,7 +88,7 @@ describe('WatchPage', () => {
     state.screensFull = true;
     await view();
     await user.click(await screen.findByRole('button', { name: '재생' }));
-    expect(await screen.findByRole('alert')).toHaveTextContent('동시 시청 대수');
+    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('동시 시청 대수'));
     expect(screen.getByRole('button', { name: '재생' })).toBeInTheDocument();
   });
 

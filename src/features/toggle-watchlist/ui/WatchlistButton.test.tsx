@@ -16,10 +16,24 @@ describe('WatchlistButton', () => {
     await waitFor(() => expect(button).toHaveAttribute('aria-pressed', 'true'));
     expect(state.calls.some((call) => call.method === 'PUT')).toBe(true);
 
-    await waitFor(() => expect(button).toBeEnabled());
+    await waitFor(() => expect(button).not.toHaveAttribute('aria-disabled'));
     await userEvent.click(button);
     await waitFor(() => expect(button).toHaveAttribute('aria-pressed', 'false'));
     expect(state.calls.some((call) => call.method === 'DELETE')).toBe(true);
+  });
+
+  it('빠르게 두 번 눌러도 한 번만 바꾼다', async () => {
+    const { state } = installFakeApi();
+    await renderWithProviders(<WatchlistButton movieId="last-screening" />);
+    const button = await screen.findByRole('button', { name: '찜하기' });
+    let release = () => {};
+    state.hold = new Promise((resolve) => {
+      release = resolve;
+    });
+    await userEvent.dblClick(button);
+    release();
+    await waitFor(() => expect(button).toHaveAttribute('aria-pressed', 'true'));
+    expect(state.calls.filter((call) => call.path.startsWith('/api/library/watchlist'))).toHaveLength(1);
   });
 
   it('방문자는 돌아올 주소와 함께 로그인으로 보낸다', async () => {
@@ -36,6 +50,6 @@ describe('WatchlistButton', () => {
     state.fail = (method) => method === 'PUT';
     await renderWithProviders(<WatchlistButton movieId="last-screening" />);
     await userEvent.click(await screen.findByRole('button', { name: '찜하기' }));
-    expect(await screen.findByRole('alert')).toHaveTextContent('바꾸지 못했습니다');
+    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('바꾸지 못했습니다'));
   });
 });

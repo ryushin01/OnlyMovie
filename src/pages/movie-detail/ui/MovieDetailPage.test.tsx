@@ -16,7 +16,9 @@ describe('MovieDetailPage', () => {
 
     state.fail = () => true;
     await act(() => queryClient.refetchQueries({ queryKey: ['movie', 'last-screening'] }));
-    expect(await screen.findByRole('alert')).toHaveTextContent('영화를 불러오지 못했습니다');
+    expect(
+      await screen.findByRole('heading', { level: 1, name: '영화를 불러오지 못했습니다' }),
+    ).toBeInTheDocument();
     expect(document.title).toBe('영화를 불러오지 못했습니다 | OnlyMovie');
   });
 
@@ -24,9 +26,9 @@ describe('MovieDetailPage', () => {
     const { state } = installFakeApi();
     state.fail = () => true;
     await view();
-    expect(await screen.findByRole('alert', {}, { timeout: 3000 })).toHaveTextContent(
-      '영화를 불러오지 못했습니다',
-    );
+    expect(
+      await screen.findByRole('heading', { level: 1, name: '영화를 불러오지 못했습니다' }, { timeout: 3000 }),
+    ).toBeInTheDocument();
     expect(document.title).toBe('영화를 불러오지 못했습니다 | OnlyMovie');
   });
 

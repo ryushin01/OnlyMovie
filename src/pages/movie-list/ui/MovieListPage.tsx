@@ -1,9 +1,11 @@
 import { css } from '@emotion/react';
+import { useId } from 'react';
 import { getRouteApi, Link, useNavigate } from '@tanstack/react-router';
 import { MovieCard, MovieCardSkeleton, toMovieSearch, useMovies, type MovieFilters } from '@/entities/movie';
 import { MovieFilterForm } from '@/features/filter-movies';
 import { routes } from '@/shared/config/routes';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
+import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { buttonCss } from '@/shared/ui/Button';
 import { pageTitleCss, sectionTitleCss, visuallyHidden } from '@/shared/ui/styles';
 import { SearchExtras } from './SearchExtras';
@@ -85,6 +87,7 @@ export function MovieListPage() {
   useDocumentTitle('영화 찾기');
   // 주소의 검색 조건은 라우터가 검증해서 넘깁니다.
   const filters = route.useSearch();
+  const statusNavId = useId();
   const navigate = useNavigate();
   const { data, isPending, isError } = useMovies(filters, { keepPrevious: true });
   const pageCount = data ? Math.ceil(data.total / data.pageSize) : 0;
@@ -92,7 +95,11 @@ export function MovieListPage() {
   return (
     <>
       <h1 css={pageTitleCss}>영화 찾기</h1>
-      <nav aria-label="공개 상태">
+      {/* 탭처럼 보이지만 주소를 바꾸는 링크 묶음이라 tablist 대신 nav > h2 + ul로 만듭니다. */}
+      <nav aria-labelledby={statusNavId}>
+        <h2 id={statusNavId} css={visuallyHidden}>
+          공개 상태
+        </h2>
         <ul css={tabsCss}>
           {TABS.map(({ label, patch }) => {
             const on =
@@ -138,11 +145,9 @@ export function MovieListPage() {
           </ul>
         </>
       )}
-      {isError && (
-        <p role="alert" css={{ marginTop: 32 }}>
-          영화를 불러오지 못했습니다. 새로고침해 주세요.
-        </p>
-      )}
+      <AlertMessage css={{ marginTop: 32 }}>
+        {isError ? '영화를 불러오지 못했습니다. 새로고침해 주세요.' : null}
+      </AlertMessage>
       {data && (
         <>
           {/* 조건을 바꾸면 스크린 리더에도 결과 수가 읽힙니다. */}

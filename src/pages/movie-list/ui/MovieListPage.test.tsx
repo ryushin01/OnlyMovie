@@ -44,6 +44,8 @@ describe('MovieListPage', () => {
     const { state } = installFakeApi({ movies });
     state.fail = (_method, path) => path.startsWith('/api/movies');
     await renderWithProviders(page, '/movies');
-    expect(await screen.findByRole('alert', {}, { timeout: 2000 })).toHaveTextContent('불러오지 못했습니다');
+    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('불러오지 못했습니다'), {
+      timeout: 2000,
+    });
   });
 });

@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router';
 import { useLibrary, useToggleReleaseAlert } from '@/entities/movie';
 import { useSession } from '@/entities/session';
 import { paths, routes } from '@/shared/config/routes';
+import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { Button, buttonCss } from '@/shared/ui/Button';
 import { onImageButtonCss } from '@/shared/ui/styles';
 
@@ -48,7 +49,7 @@ export function ReleaseAlertButton({ movieId, onImage = false }: Props) {
         variant="outline"
         css={imageCss}
         aria-pressed={saved}
-        disabled={toggle.isPending}
+        pending={toggle.isPending}
         onClick={handleClick}
       >
         {saved && (
@@ -58,11 +59,9 @@ export function ReleaseAlertButton({ movieId, onImage = false }: Props) {
         )}
         공개 알림 받기
       </Button>
-      {toggle.isError && (
-        <p role="alert" css={{ margin: '8px 0 0', fontWeight: 700 }}>
-          공개 알림을 바꾸지 못했습니다. 다시 시도해 주세요.
-        </p>
-      )}
+      <AlertMessage css={{ marginTop: 8, fontWeight: 700 }}>
+        {toggle.isError ? '공개 알림을 바꾸지 못했습니다. 다시 시도해 주세요.' : null}
+      </AlertMessage>
     </div>
   );
 }
