@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { HtmlValidate } from 'html-validate';
 import { installFakeApi, MEMBER, seedMovies } from './fakeApi';
 
 /** Safari의 Tab은 기본 설정에서 링크와 버튼을 건너뛰고, Option+Tab은 모두 지나갑니다. */
@@ -704,6 +705,48 @@ const MEMBER_PAGES: [string, string][] = [
   ['/account', '내 계정'],
   ['/watch/last-screening', '마지막 상영'],
 ];
+
+test('주요 화면의 마크업이 HTML 표준에 맞다', async ({ page, browserName }) => {
+  // 마크업은 React가 브라우저와 상관없이 같게 만들므로 한 브라우저에서만 검사합니다.
+  test.skip(browserName !== 'chromium', '마크업은 브라우저마다 같습니다.');
+  test.setTimeout(90_000);
+  // 콘텐츠 모델, 중복 id, 속성 값처럼 HTML 표준에 정해진 규칙만 씁니다(KWCAG 8.1.1).
+  const validator = new HtmlValidate({ extends: ['html-validate:standard'] });
+  const state = await installFakeApi(page);
+
+  const expectValidMarkup = async (label: string) => {
+    const html = await page.evaluate(() => `<!doctype html>\n${document.documentElement.outerHTML}`);
+    const report = await validator.validateString(html, label);
+    const problems = report.results.flatMap((result) =>
+      result.messages.map(
+        ({ line, column, ruleId, message }) => `${label} ${line}:${column} ${ruleId}: ${message}`,
+      ),
+    );
+    expect(problems).toEqual([]);
+  };
+  const visit = async ([path, heading]: [string, string]) => {
+    await page.goto(path);
+    await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
+    await expect(page.locator('main output:has-text("중입니다")')).toHaveCount(0);
+    await expectValidMarkup(path);
+  };
+
+  for (const entry of VISITOR_PAGES) await visit(entry);
+
+  // 안내가 채워진 상태도 검사합니다.
+  state.user = MEMBER;
+  await page.goto('/checkout/standard');
+  await expect(page.getByRole('heading', { level: 1, name: '스탠다드 이용권' })).toBeVisible();
+  await page.getByRole('radio', { name: '결제 실패' }).check();
+  await page.getByRole('button', { name: '10,900원 가상 결제' }).click();
+  await expect(page.getByRole('main').getByRole('alert')).toContainText('가상 결제에 실패했습니다');
+  await expectValidMarkup('/checkout/standard (결제 실패)');
+
+  await page.getByRole('radio', { name: '결제 성공' }).check();
+  await page.getByRole('button', { name: '10,900원 가상 결제' }).click();
+  await expect(page.getByRole('heading', { name: '스탠다드 이용권 이용 중' })).toBeVisible();
+  for (const entry of MEMBER_PAGES) await visit(entry);
+});
 
 for (const colorScheme of ['light', 'dark'] as const) {
   for (const [width, height] of [
