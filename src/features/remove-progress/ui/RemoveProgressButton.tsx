@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import { useRef } from 'react';
 import { useRemoveProgress } from '@/entities/movie';
+import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { CloseIcon } from '@/shared/ui/icons';
 import { visuallyHidden } from '@/shared/ui/styles';
 
@@ -15,6 +16,11 @@ const buttonCss = css`
   border-radius: 50%;
   cursor: pointer;
   --focus: #fff;
+
+  &[aria-disabled='true'] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `;
 const errorCss = css`
   position: absolute;
@@ -49,15 +55,19 @@ export function RemoveProgressButton({ movieId, title }: { movieId: string; titl
 
   return (
     <>
-      <button type="button" css={buttonCss} disabled={remove.isPending} onClick={handleClick}>
+      {/* disabled로 바꾸면 초점이 문서 처음으로 가므로 aria-disabled로 알리고, 누르기는 ref 잠금이 막습니다. */}
+      <button
+        type="button"
+        css={buttonCss}
+        aria-disabled={remove.isPending || undefined}
+        onClick={handleClick}
+      >
         <CloseIcon width={18} height={18} />
         <span css={visuallyHidden}>{title} 이어 보기에서 지우기</span>
       </button>
-      {remove.isError && (
-        <p role="alert" css={errorCss}>
-          지우지 못했습니다. 다시 시도해 주세요.
-        </p>
-      )}
+      <AlertMessage css={errorCss}>
+        {remove.isError ? '지우지 못했습니다. 다시 시도해 주세요.' : null}
+      </AlertMessage>
     </>
   );
 }

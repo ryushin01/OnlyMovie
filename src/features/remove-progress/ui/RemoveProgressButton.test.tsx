@@ -21,5 +21,5 @@ it('실패하면 글자로 알린다', async () => {
   state.fail = (method) => method === 'DELETE';
   await view();
   await userEvent.click(await button());
-  expect(await screen.findByRole('alert')).toHaveTextContent('지우지 못했습니다');
+  await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('지우지 못했습니다'));
 });

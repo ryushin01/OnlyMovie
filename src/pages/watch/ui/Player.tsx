@@ -10,6 +10,7 @@ import {
 } from '@/entities/movie';
 import { ApiError } from '@/shared/api/request';
 import { deviceId } from '@/shared/lib/deviceId';
+import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { Button } from '@/shared/ui/Button';
 
 const screenCss = css`
@@ -184,11 +185,11 @@ export function Player({ movie, quality, startAt }: Props) {
           자막
         </Button>
       </div>
-      {blocked && (
-        <p role="alert" css={{ margin: '12px 0 0', color: 'var(--danger)', fontWeight: 700 }}>
-          이용권의 동시 시청 대수를 모두 쓰고 있습니다. 다른 기기에서 재생을 멈춘 뒤 다시 눌러 주세요.
-        </p>
-      )}
+      <AlertMessage css={{ marginTop: 12, color: 'var(--danger)', fontWeight: 700 }}>
+        {blocked
+          ? '이용권의 동시 시청 대수를 모두 쓰고 있습니다. 다른 기기에서 재생을 멈춘 뒤 다시 눌러 주세요.'
+          : null}
+      </AlertMessage>
       <p css={{ margin: '12px 0 0', color: 'var(--muted)' }}>
         {movie.audioLanguages.join(', ')} 음성 · {movie.subtitleLanguages.join(', ')} 자막 ·{' '}
         {formatRuntime(movie.runtimeMinutes)}

@@ -1,7 +1,8 @@
 import { css } from '@emotion/react';
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import { formatPrice, useSubscribe, type Plan } from '@/entities/subscription';
 import { ApiError } from '@/shared/api/request';
+import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { Button } from '@/shared/ui/Button';
 
 const formCss = css`
@@ -34,7 +35,7 @@ const fieldsetCss = css`
   }
 `;
 const alertCss = css`
-  margin: 0;
+  margin-bottom: 16px;
   color: var(--danger);
   font-weight: 700;
 `;
@@ -51,12 +52,7 @@ const failureMessage = (error: unknown) => {
 export function CheckoutForm({ plan, onDone }: { plan: Plan; onDone: () => void }) {
   const [result, setResult] = useState<'success' | 'failure'>('success');
   const subscribe = useSubscribe();
-  const alertRef = useRef<HTMLParagraphElement>(null);
   const submitting = useRef(false);
-
-  useEffect(() => {
-    if (subscribe.isError) alertRef.current?.focus();
-  }, [subscribe.isError]);
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
@@ -67,7 +63,8 @@ export function CheckoutForm({ plan, onDone }: { plan: Plan; onDone: () => void 
       { plan: plan.id, simulateFailure: result === 'failure' },
       {
         onSuccess: onDone,
-        onSettled: () => {
+        // 성공하면 화면을 떠나므로 실패했을 때만 다시 제출할 수 있게 합니다.
+        onError: () => {
           submitting.current = false;
         },
       },
@@ -97,13 +94,12 @@ export function CheckoutForm({ plan, onDone }: { plan: Plan; onDone: () => void 
           결제 실패
         </label>
       </fieldset>
-      {subscribe.isError && (
-        <p ref={alertRef} role="alert" tabIndex={-1} css={alertCss}>
-          {failureMessage(subscribe.error)}
-        </p>
-      )}
       <div>
-        <Button type="submit" disabled={subscribe.isPending}>
+        {/* 안내 영역은 처음부터 두고 내용만 바꿉니다. 초점은 결제 버튼에 그대로 둡니다. */}
+        <AlertMessage css={alertCss}>
+          {subscribe.isError ? failureMessage(subscribe.error) : null}
+        </AlertMessage>
+        <Button type="submit" pending={subscribe.isPending}>
           {subscribe.isPending ? '결제 중…' : `${formatPrice(plan.price)} 가상 결제`}
         </Button>
       </div>

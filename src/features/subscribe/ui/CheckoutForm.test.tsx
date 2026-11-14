@@ -21,7 +21,7 @@ describe('CheckoutForm', () => {
     });
   });
 
-  it('결제 실패를 고르면 안내하고 초점을 옮긴다', async () => {
+  it('결제 실패를 고르면 안내하고, 초점은 결제 버튼에 남긴다', async () => {
     const user = userEvent.setup();
     installFakeApi();
     const onDone = vi.fn();
@@ -30,8 +30,8 @@ describe('CheckoutForm', () => {
     await user.click(screen.getByRole('radio', { name: '결제 실패' }));
     await user.click(screen.getByRole('button', { name: '7,900원 가상 결제' }));
 
-    expect(await screen.findByRole('alert')).toHaveTextContent('가상 결제에 실패했습니다');
-    await waitFor(() => expect(screen.getByRole('alert')).toHaveFocus());
+    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('가상 결제에 실패했습니다'));
+    expect(screen.getByRole('button', { name: '7,900원 가상 결제' })).toHaveFocus();
     expect(onDone).not.toHaveBeenCalled();
   });
 
@@ -57,7 +57,10 @@ describe('CheckoutForm', () => {
 
     await userEvent.click(screen.getByRole('button', { name: '7,900원 가상 결제' }));
 
-    expect(await screen.findByRole('button', { name: '결제 중…' })).toBeDisabled();
+    // disabled 대신 aria-disabled로 막아, 초점이 버튼에 남습니다.
+    const button = await screen.findByRole('button', { name: '결제 중…' });
+    expect(button).toHaveAttribute('aria-disabled', 'true');
+    expect(button).toHaveFocus();
     release();
   });
 });

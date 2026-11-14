@@ -36,7 +36,7 @@ describe('LoginForm', () => {
     expect(auth.login).toHaveBeenCalledWith('member@example.com', 'secret');
   });
 
-  it('실패하면 안내하고 초점을 옮긴다', async () => {
+  it('실패하면 고치는 방법까지 안내하고, 초점은 로그인 버튼에 남긴다', async () => {
     const user = userEvent.setup();
     auth.login.mockRejectedValue(new Error('invalid'));
     await renderWithProviders(<LoginForm onDone={() => {}} />);
@@ -45,8 +45,19 @@ describe('LoginForm', () => {
     await user.type(screen.getByLabelText('비밀번호 (필수)'), 'wrong');
     await user.click(screen.getByRole('button', { name: '로그인' }));
 
-    expect(await screen.findByRole('alert')).toHaveTextContent('맞지 않습니다');
-    await waitFor(() => expect(screen.getByRole('alert')).toHaveFocus());
+    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('맞지 않습니다'));
+    expect(screen.getByRole('alert')).toHaveTextContent('비밀번호 찾기를 이용해 주세요');
+    expect(screen.getByRole('button', { name: '로그인' })).toHaveFocus();
+  });
+
+  it('비밀번호 찾기로 바꾸거나 돌아오면, 사라진 버튼 대신 이메일 칸으로 초점을 옮긴다', async () => {
+    const user = userEvent.setup();
+    await renderWithProviders(<LoginForm onDone={() => {}} />);
+
+    await user.click(screen.getByRole('button', { name: '비밀번호 찾기' }));
+    expect(screen.getByLabelText('이메일 (필수)')).toHaveFocus();
+    await user.click(screen.getByRole('button', { name: '로그인으로 돌아가기' }));
+    expect(screen.getByLabelText('이메일 (필수)')).toHaveFocus();
   });
 
   it('비밀번호를 잊으면 재설정 메일을 요청한다', async () => {

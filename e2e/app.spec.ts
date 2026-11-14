@@ -191,6 +191,8 @@ test('메일 확인이 필요한 가입은 안내하고, 메일의 링크로 들
   await expect(
     page.getByText('cinephile@example.com로 확인 메일을 보냈습니다.', { exact: false }),
   ).toBeVisible();
+  // 누른 가입 버튼이 사라지므로 초점은 안내 제목으로 옮겨 갑니다.
+  await expect(page.getByRole('heading', { name: '메일을 확인해 주세요' })).toBeFocused();
   expect(state.user).toBeNull();
 
   // 메일의 링크는 사이트 첫 화면으로 들어옵니다.
@@ -210,9 +212,13 @@ test('결제 실패를 안내하고 이용권을 시작하지 않는다', async 
   const state = await installFakeApi(page, { user: MEMBER });
   await page.goto('/checkout/basic');
   await page.getByRole('radio', { name: '결제 실패' }).check();
-  await page.getByRole('button', { name: '7,900원 가상 결제' }).click();
-  await expect(page.getByRole('alert')).toContainText('가상 결제에 실패했습니다');
-  await expect(page.getByRole('alert')).toBeFocused();
+  // 키보드로 결제합니다. 실패 안내는 읽히되 초점은 결제 버튼에 남아 바로 다시 시도할 수 있습니다.
+  // (WebKit은 마우스로 누른 버튼에 초점을 주지 않아, 초점은 키보드 조작으로 확인합니다.)
+  const pay = page.getByRole('button', { name: '7,900원 가상 결제' });
+  await pay.focus();
+  await page.keyboard.press('Enter');
+  await expect(page.getByRole('main').getByRole('alert')).toContainText('가상 결제에 실패했습니다');
+  await expect(pay).toBeFocused();
   expect(state.subscription).toBeNull();
 
   await page.getByRole('radio', { name: '결제 성공' }).check();
@@ -265,9 +271,12 @@ test('이용권을 낮추면 다음 결제일로 예약되고, 해지와 취소�
   expect(dialogText).toContain('해지할까요');
   await expect(page.getByRole('button', { name: '해지 취소' })).toHaveCount(0);
 
+  // 키보드로 해지합니다. 누른 해지하기가 사라지므로 초점은 같은 자리의 해지 취소로 옮겨 갑니다.
   page.once('dialog', (dialog) => dialog.accept());
-  await page.getByRole('button', { name: '해지하기' }).click();
+  await page.getByRole('button', { name: '해지하기' }).focus();
+  await page.keyboard.press('Enter');
   await expect(page.getByText(/해지됩니다\. 그때까지 계속 볼 수 있습니다\./)).toBeVisible();
+  await expect(page.getByRole('button', { name: '해지 취소' })).toBeFocused();
   await page.getByRole('button', { name: '해지 취소' }).click();
   await expect(page.getByRole('button', { name: '해지하기' })).toBeVisible();
 });
@@ -540,7 +549,7 @@ test('동시 시청 대수를 넘으면 재생을 멈추고 안내한다', async
   state.screensFull = true;
   await page.goto('/watch/glass-orbit');
   await page.getByRole('button', { name: '재생' }).click();
-  await expect(page.getByRole('alert')).toContainText('동시 시청 대수');
+  await expect(page.getByRole('main').getByRole('alert')).toContainText('동시 시청 대수');
   await expect(page.getByRole('button', { name: '재생' })).toBeVisible();
 });
 
@@ -565,6 +574,67 @@ test('키보드 순서는 로고, 검색창, 도구, 주요 메뉴 순이다', a
   await page.getByRole('banner').getByRole('link', { name: 'OnlyMovie' }).focus();
   await page.keyboard.press('Tab');
   await expect(page.getByLabel('영화 검색')).toBeFocused();
+});
+
+test('키보드로 찜하기와 공개 알림을 누른 뒤에도 초점이 버튼에 남는다', async ({ page }) => {
+  await installFakeApi(page, { user: MEMBER, plan: 'standard' });
+  // 요청 중인 버튼을 disabled로 바꾸면 브라우저가 초점을 문서 처음으로 보내던 문제를 막습니다.
+  await page.route('**/api/library/*/*', async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 300));
+    await route.fallback();
+  });
+  await page.goto('/movies/glass-orbit');
+  const watchlist = page.getByRole('button', { name: '찜하기' });
+  await watchlist.focus();
+  await page.keyboard.press('Enter');
+  await expect(watchlist).toHaveAttribute('aria-pressed', 'true');
+  await expect(watchlist).toBeFocused();
+
+  await page.goto('/movies/island-of-clocks');
+  const releaseAlert = page.getByRole('button', { name: '공개 알림 받기' });
+  await releaseAlert.focus();
+  await page.keyboard.press('Enter');
+  await expect(releaseAlert).toHaveAttribute('aria-pressed', 'true');
+  await expect(releaseAlert).toBeFocused();
+});
+
+test('셀렉트의 화살표는 왼쪽 글자와 같은 간격으로 놓인다', async ({ page }) => {
+  await installFakeApi(page);
+  await page.goto('/movies');
+  for (const name of ['장르', '정렬']) {
+    const gaps = await page.getByLabel(name, { exact: true }).evaluate((element) => {
+      const style = getComputedStyle(element);
+      const box = element.getBoundingClientRect();
+      const arrow = element.parentElement!.querySelector('svg')!.getBoundingClientRect();
+      return {
+        appearance: style.appearance,
+        left: parseFloat(style.borderLeftWidth) + parseFloat(style.paddingLeft),
+        right: box.right - arrow.right,
+        centered: Math.abs(box.top + box.height / 2 - (arrow.top + arrow.height / 2)),
+      };
+    });
+    expect(gaps.appearance).toBe('none');
+    expect(Math.abs(gaps.right - gaps.left)).toBeLessThanOrEqual(1);
+    expect(gaps.centered).toBeLessThanOrEqual(1);
+  }
+});
+
+test('아이콘만 있는 버튼은 초점과 마우스에서 툴팁을 보이고 Esc로 닫는다', async ({ page }) => {
+  await installFakeApi(page);
+  await page.goto('/');
+  const theme = page.getByRole('button', { name: '다크 모드' });
+  const tooltip = page.getByRole('tooltip');
+  await expect(tooltip).toHaveCount(0);
+
+  await theme.focus();
+  await expect(tooltip).toHaveText('다크 모드');
+  await expectNoHorizontalOverflow(page);
+  await page.keyboard.press('Escape');
+  await expect(tooltip).toHaveCount(0);
+  await expect(theme).toBeFocused();
+
+  await page.getByRole('search').getByRole('button', { name: '검색' }).hover();
+  await expect(tooltip).toHaveText('검색');
 });
 
 test('다크 모드를 저장하고 시스템 설정을 따른다', async ({ browser, baseURL }) => {
@@ -670,7 +740,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
       await expect(page.getByRole('heading', { level: 1, name: '스탠다드 이용권' })).toBeVisible();
       await page.getByRole('radio', { name: '결제 실패' }).check();
       await page.getByRole('button', { name: '10,900원 가상 결제' }).click();
-      await expect(page.getByRole('alert')).toBeVisible();
+      await expect(page.getByRole('main').getByRole('alert')).toContainText('가상 결제에 실패했습니다');
       await expectNoHorizontalOverflow(page);
       await expectNoAxeViolations(page);
 

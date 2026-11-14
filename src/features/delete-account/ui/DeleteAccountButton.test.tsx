@@ -35,15 +35,15 @@ describe('DeleteAccountButton', () => {
     expect(deletes(state)).toHaveLength(1);
   });
 
-  it('실패하면 안내하고 초점을 옮기며 다시 시도할 수 있다', async () => {
+  it('실패하면 안내하고, 초점은 버튼에 남기며 다시 시도할 수 있다', async () => {
     const { state } = installFakeApi();
     state.fail = (method) => method === 'DELETE';
     vi.stubGlobal('confirm', () => true);
     const onDone = vi.fn();
     await renderWithProviders(<DeleteAccountButton onDone={onDone} />);
     await userEvent.click(screen.getByRole('button', { name: '회원 탈퇴' }));
-    expect(await screen.findByRole('alert')).toHaveTextContent('탈퇴하지 못했습니다');
-    await waitFor(() => expect(screen.getByRole('alert')).toHaveFocus());
+    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('탈퇴하지 못했습니다'));
+    expect(screen.getByRole('button', { name: '회원 탈퇴' })).toHaveFocus();
     expect(onDone).not.toHaveBeenCalled();
     expect(screen.getByRole('button', { name: '회원 탈퇴' })).toBeEnabled();
   });

@@ -16,6 +16,7 @@ import { DeleteAccountButton } from '@/features/delete-account';
 import { SubscriptionManager } from '@/features/manage-subscription';
 import { routes } from '@/shared/config/routes';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
+import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { buttonCss } from '@/shared/ui/Button';
 import { pageTitleCss, panelCss, sectionTitleCss } from '@/shared/ui/styles';
 import { formatKoreanDate } from '@/shared/lib/date';
@@ -105,11 +106,9 @@ function Account({ user, onDeleted }: { user: SessionUser; onDeleted: () => void
         {user.email}
       </p>
       {isPending && <output css={{ display: 'block', marginTop: 32 }}>이용권을 확인하는 중입니다.</output>}
-      {isError && (
-        <p role="alert" css={{ marginTop: 32 }}>
-          이용권을 불러오지 못했습니다. 새로고침해 주세요.
-        </p>
-      )}
+      <AlertMessage css={{ marginTop: 32 }}>
+        {isError ? '이용권을 불러오지 못했습니다. 새로고침해 주세요.' : null}
+      </AlertMessage>
       {data && (
         <>
           <section css={[sectionCss, plan && planSurfaceCss(plan)]}>

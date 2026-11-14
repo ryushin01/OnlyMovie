@@ -4,6 +4,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { routes } from '@/shared/config/routes';
 import { SearchIcon } from '@/shared/ui/icons';
 import { inputCss, visuallyHidden } from '@/shared/ui/styles';
+import { Tooltip } from '@/shared/ui/Tooltip';
 
 const searchCss = css`
   width: 100%;
@@ -16,10 +17,12 @@ const fieldCss = css`
   padding-left: 52px;
   border-radius: 999px;
 `;
-const submitCss = css`
+const submitWrapCss = css`
   position: absolute;
   top: 2px;
   left: 4px;
+`;
+const submitCss = css`
   display: grid;
   place-items: center;
   width: 44px;
@@ -56,10 +59,13 @@ export function MovieSearch() {
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
-        <button type="submit" css={submitCss}>
-          <SearchIcon />
-          <span css={visuallyHidden}>검색</span>
-        </button>
+        <Tooltip label="검색" css={submitWrapCss}>
+          {(trigger) => (
+            <button type="submit" css={submitCss} {...trigger}>
+              <SearchIcon />
+            </button>
+          )}
+        </Tooltip>
       </form>
     </search>
   );

@@ -15,6 +15,7 @@ import { SignupPage } from '@/pages/signup';
 import { WatchPage } from '@/pages/watch';
 import { nextSearch } from '@/shared/config/routes';
 import { routerSearch } from '@/shared/lib/routerSearch';
+import { PageAnnouncer } from '@/shared/ui/PageAnnouncer';
 import { reportError } from './monitoring';
 import { SiteLayout } from '@/widgets/site-layout';
 
@@ -35,9 +36,12 @@ const rootRoute = createRootRoute({
   // 머리글까지 그리지 못한 경우의 마지막 안내입니다. 화면 하나가 실패하면 라우터의
   // defaultErrorComponent가 본문 자리에 그려 머리글이 남고 다른 화면으로 갈 수 있습니다.
   errorComponent: () => (
-    <main>
-      <RouteErrorPage />
-    </main>
+    <>
+      <main>
+        <RouteErrorPage />
+      </main>
+      <PageAnnouncer />
+    </>
   ),
   notFoundComponent: NotFoundPage,
 });

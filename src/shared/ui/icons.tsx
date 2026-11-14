@@ -77,9 +77,11 @@ export const MoonIcon = (props: IconProps) => (
   </Icon>
 );
 
-export const ChevronIcon = ({ direction, ...props }: IconProps & { direction: 'left' | 'right' }) => (
+const CHEVRONS = { left: 'M15 5l-7 7 7 7', right: 'M9 5l7 7-7 7', down: 'M5 9l7 7 7-7' };
+
+export const ChevronIcon = ({ direction, ...props }: IconProps & { direction: keyof typeof CHEVRONS }) => (
   <Icon {...props}>
-    <path d={direction === 'left' ? 'M15 5l-7 7 7 7' : 'M9 5l7 7-7 7'} />
+    <path d={CHEVRONS[direction]} />
   </Icon>
 );
 

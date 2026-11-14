@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useClearSession } from '@/entities/session';
 import { request } from '@/shared/api/request';
+import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { Button } from '@/shared/ui/Button';
 
 const MESSAGE =
@@ -9,20 +10,20 @@ const MESSAGE =
 export function DeleteAccountButton({ onDone }: { onDone: () => void }) {
   const [pending, setPending] = useState(false);
   const [failed, setFailed] = useState(false);
-  const alertRef = useRef<HTMLParagraphElement>(null);
+  const submitting = useRef(false);
   const clearSession = useClearSession();
 
-  useEffect(() => {
-    if (failed) alertRef.current?.focus();
-  }, [failed]);
-
   const handleClick = async () => {
-    if (pending || !window.confirm(MESSAGE)) return;
+    // 빠르게 두 번 누르면 pending이 바뀌기 전에 다시 들어오므로 ref로 막습니다.
+    if (submitting.current || !window.confirm(MESSAGE)) return;
+    submitting.current = true;
     setPending(true);
     setFailed(false);
     try {
       await request('/api/account', { method: 'DELETE' });
     } catch {
+      // 성공하면 화면을 떠나므로 실패했을 때만 다시 누를 수 있게 합니다.
+      submitting.current = false;
       setFailed(true);
       setPending(false);
       return;
@@ -36,19 +37,13 @@ export function DeleteAccountButton({ onDone }: { onDone: () => void }) {
 
   return (
     <>
-      <Button variant="outline" disabled={pending} onClick={handleClick}>
+      <Button variant="outline" pending={pending} onClick={handleClick}>
         {pending ? '탈퇴하는 중…' : '회원 탈퇴'}
       </Button>
-      {failed && (
-        <p
-          ref={alertRef}
-          role="alert"
-          tabIndex={-1}
-          css={{ margin: '12px 0 0', color: 'var(--danger)', fontWeight: 700 }}
-        >
-          탈퇴하지 못했습니다. 잠시 뒤 다시 시도해 주세요.
-        </p>
-      )}
+      {/* 안내 영역은 처음부터 두고 내용만 바꿉니다. 초점은 버튼에 그대로 둡니다. */}
+      <AlertMessage css={{ marginTop: 12, color: 'var(--danger)', fontWeight: 700 }}>
+        {failed ? '탈퇴하지 못했습니다. 잠시 뒤 다시 시도해 주세요.' : null}
+      </AlertMessage>
     </>
   );
 }

@@ -60,7 +60,9 @@ describe('HomePage', () => {
     const { state } = installFakeApi();
     state.fail = () => true;
     await renderWithProviders(<HomePage />);
-    expect(await screen.findByRole('alert', {}, { timeout: 2000 })).toHaveTextContent('불러오지 못했습니다');
+    expect(
+      await screen.findByRole('heading', { level: 1, name: '영화를 불러오지 못했습니다' }, { timeout: 2000 }),
+    ).toBeInTheDocument();
   });
 
   it('작품이 없으면 안내한다', async () => {

@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { expect, it } from 'vitest';
 import { installFakeApi } from '@/shared/lib/test/fakeApi';
 import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
@@ -19,5 +19,5 @@ it('불러오지 못하면 알린다', async () => {
   const { state } = installFakeApi();
   state.fail = (_method, path) => path.startsWith('/api/movies');
   await renderWithProviders(<ImportsPage />);
-  expect(await screen.findByRole('alert')).toHaveTextContent('불러오지 못했습니다');
+  await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('불러오지 못했습니다'));
 });

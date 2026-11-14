@@ -31,12 +31,14 @@ describe('SignupForm', () => {
     expect(auth.signup).toHaveBeenCalledWith('cinephile@example.com', 'password1', { full_name: '시네필' });
   });
 
-  it('메일 확인이 필요하면 안내한다', async () => {
+  it('메일 확인이 필요하면 안내하고, 사라진 버튼 대신 안내 제목으로 초점을 옮긴다', async () => {
     const onDone = vi.fn();
     auth.signup.mockResolvedValue({});
     await renderWithProviders(<SignupForm onDone={onDone} />);
     await fill();
-    expect(await screen.findByRole('status')).toHaveTextContent('cinephile@example.com로 확인 메일');
+    const heading = await screen.findByRole('heading', { name: '메일을 확인해 주세요' });
+    await waitFor(() => expect(heading).toHaveFocus());
+    expect(screen.getByText(/cinephile@example.com로 확인 메일을 보냈습니다/)).toBeInTheDocument();
     expect(onDone).not.toHaveBeenCalled();
   });
 
@@ -50,11 +52,29 @@ describe('SignupForm', () => {
     expect(auth.signup).not.toHaveBeenCalled();
   });
 
-  it('가입에 실패하면 안내하고 초점을 옮긴다', async () => {
+  it('가입에 실패하면 안내하고, 초점은 가입 버튼에 남긴다', async () => {
     auth.signup.mockRejectedValue(new Error('duplicate'));
     await renderWithProviders(<SignupForm onDone={() => {}} />);
     await fill();
-    expect(await screen.findByRole('alert')).toHaveTextContent('가입하지 못했습니다');
-    await waitFor(() => expect(screen.getByRole('alert')).toHaveFocus());
+    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent('가입하지 못했습니다'));
+    expect(screen.getByRole('button', { name: '가입하기' })).toHaveFocus();
+  });
+
+  it('빠르게 두 번 눌러도 한 번만 가입을 요청한다', async () => {
+    let finish = (_value: unknown) => {};
+    auth.signup.mockReturnValue(
+      new Promise((resolve) => {
+        finish = resolve;
+      }),
+    );
+    const user = userEvent.setup();
+    await renderWithProviders(<SignupForm onDone={() => {}} />);
+    await user.type(screen.getByLabelText('이름 (필수)'), '시네필');
+    await user.type(screen.getByLabelText('이메일 (필수)'), 'cinephile@example.com');
+    await user.type(screen.getByLabelText('비밀번호 (필수)'), 'password1');
+    await user.dblClick(screen.getByRole('button', { name: '가입하기' }));
+    finish({});
+    await screen.findByRole('heading', { name: '메일을 확인해 주세요' });
+    expect(auth.signup).toHaveBeenCalledOnce();
   });
 });

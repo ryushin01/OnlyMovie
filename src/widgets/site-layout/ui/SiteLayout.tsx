@@ -8,6 +8,7 @@ import { MovieSearch } from '@/features/search-movies';
 import { ThemeToggle } from '@/features/toggle-theme';
 import { routes } from '@/shared/config/routes';
 import { buttonCss } from '@/shared/ui/Button';
+import { PageAnnouncer } from '@/shared/ui/PageAnnouncer';
 import { FilmIcon, HomeIcon, LoginIcon, StarIcon, TicketIcon, UserIcon } from '@/shared/ui/icons';
 
 /** 레일이 왼쪽에 서고, 좁은 화면에서는 아래쪽 탭 막대가 되는 폭 */
@@ -248,6 +249,8 @@ export function SiteLayout() {
           영상도 재생되지 않습니다.
         </small>
       </footer>
+      {/* 화면 전체가 실패 안내로 바뀔 때 읽는 알림 영역. 앱이 시작될 때부터 둡니다. */}
+      <PageAnnouncer />
     </div>
   );
 }

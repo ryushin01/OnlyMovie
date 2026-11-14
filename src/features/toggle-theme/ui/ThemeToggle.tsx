@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/shared/ui/Button';
 import { MoonIcon, SunIcon } from '@/shared/ui/icons';
-import { visuallyHidden } from '@/shared/ui/styles';
+import { Tooltip } from '@/shared/ui/Tooltip';
 
 const STORAGE_KEY = 'only-movie-theme';
 
@@ -20,17 +20,21 @@ export function ThemeToggle() {
     }
   };
 
+  // 버튼 이름은 누르면 바뀔 모드입니다. 아이콘만 있으므로 툴팁 글자를 이름으로 씁니다.
   const label = dark ? '라이트 모드' : '다크 모드';
 
   return (
-    <Button
-      variant="outline"
-      onClick={toggle}
-      title={label}
-      css={{ width: 44, paddingInline: '0 !important' }}
-    >
-      {dark ? <SunIcon /> : <MoonIcon />}
-      <span css={visuallyHidden}>{label}</span>
-    </Button>
+    <Tooltip label={label} align="end">
+      {(trigger) => (
+        <Button
+          variant="outline"
+          onClick={toggle}
+          css={{ width: 44, minHeight: 44, padding: 0 }}
+          {...trigger}
+        >
+          {dark ? <SunIcon /> : <MoonIcon />}
+        </Button>
+      )}
+    </Tooltip>
   );
 }

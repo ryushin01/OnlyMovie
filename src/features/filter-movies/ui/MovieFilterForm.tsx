@@ -15,6 +15,7 @@ import {
 import { routes } from '@/shared/config/routes';
 import { Button, buttonCss } from '@/shared/ui/Button';
 import { Field } from '@/shared/ui/Field';
+import { SelectControl } from '@/shared/ui/SelectControl';
 import { inputCss, panelCss } from '@/shared/ui/styles';
 
 const gridCss = css`
@@ -68,14 +69,14 @@ function Select({
   return (
     <Field label={label}>
       {(control) => (
-        <select {...control} css={inputCss} name={name} defaultValue={value ?? ''}>
+        <SelectControl {...control} name={name} defaultValue={value ?? ''}>
           {all !== null && <option value="">{all}</option>}
           {options.map(([key, text]) => (
             <option key={key} value={key}>
               {text}
             </option>
           ))}
-        </select>
+        </SelectControl>
       )}
     </Field>
   );
