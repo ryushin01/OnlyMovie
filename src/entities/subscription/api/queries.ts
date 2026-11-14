@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { requestJson } from '@/shared/api/request';
+import { requestJson } from '@/shared/api';
 import type { PlanId } from '../model/plans';
 import { SubscriptionDataSchema } from './schemas';
 

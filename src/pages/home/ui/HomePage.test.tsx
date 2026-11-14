@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { installFakeApi } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { installFakeApi, renderWithProviders } from '@/shared/lib/test';
 import { HomePage } from './HomePage';
 
 describe('HomePage', () => {

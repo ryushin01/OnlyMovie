@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
 import { PageMessage } from '@/shared/ui/PageMessage';

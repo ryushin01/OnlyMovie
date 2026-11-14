@@ -8,7 +8,7 @@ import {
   useSaveProgress,
   type Movie,
 } from '@/entities/movie';
-import { ApiError } from '@/shared/api/request';
+import { ApiError } from '@/shared/api';
 import { deviceId } from '@/shared/lib/deviceId';
 import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { Button } from '@/shared/ui/Button';

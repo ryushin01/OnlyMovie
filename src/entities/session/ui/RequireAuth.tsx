@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { Navigate, useRouterState } from '@tanstack/react-router';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { useSession } from '../api/useSession';
 
 /** 회원 화면을 감쌉니다. 로그인하지 않았으면 로그인 뒤 돌아오도록 로그인 화면으로 보냅니다. */

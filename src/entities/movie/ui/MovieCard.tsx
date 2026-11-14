@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useState, type ReactNode } from 'react';
 import { Link } from '@tanstack/react-router';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { PlayIcon } from '@/shared/ui/icons';
 import { badgeCss } from '@/shared/ui/styles';
 import { formatDate, isReleased, type Movie } from '../model/types';

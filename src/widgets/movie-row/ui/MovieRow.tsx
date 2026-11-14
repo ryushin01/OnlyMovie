@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { Link } from '@tanstack/react-router';
-import type { routes } from '@/shared/config/routes';
+import { type routes } from '@/shared/config';
 import { MovieCard, type Movie } from '@/entities/movie';
 import { ChevronIcon } from '@/shared/ui/icons';
 import { sectionTitleCss, visuallyHidden } from '@/shared/ui/styles';

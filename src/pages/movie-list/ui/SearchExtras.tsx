@@ -1,5 +1,5 @@
 import { useMovies, type Movie } from '@/entities/movie';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { MovieRow } from '@/widgets/movie-row';
 
 /** 검색 결과 아래에 첫 결과와 장르가 같은 작품, 추천작을 잇습니다. 이미 위에 나온 작품은 빼고 줄끼리도 겹치지 않게 합니다. */

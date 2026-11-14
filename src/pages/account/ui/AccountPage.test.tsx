@@ -1,8 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { activeSubscription, installFakeApi } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { activeSubscription, installFakeApi, renderWithProviders } from '@/shared/lib/test';
 import { AccountPage } from './AccountPage';
 
 const view = () =>

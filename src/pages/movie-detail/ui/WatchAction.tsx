@@ -4,7 +4,7 @@ import { Link } from '@tanstack/react-router';
 import { formatClock, formatDate, isReleased, useLibrary, type Movie } from '@/entities/movie';
 import { useSession } from '@/entities/session';
 import { activePlan, useSubscription, watchBlock } from '@/entities/subscription';
-import { paths, routes } from '@/shared/config/routes';
+import { paths, routes } from '@/shared/config';
 import { buttonCss } from '@/shared/ui/Button';
 
 const noteCss = css`

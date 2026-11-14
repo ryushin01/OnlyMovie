@@ -12,7 +12,7 @@ import {
   useMovieFacets,
   type MovieFilters,
 } from '@/entities/movie';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { Button, buttonCss } from '@/shared/ui/Button';
 import { Field } from '@/shared/ui/Field';
 import { SelectControl } from '@/shared/ui/SelectControl';

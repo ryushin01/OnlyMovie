@@ -1,8 +1,7 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect, it } from 'vitest';
-import { installFakeApi, sampleMovie } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { installFakeApi, renderWithProviders, sampleMovie } from '@/shared/lib/test';
 import { AlertBell } from './AlertBell';
 
 const view = () => renderWithProviders(<AlertBell />);

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import { Link } from '@tanstack/react-router';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import type { Genre } from '../model/types';
 
 const listCss = css`

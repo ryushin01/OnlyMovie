@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/react';
 import { expect, it } from 'vitest';
-import { activeSubscription, installFakeApi, sampleMovie } from '@/shared/lib/test/fakeApi';
-import { renderWithProviders } from '@/shared/lib/test/renderWithProviders';
+import { activeSubscription, installFakeApi, renderWithProviders, sampleMovie } from '@/shared/lib/test';
 import { MemberPanel } from './MemberPanel';
 
 // 패널은 1440px 이상에서만 보입니다. jsdom은 창 너비가 1024px로 고정이라 미디어 쿼리로 숨겨지므로,

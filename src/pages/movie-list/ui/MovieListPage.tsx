@@ -2,13 +2,13 @@ import { css } from '@emotion/react';
 import { useId } from 'react';
 import { getRouteApi, Link, useNavigate } from '@tanstack/react-router';
 import { MovieCard, MovieCardSkeleton, toMovieSearch, useMovies, type MovieFilters } from '@/entities/movie';
-import { MovieFilterForm } from '@/features/filter-movies';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { buttonCss } from '@/shared/ui/Button';
 import { pageTitleCss, sectionTitleCss, visuallyHidden } from '@/shared/ui/styles';
 import { SearchExtras } from './SearchExtras';
+import { MovieFilterForm } from './MovieFilterForm';
 
 const SKELETON_CARDS = 12;
 const route = getRouteApi('/movies');

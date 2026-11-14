@@ -1,5 +1,5 @@
 import { useMovies, type Movie } from '@/entities/movie';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { MovieRow, MovieRowSkeleton } from '@/widgets/movie-row';
 
 /** 첫 번째 장르가 같은 공개작입니다. 없으면 줄을 그리지 않습니다. */

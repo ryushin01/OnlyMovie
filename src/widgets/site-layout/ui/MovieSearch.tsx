@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import { useId, useState, type FormEvent } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { SearchIcon } from '@/shared/ui/icons';
 import { inputCss, visuallyHidden } from '@/shared/ui/styles';
 import { Tooltip } from '@/shared/ui/Tooltip';

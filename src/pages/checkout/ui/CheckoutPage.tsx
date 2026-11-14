@@ -8,12 +8,12 @@ import {
   useSubscription,
   type Plan,
 } from '@/entities/subscription';
-import { CheckoutForm } from '@/features/subscribe';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { buttonCss } from '@/shared/ui/Button';
 import { PageMessage } from '@/shared/ui/PageMessage';
 import { formPanelCss, formTitleCss } from '@/shared/ui/styles';
+import { CheckoutForm } from './CheckoutForm';
 
 const route = getRouteApi('/checkout/$plan');
 

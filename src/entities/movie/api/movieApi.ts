@@ -1,4 +1,4 @@
-import { ApiError, request, requestJson } from '@/shared/api/request';
+import { ApiError, request, requestJson } from '@/shared/api';
 import { toMovieQuery, type MovieFilters } from '../model/filters';
 import type { Movie } from '../model/types';
 import {

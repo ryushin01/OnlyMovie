@@ -12,15 +12,15 @@ import {
   useSubscription,
   type Payment,
 } from '@/entities/subscription';
-import { DeleteAccountButton } from '@/features/delete-account';
-import { SubscriptionManager } from '@/features/manage-subscription';
-import { routes } from '@/shared/config/routes';
+import { routes } from '@/shared/config';
 import { useDocumentTitle } from '@/shared/lib/useDocumentTitle';
 import { AlertMessage } from '@/shared/ui/AlertMessage';
 import { buttonCss } from '@/shared/ui/Button';
 import { pageTitleCss, panelCss, sectionTitleCss } from '@/shared/ui/styles';
 import { formatKoreanDate } from '@/shared/lib/date';
 import { ContinueWatchingRow, MovieRow } from '@/widgets/movie-row';
+import { DeleteAccountButton } from './DeleteAccountButton';
+import { SubscriptionManager } from './SubscriptionManager';
 
 const sectionCss = css`
   ${panelCss}
