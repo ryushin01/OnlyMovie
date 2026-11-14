@@ -121,6 +121,7 @@ src/
 
 | 자료 | 저작자 | 사용 허락 | 원본 |
 |---|---|---|---|
+| 클래퍼보드 아이콘 (파비콘·홈 화면 아이콘·머리글 로고) | PureSolution | Flaticon 무료 라이선스(저작자 표기 조건) | [Flaticon "Action"](https://www.flaticon.com/free-icon/action_5581962) — [Action icons created by PureSolution - Flaticon](https://www.flaticon.com/free-icons/action) |
 | Oswald 글꼴 | The Oswald Project Authors | SIL OFL 1.1 | [googlefonts/OswaldFont](https://github.com/googlefonts/OswaldFont) |
 | Black Han Sans(검은고딕) 글꼴 | The Black Han Sans Project Authors | SIL OFL 1.1 | [zesstype/Black-Han-Sans](https://github.com/zesstype/Black-Han-Sans) |
 | Gothic A1 글꼴 | HanYang I&C | SIL OFL 1.1 | [Google Fonts](https://fonts.google.com/specimen/Gothic+A1) |
