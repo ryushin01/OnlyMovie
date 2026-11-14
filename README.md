@@ -60,7 +60,7 @@
 | 상태·데이터 | TanStack Query v5, zod(API 응답 검증) |
 | 서버 | Netlify Functions, Netlify Database (PostgreSQL), Netlify Identity (회원) |
 | 스타일 | Emotion, Oswald·Black Han Sans(제목), Roboto·Gothic A1(본문) |
-| 품질 | oxlint(jsx-a11y), Prettier, Vitest + React Testing Library, Playwright + axe (Chromium, Firefox, WebKit E2E), size-limit, Lighthouse CI |
+| 품질 | oxlint(jsx-a11y), Steiger(FSD), Prettier, Vitest + React Testing Library, Playwright + axe (Chromium, Firefox, WebKit E2E), html-validate, size-limit, Lighthouse CI |
 | 모니터링 | Sentry(DSN이 있을 때만), web-vitals |
 | 배포 | Netlify, GitHub Actions |
 | 자동화 | GitHub Actions (CI, 배포 후 사이트 검사), Dependabot |

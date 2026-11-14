@@ -56,7 +56,7 @@ API 호출은 `src/shared/api/request.ts`를 거칩니다. 본문을 받는 요�
 |---|---|---|
 | 단위·컴포넌트 | `src/**/*.test.ts(x)` | 검색 조건 검증, 재생 권한, 필터, 가입·로그인, 가상 결제, 이용권 변경, 찜, 이어 보기, 탈퇴, 화면별 상태. API는 `shared/lib/test/fakeApi.ts`로 대신합니다. 화면은 `await renderWithProviders({ '/watch/$id': <WatchPage /> }, '/watch/a')`처럼 앱과 같은 경로 이름으로 그립니다. |
 | 서버 | `netlify/lib/*.test.ts` | 실제 Postgres에 마이그레이션을 적용한 시드, 검색과 필터, 이용권 상태 변화(갱신, 만료, 올리기, 낮추기, 중복 요청), 찜과 이어 보기, 탈퇴 시 기록 삭제 |
-| E2E | `e2e/app.spec.ts` | Chromium, Firefox, WebKit에서 프로덕션 빌드의 메인→리스트→디테일, 검색, 필터와 주소 공유, 가입→결제→재생, 결제 실패, 중복 제출, 권한별 재생, 이용권 변경·해지, 찜, 이어 보기, 비슷한 영화, 탈퇴, 키보드, 컨트롤 크기, CSP 위반, 화면 오류 안내, 폭 320·1440·2200px의 넘침과 axe 검사. `vite preview`에 함수가 없어 API와 Identity는 `e2e/fakeApi.ts`로 대신합니다. |
+| E2E | `e2e/app.spec.ts` | Chromium, Firefox, WebKit에서 프로덕션 빌드의 메인→리스트→디테일, 검색, 필터와 주소 공유, 가입→결제→재생, 결제 실패, 중복 제출, 권한별 재생, 이용권 변경·해지, 찜, 이어 보기, 비슷한 영화, 탈퇴, 키보드, 컨트롤 크기, CSP 위반, 마크업 표준(html-validate), 화면 오류 안내, 폭 320·1440·2200px의 넘침과 axe 검사. `vite preview`에 함수가 없어 API와 Identity는 `e2e/fakeApi.ts`로 대신합니다. |
 | 배포 검사 | `e2e/live.spec.ts` | 배포된 사이트의 3단 흐름, 이미지, axe, 보안 헤더, 회원 응답이 캐시되지 않음, 비로그인·다른 사이트의 요청 거부. 운영 데이터를 바꾸지 않습니다. |
 
 ```bash
